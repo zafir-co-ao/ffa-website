@@ -1,0 +1,51 @@
+.ffa {
+	button,
+	.button {
+		font-family: "Montserrat", sans-serif;
+	}
+
+	/* links */
+	.btnlingua:link {
+		color: #999 !important;
+		text-decoration: none;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 60px;
+	}
+
+	.btnlingua:visited {
+		color: #999 !important;
+	}
+
+	.btnlingua:hover {
+		color: #000 !important;
+		text-decoration: none;
+	}
+
+	.btnlingua.active,
+	.btnlingua:active {
+		color: #000 !important;
+		text-decoration: none;
+	}
+
+	.btnmenuabout:link {
+		color: #999999 !important;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	.btnmenuabout:visited {
+		color: #999999 !important;
+	}
+
+	.btnmenuabout:hover {
+		color: #0071bc !important;
+		text-decoration: none;
+	}
+
+	.btnmenuabout.active,
+	.btnmenuabout:active {
+		color: #0071bc !important;
+		text-decoration: none;
+	}
+}

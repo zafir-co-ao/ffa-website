@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /a
+Disallow: /images
+Disallow: /__nuxt
+
+Sitemap: https://fatimafreitas.com/sitemap.xml

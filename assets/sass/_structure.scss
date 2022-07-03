@@ -1,0 +1,256 @@
+.ffa {
+	li {
+		position: relative;
+		padding-left: 1em;
+		list-style: none;
+	}
+
+	li::before {
+		content: "\2022" !important;
+		color: #0074bf;
+		position: absolute;
+		left: 0;
+	}
+
+	p,
+	ul {
+		margin: 0 0 1em;
+	}
+
+	ul {
+		padding-inline-start: 0;
+	}
+
+	hr {
+		height: 0px;
+		border-top: 1px solid colors.$azulescuro;
+		background-color: transparent;
+	}
+
+	label {
+		color: colors.$azulescuro;
+	}
+
+	.subtitle1 {
+		font-size: 16px;
+	}
+
+	.subtitle2 {
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.body1 {
+		font-size: 16px;
+	}
+
+	.body2 {
+		font-size: 14px;
+	}
+
+	.button {
+		font-size: 14px;
+		font-weight: 600;
+		text-transform: uppercase;
+	}
+
+	.caption {
+		font-size: 12px;
+	}
+
+	.overline {
+		font-size: 10px;
+		text-transform: uppercase;
+	}
+
+	.bgseparadorhome {
+		background-image: url("/images/separador_home.jpg");
+		background-position: left center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		min-height: 200px;
+		height: auto;
+		padding-top: 4%;
+		padding-bottom: 4%;
+	}
+
+	.bgpagina {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		min-height: 200px;
+		padding: 0;
+		height: auto;
+		width: 100%;
+		padding-top: 10%;
+		padding-bottom: 10%;
+	}
+
+	.logo {
+		height: 45px;
+	}
+
+	.fotopartner {
+		width: 130px;
+		height: 130px;
+		border-radius: 65px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		object-position: center center;
+		object-fit: cover;
+	}
+
+	.fotopartnergrande {
+		width: 260px;
+		height: 260px;
+		border-radius: 130px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.titulo {
+		font-size: 1.5rem;
+		line-height: 20px;
+	}
+
+	.fw-900 {
+		font-weight: 900;
+	}
+
+	/* sm */
+
+	@media (min-width: 576px) {
+		.logo {
+			height: 60px;
+		}
+
+		.fotopartner {
+			width: 150px;
+			height: 150px;
+			border-radius: 75px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.titulo {
+			font-size: 1.8rem;
+			line-height: 26px;
+		}
+
+		.bgseparadorhome {
+			background-repeat: no-repeat;
+			background-size: cover;
+			min-height: 200px;
+			height: auto;
+			padding-top: 4%;
+			padding-bottom: 4%;
+		}
+	}
+
+	/* md */
+
+	@media (min-width: 768px) {
+		.portrait-img-container {
+			padding-top: 150% !important;
+		}
+
+		.logo {
+			height: 60px;
+		}
+
+		.fotopartner {
+			width: 160px;
+			height: 160px;
+			border-radius: 80px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.titulo {
+			font-size: 2.5rem;
+			line-height: 32px;
+		}
+
+		.bgseparadorhome {
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			min-height: 200px;
+			height: auto;
+			padding-top: 4%;
+			padding-bottom: 4%;
+		}
+	}
+
+	/* lg */
+
+	@media (min-width: 992px) {
+		.logo {
+			height: 60px;
+		}
+
+		.fotopartner {
+			width: 160px;
+			height: 160px;
+			border-radius: 80px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.titulo {
+			font-size: 2.5rem;
+			line-height: 40px;
+		}
+
+		.bgseparadorhome {
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			min-height: 200px;
+			height: auto;
+			padding-top: 4%;
+			padding-bottom: 4%;
+		}
+	}
+
+	/* xl */
+
+	@media (min-width: 1200px) {
+		.logo {
+			height: 60px;
+		}
+
+		.fotopartner {
+			width: 160px;
+			height: 160px;
+			border-radius: 80px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.titulo {
+			font-size: 2.5rem;
+			line-height: 32px;
+		}
+
+		.bgseparadorhome {
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			min-height: 200px;
+			height: auto;
+			padding-top: 4%;
+			padding-bottom: 4%;
+		}
+	}
+
+	/* Acerto dos gradientes para internet explorer */
+}

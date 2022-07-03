@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+@use "colors";
+
+@import "base", "button", "structure", "banners-carousel", "splash";
+
+.ffa {
+	/* Cores texto */
+	.branco {
+		color: colors.$branco;
+	}
+
+	.preto {
+		color: colors.$preto;
+	}
+
+	.azul {
+		color: colors.$azul;
+	}
+
+	.azulescuro {
+		color: colors.$azulescuro;
+	}
+
+	.azulmenu {
+		color: colors.$azulmenu;
+	}
+
+	.azulclaro {
+		color: colors.$azulclaro;
+	}
+
+	.erro {
+		color: colors.$erro;
+	}
+
+	.cinzaescuro {
+		color: colors.$cinzaescuro;
+	}
+
+	.cinzaclaro {
+		color: colors.$cinzaclaro;
+	}
+
+	.foco {
+		color: colors.$foco;
+	}
+
+	.transparencia {
+		color: colors.$transparencia;
+	}
+	/* Cores fundo */
+	.bgazul {
+		background-color: colors.$azul;
+	}
+
+	.bgazulescuro {
+		background-color: colors.$azulescuro;
+	}
+
+	.bgazulmenu {
+		background-color: colors.$azulmenu;
+	}
+
+	.bgazulclaro {
+		background-color: colors.$azulclaro;
+	}
+
+	.bgerro {
+		background-color: colors.$erro;
+	}
+
+	.bgcinzaescuro {
+		background-color: colors.$cinzaescuro;
+	}
+
+	.bgcinzaclaro {
+		background-color: colors.$cinzaclaro;
+	}
+
+	.bgfoco {
+		background-color: colors.$foco;
+	}
+
+	.bgtransparencia {
+		background-color: colors.$transparencia;
+	}
+
+	.borderazulmenu {
+		border: 1px solid colors.$azulmenu;
+	}
+}

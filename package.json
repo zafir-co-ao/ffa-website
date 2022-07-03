@@ -1,0 +1,20 @@
+{
+	"private": true,
+	"scripts": {
+		"dev": "nuxt dev",
+		"build": "nuxt build",
+		"start": "node .output/server/index.mjs",
+		"clean": "rm -fr .output node_modules .nuxt package-lock.json"
+	},
+	"devDependencies": {
+		"@tinymce/tinymce-vue": "^4.0.5",
+		"nuxt3": "^3.0.0-27439932.78761c2",
+		"sass": "^1.49.7",
+		"sass-loader": "^12.4.0"
+	},
+	"dependencies": {
+		"antbox": "file:deps/antbox-0.0.2.tgz",
+		"he": "^1.2.0",
+		"lightray": "file:deps/lightray-0.4.9.tgz"
+	}
+}

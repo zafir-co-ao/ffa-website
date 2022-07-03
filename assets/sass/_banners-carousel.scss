@@ -1,0 +1,25 @@
+@use "colors";
+
+.banners-carousel {
+    .banner-ellipsis {
+		bottom: 1em;
+
+		display: flex;
+		justify-content: center;
+	}
+
+	.banner-selector {
+		width: 1.5em;
+		height: 0.35em;
+		background-color: #eee;
+		margin-right: 0.5em;
+	}
+
+	.banner-selector:hover {
+		cursor: pointer;
+	}
+
+	.banner-selector__selected {
+		background-color: colors.$azul !important;
+	}
+}

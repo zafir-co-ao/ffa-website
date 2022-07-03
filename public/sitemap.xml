@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://fatimafreitas.com/pt</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en" />
+    </url>
+    <url>
+        <loc>https://fatimafreitas.com/pt/about-us</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt/about-us" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en/about-us" />
+    </url>
+    <url>
+        <loc>https://fatimafreitas.com/pt/services</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt/services" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en/services" />
+    </url>
+    <url>
+        <loc>https://fatimafreitas.com/pt/media</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt/media" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en/media" />
+    </url>
+    <url>
+        <loc>https://fatimafreitas.com/pt/people</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt/people" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en/people" />
+    </url>
+    <url>
+        <loc>https://fatimafreitas.com/pt/careers</loc>
+        <xhtml:link rel="alternate" hreflang="pt" href="https://fatimafreitas.com/pt/careers" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://fatimafreitas.com/en/careers" />
+    </url>
+</urlset>
