@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 resources
 npm-debug*
 *.log*
