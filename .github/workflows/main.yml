@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: [self-hosted, linux]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile -t ffa-website:latest -t ffa-website:$(date +%s)
+      
+    - name: Deploy
+      run: docker rm -f ffa-website && docker run -d --name ffa-website -p 60001:8080 --env ANTBOX_SERVER_URL="https://pvt2.kindalus.me" --restart unless-stopped ffa-website:latest
