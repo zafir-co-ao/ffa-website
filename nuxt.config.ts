@@ -10,10 +10,16 @@ export default defineNuxtConfig({
 
 	build: {
 		transpile: ["@tinymce/tinymce-vue"],
-		extractCSS: true,
 	},
 
 	css: ["~~/assets/sass/fatimafreitas.scss"],
+
+	vite: {
+		build: {
+			cssCodeSplit: false,
+			minify: false,
+		},
+	},
 
 	meta: {
 		link: [
