@@ -22,10 +22,7 @@ const fullYear = new Date().getFullYear();
 					</p>
 				</div>
 				<div class="col-md-6 pt-md-4 pb-md-4 text-left">
-					<p
-						class="h6 fw-normal azulclaro"
-						style="line-height: 50px; text-align: right"
-					>
+					<p class="h6 fw-normal azulclaro lh-50 text-end">
 						&copy; Fátima Freitas & Associados
 						{{ fullYear }}
 					</p>
@@ -39,5 +36,9 @@ const fullYear = new Date().getFullYear();
 .disclaimer {
 	color: #fff;
 	text-decoration: none;
+}
+
+.lh-50 {
+	line-height: 50px;
 }
 </style>

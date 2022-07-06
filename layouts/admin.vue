@@ -5,8 +5,7 @@ definePageMeta({ middleware: "auth-guard" });
 <template>
 	<main>
 		<div
-			class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-			style="width: 280px"
+			class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar"
 		>
 			<a
 				href="/"
@@ -65,6 +64,10 @@ main {
 	max-height: 100vh;
 	overflow-x: auto;
 	overflow-y: hidden;
+}
+
+.sidebar {
+	width: 280px;
 }
 
 .b-example-divider {

@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<div class="container-fluid bgcinzaescuro" style="position: relative">
+		<div class="container-fluid bgcinzaescuro position-relative">
 			<div class="paracinzentoescuro"></div>
 			<div class="row">
 				<div class="col-sm-12 m-0 p-0 text-center">
@@ -48,11 +48,6 @@
 									href="https://ao.linkedin.com/company/fatima-freitas-advogados"
 								>
 									<img
-										style="
-											width: 1.5em;
-											color: white;
-											margin-right: 1.5em;
-										"
 										src="/images/linkedin-icon-white.svg"
 									/>
 									LinkedIn
@@ -99,6 +94,12 @@ function changeMap(officeId: string) {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
+}
+
+.follow-us img {
+	width: 1.5em;
+	margin-right: 1.5em;
+	color: white;
 }
 
 .paracinzentoescuro {

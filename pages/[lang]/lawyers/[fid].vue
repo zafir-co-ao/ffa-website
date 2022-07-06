@@ -93,12 +93,8 @@ const ldJson = JSON.stringify({
 		<Script type="application/ld+json" :children="ldJson" />
 
 		<Title>{{ lawyer.name }} - {{ strings.meta_title[lang] }}</Title>
-		<nav
-			class="pt-3"
-			style="--bs-breadcrumb-divider: '>'"
-			aria-label="breadcrumb"
-		>
-			<div class="breadcrumb" style="font-size: 0.85em">
+		<nav class="pt-3" aria-label="breadcrumb">
+			<div class="breadcrumb fs-085">
 				<span class="breadcrumb-item"><a href="/">Home</a></span>
 				<span class="breadcrumb-item">
 					<router-link to="../people">
@@ -116,8 +112,7 @@ const ldJson = JSON.stringify({
 				<div class="portrait-img-container">
 					<img
 						:src="portraitUrl"
-						class="anonymous-headshot"
-						style="max-width: 100%"
+						class="anonymous-headshot w-100"
 						alt=""
 					/>
 				</div>
@@ -125,7 +120,7 @@ const ldJson = JSON.stringify({
 
 			<div id="curriculopartner" class="col-md-8">
 				<div class="mb-3 curriculum-header">
-					<h1 class="h4 fw-bold azul mb-2" style="margin-bottom: 0">
+					<h1 class="h4 fw-bold azul mb-2 mb-0">
 						{{ lawyer?.name }}
 					</h1>
 					<div class="h5 font-weight-500 azulescuro">
@@ -133,7 +128,7 @@ const ldJson = JSON.stringify({
 					</div>
 				</div>
 				<div class="mt-3" v-html="lawyer.bio"></div>
-				<div style="font-size: 0.925em">
+				<div class="fs-0925">
 					<p class="mt-3">
 						<span id="labelemail" class="azul">E-mail</span>
 						<br />
@@ -186,8 +181,8 @@ const ldJson = JSON.stringify({
 					><i class="bi bi-printer azul"></i
 				></a>
 			</div>
-			<div class="mt-5" style="font-size: 0.85em">
-				<span style="color: #6c757d">&lt;&lt;</span>
+			<div class="mt-5 fs-085">
+				<span class="color-gray">&lt;&lt;</span>
 				<router-link to="../people"
 					><span>{{ scopedMessages.back[lang] }}</span></router-link
 				>
@@ -195,3 +190,13 @@ const ldJson = JSON.stringify({
 		</div>
 	</div>
 </template>
+
+<style scoped>
+nav {
+	--bs-breadcrumb-divider: ">";
+}
+
+.color-gray {
+	color: #6c757d;
+}
+</style>

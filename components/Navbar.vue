@@ -85,7 +85,7 @@ const scopedMessages = {
 					>
 					&nbsp;
 					<nuxt-link :to="`/${lang}/search`"
-						><i style="font-size: 0.85em" class="bi bi-search"></i
+						><i class="bi bi-search"></i
 					></nuxt-link>
 				</div>
 
@@ -157,6 +157,9 @@ const scopedMessages = {
 </template>
 
 <style lang="scss" scoped>
+.bi {
+	font-size: 00.85em;
+}
 .navbar-brand:hover {
 	cursor: pointer;
 }

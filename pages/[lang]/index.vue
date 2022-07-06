@@ -41,10 +41,7 @@ const scopedMessages = {
 			<text-container class="fs-5" content-fid="home__texto_1" />
 		</div>
 
-		<div
-			class="container-fluid bgseparadorhome mt-5"
-			style="position: relative"
-		>
+		<div class="container-fluid bgseparadorhome mt-5 position-relative">
 			<div class="paratransparente"></div>
 			<div class="parabranco"></div>
 
@@ -72,12 +69,11 @@ const scopedMessages = {
 					<a
 						href="https://www.mirandalawfirm.com/alliance/overview/"
 						target="_blank"
-						style="margin-bottom: 28px"
+						class="miranda-link"
 					>
 						<img
 							src="/images/mirandaalliance.png"
 							alt="Miranda Alliance"
-							style="max-width: 300px; margin-bottom: 20px"
 						/>
 					</a>
 				</div>
@@ -91,10 +87,9 @@ const scopedMessages = {
 						{{ scopedMessages.media[lang] }}
 					</p>
 					<img
-						class="mb-3"
+						class="mb-3 events"
 						:src="mediaImageUrl"
 						alt="events"
-						style="min-height: 60px; width: 100%; max-width: 500px"
 					/>
 					<div class="body1 text-black">
 						<borderless-text-container
@@ -152,6 +147,21 @@ const scopedMessages = {
 		white 49.5%,
 		rgba(255, 255, 255, 0) 50.5%
 	);
+}
+
+.miranda-link {
+	margin-bottom: 28px;
+}
+
+.miranda-link img {
+	max-width: 300px;
+	margin-bottom: 20px;
+}
+
+.events {
+	min-height: 60px;
+	width: 100%;
+	max-width: 500px;
 }
 
 @media (min-width: 576px) {

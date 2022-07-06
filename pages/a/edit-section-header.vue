@@ -101,14 +101,7 @@ function updateImage() {
 			label="Título - Linha 1 (Português / Inglês)"
 			v-model="header.title"
 		/>
-		<div
-			class="p-3 mb-5"
-			style="
-				font-size: smaller;
-				background-color: #fbf1da;
-				border: solid 1px #f1ce7e;
-			"
-		>
+		<div class="p-3 mb-5 tip">
 			<span class="fw-bold">Dica:</span>
 			Escrever o texto "&lt;br&gt;" para inserir uma quebra de linha
 		</div>
@@ -151,3 +144,11 @@ function updateImage() {
 		/>
 	</div>
 </template>
+
+<style scoped>
+.tip {
+	font-size: smaller;
+	background-color: #fbf1da;
+	border: solid 1px #f1ce7e;
+}
+</style>

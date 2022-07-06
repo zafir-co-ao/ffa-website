@@ -14,13 +14,6 @@ export default defineNuxtConfig({
 
 	css: ["~~/assets/sass/fatimafreitas.scss"],
 
-	vite: {
-		build: {
-			cssCodeSplit: false,
-			minify: false,
-		},
-	},
-
 	meta: {
 		link: [
 			{

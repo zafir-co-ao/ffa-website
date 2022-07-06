@@ -166,9 +166,8 @@ const scopedMessages = {
 					<div class="form-floating col">
 						<textarea
 							v-model="comments"
-							class="form-control"
+							class="form-control h-10"
 							:placeholder="scopedMessages.leaveYourMessage[lang]"
-							style="height: 10em"
 							maxlength="600"
 						></textarea>
 						<label>{{ scopedMessages.message[lang] }}</label>
@@ -197,7 +196,7 @@ const scopedMessages = {
 								@click="attachCurriculum"
 							/>
 
-							<div class="azul mt-1" style="font-size: 0.85em">
+							<div class="azul mt-1 fs-085">
 								{{
 									scopedMessages.applicationAttachmentMessage[
 										lang
@@ -207,8 +206,7 @@ const scopedMessages = {
 						</div>
 						<div
 							v-if="hasErrors"
-							style="margin-left: 1em"
-							class="alert alert-danger"
+							class="alert alert-danger me-3"
 							role="alert"
 						>
 							<div v-for="error in errorMessages">
@@ -221,3 +219,9 @@ const scopedMessages = {
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+.h-10 {
+	height: 10rem;
+}
+</style>

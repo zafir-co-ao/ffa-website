@@ -10,22 +10,19 @@ interface BannerProps {
 	lang: PortalLanguage;
 }
 
-defineProps<BannerProps>();
+const props = defineProps<BannerProps>();
+const bannerRef = ref<HTMLDivElement>();
+
+onMounted(() => {
+	const el = bannerRef.value;
+	el.style.backgroundImage = `url(${props.imageUrl})`;
+});
 </script>
 
 <template>
-	<div
-		class="container-fluid banner"
-		:style="{
-			position: 'relative',
-			'background-image': 'url(' + imageUrl + ')',
-		}"
-	>
+	<div ref="bannerRef" class="container-fluid banner">
 		<div class="text-center">
-			<h1
-				class="titulo fw-bold text-white text-uppercase"
-				style="line-height: 1.25em"
-			>
+			<h1 class="titulo fw-bold text-white text-uppercase">
 				{{ title1 }}
 				<span v-if="title2"><br />{{ title2 }}</span>
 			</h1>
@@ -45,6 +42,8 @@ defineProps<BannerProps>();
 
 <style scoped>
 .banner {
+	position: relative;
+
 	box-sizing: border-box;
 
 	height: 472px !important;
@@ -88,7 +87,7 @@ defineProps<BannerProps>();
 
 .titulo {
 	font-size: 1.5rem;
-	line-height: 20px;
+	line-height: 1.25em;
 }
 
 /* sm */

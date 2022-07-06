@@ -184,11 +184,7 @@ async function reloadEvent(): Promise<void> {
 				/>
 			</div>
 			<div class="text-center">
-				<img
-					v-if="event.bannerUuid"
-					:src="bannerUrl"
-					style="max-width: 75%"
-				/>
+				<img v-if="event.bannerUuid" :src="bannerUrl" class="mw-75" />
 			</div>
 		</div>
 
@@ -263,5 +259,9 @@ input[readonly] {
 }
 select option {
 	padding: 1.5em;
+}
+
+.mw-75 {
+	max-width: 75%;
 }
 </style>

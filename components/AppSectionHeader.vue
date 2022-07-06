@@ -7,19 +7,22 @@ interface SectionHeaderProps {
 	header: LocalizedSectionHeader;
 }
 
-defineProps<SectionHeaderProps>();
+const props = defineProps<SectionHeaderProps>();
+
+const headerRef = ref<HTMLElement>();
+
+onMounted(() => {
+	const el = headerRef.value;
+	el.style.backgroundImage = `url(${props.header?.imageUrl})`;
+});
 </script>
 
 <template>
-	<div
-		class="section-header container-fluid bg-azul"
-		:style="{ 'background-image': `url(${header?.imageUrl})` }"
-	>
+	<div ref="headerRef" class="section-header container-fluid bg-azul">
 		<div class="container">
 			<div class="text-center">
 				<h1
 					class="titulo fw-bold text-white text-uppercase"
-					style="line-height: 1.25em"
 					v-html="header?.title ?? ''"
 				/>
 				<p
@@ -46,6 +49,10 @@ defineProps<SectionHeaderProps>();
 	width: 100%;
 	padding-top: 10%;
 	padding-bottom: 10%;
+}
+
+.titulo {
+	line-height: 1.25em;
 }
 
 .parabranco,

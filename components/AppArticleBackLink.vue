@@ -8,11 +8,21 @@ const emit = defineEmits([]);
 </script>
 
 <template>
-	<div style="font-size: 0.85em" class="my-5">
+	<div class="my-5 wrapper">
 		<!-- Mesma cor que os breadcrumbs -->
-		<span style="color: #6c757d">&lt;&lt;</span>
+		<span>&lt;&lt;</span>
 		<router-link :to="backPage">
 			{{ strings.back[lang] }}
 		</router-link>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+.wrapper {
+	font-size: 0.85em;
+}
+
+.wrapper span {
+	color: #6c757d;
+}
+</style>

@@ -16,12 +16,8 @@ const emit = defineEmits([]);
 </script>
 
 <template>
-	<nav
-		class="pt-3 mb-5"
-		style="--bs-breadcrumb-divider: '>'"
-		aria-label="breadcrumb"
-	>
-		<div class="breadcrumb" style="font-size: 0.85em">
+	<nav class="pt-3 mb-5" aria-label="breadcrumb">
+		<div class="breadcrumb">
 			<span class="breadcrumb-item"><a href="/">Home</a></span>
 			<span class="breadcrumb-item">
 				<nuxt-link :to="backPageUrl">
@@ -37,3 +33,13 @@ const emit = defineEmits([]);
 		</div>
 	</nav>
 </template>
+
+<style lang="scss" scoped>
+nav {
+	--bs-breadcrumb-divider: ">";
+}
+
+.breadcrumb {
+	font-size: 0.85em;
+}
+</style>

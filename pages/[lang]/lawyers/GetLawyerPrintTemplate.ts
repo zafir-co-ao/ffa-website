@@ -1,5 +1,5 @@
 export default function getLawyerPrintTemplate(content: string) {
-    const cssUrl = `${location.origin}/__portal/css/main.css`;
+	const cssUrl = `${location.origin}/__portal/css/main.css`;
 
 	return `<html><head>
 		<link rel="stylesheet" href="${cssUrl}" />
@@ -11,13 +11,17 @@ export default function getLawyerPrintTemplate(content: string) {
 		
 	</head>
 	<body>
-		<div class="ffa" style="padding: 1cm">
+		<div class="ffa main" >
 			<div>
 				<img class="mb-5" height="48px" src="/images/ffa-logo-2.svg">			
 			</div>
 			${content}
 		</div>
 		<style>
+			.main {
+				padding: 1cm;
+			}
+
 			.curriculum-header {
 				text-align: center;
 				margin-bottom: 2em !important;
@@ -33,4 +37,3 @@ export default function getLawyerPrintTemplate(content: string) {
 		</script>
 	</body></html>`;
 }
-
