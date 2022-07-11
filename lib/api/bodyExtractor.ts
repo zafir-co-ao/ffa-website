@@ -7,8 +7,8 @@ export default async function extractBody<T>(
 	req: IncomingMessage,
 	mapper: (v: T) => Node
 ) {
-	const lawyer = await useBody(req);
-	const node = mapper(lawyer);
+	const body = await useBody(req);
+	const node = mapper(body);
 
 	return node;
 }

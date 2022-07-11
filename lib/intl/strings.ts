@@ -121,7 +121,7 @@ export const strings: I18nMessages = {
 	},
 
 	username: { pt: "Nome de Utilizador", en: "Username" },
-	password: { pt: "Palavra-Passe", en: "Password" },
+	password: { pt: "Código", en: "Code" },
 	login: { pt: "Entrar", en: "Login" },
 
 	do_login: { pt: "Fazer Login", en: "Sign In" },

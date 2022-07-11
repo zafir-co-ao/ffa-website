@@ -213,8 +213,8 @@ async function reloadLawyer(): Promise<void> {
 			<app-input
 				type="text"
 				v-model="lawyer.name"
-				:label="strings.lawyer_name"
-				:placeholder="strings.lawyer_name"
+				:label="strings.lawyer_name.pt"
+				:placeholder="strings.lawyer_name.pt"
 			/>
 		</div>
 
@@ -250,24 +250,24 @@ async function reloadLawyer(): Promise<void> {
 				class="col-lg-4"
 				type="text"
 				v-model="lawyer.email"
-				:label="strings.lawyer_email"
-				:placeholder="strings.lawyer_email"
+				:label="strings.lawyer_email.pt"
+				:placeholder="strings.lawyer_email.pt"
 			/>
 
 			<app-input
 				class="col-md-6 col-lg-4"
 				type="text"
 				v-model="lawyer.officeTelephones"
-				:label="strings.lawyer_contacts_office"
-				:placeholder="strings.lawyer_contacts_office"
+				:label="strings.lawyer_contacts_office.pt"
+				:placeholder="strings.lawyer_contacts_office.pt"
 			/>
 
 			<app-input
 				class="col-md-6 col-lg-4"
 				type="text"
 				v-model="lawyer.mobilePhone"
-				:label="strings.lawyer_contacts_mobile"
-				:placeholder="strings.lawyer_contacts_mobile"
+				:label="strings.lawyer_contacts_mobile.pt"
+				:placeholder="strings.lawyer_contacts_mobile.pt"
 			/>
 		</div>
 		<hr />

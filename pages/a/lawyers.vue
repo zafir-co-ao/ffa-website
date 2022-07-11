@@ -22,7 +22,7 @@ function avatarUrl(uuid: string): string {
 		<admin-page-title>Advogados</admin-page-title>
 		<div class="d-flex justify-content-end">
 			<nuxt-link to="/a/edit-lawyer?uuid=_new_">
-				<app-button lang="pt" pt="Adicionar" :dark="true" />
+				<app-button label="Adicionar" :dark="true" />
 			</nuxt-link>
 		</div>
 		<list-group>

@@ -199,16 +199,16 @@ async function reloadEvent(): Promise<void> {
 				class="col-md-6 col-lg-4"
 				type="date"
 				v-model="event.eventDateTime"
-				:label="strings.event_event_date_time"
-				:placeholder="strings.event_event_date_time"
+				:label="strings.event_event_date_time.pt"
+				:placeholder="strings.event_event_date_time.pt"
 			/>
 
 			<app-input
 				class="col-md-6 col-lg-8"
 				type="text"
 				v-model="event.eventPlace"
-				:label="strings.event_event_place"
-				:placeholder="strings.event_event_place"
+				:label="strings.event_event_place.pt"
+				:placeholder="strings.event_event_place.pt"
 			/>
 		</div>
 
@@ -216,8 +216,8 @@ async function reloadEvent(): Promise<void> {
 			<app-input
 				type="text"
 				v-model="event.registrationUrl"
-				:label="strings.event_registration_url"
-				:placeholder="strings.event_registration_url"
+				:label="strings.event_registration_url.pt"
+				:placeholder="strings.event_registration_url.pt"
 			/>
 		</div>
 

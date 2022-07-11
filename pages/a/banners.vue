@@ -18,7 +18,7 @@ function cleanTitle(banner: LocalizedBanner): string {
 		<admin-page-title>Banners</admin-page-title>
 		<div class="d-flex justify-content-end">
 			<nuxt-link to="/a/edit-banner?uuid=_new_">
-				<app-button lang="pt" pt="Adicionar" :dark="true" />
+				<app-button label="Adicionar" :dark="true" />
 			</nuxt-link>
 		</div>
 		<list-group>

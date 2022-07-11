@@ -152,9 +152,9 @@ function back() {
 async function reloadMediaArticle(): Promise<void> {
 	await modelReloader.reload();
 
-	if (article.value.pdfUuid) {
-		pdfUrl.value = nodeServiceClient.getNodeUrl(article.value.pdfUuid);
-	}
+	// if (article.value.pdfUuid) {
+	// 	pdfUrl.value = nodeServiceClient.getNodeUrl(article.value.pdfUuid);
+	// }
 }
 </script>
 
@@ -175,16 +175,16 @@ async function reloadMediaArticle(): Promise<void> {
 				class="col-md-6 col-lg-4"
 				type="date"
 				v-model="article.publishedOn"
-				:label="strings.legal_alert_published_on"
-				:placeholder="strings.legal_alert_published_on"
+				:label="strings.legal_alert_published_on.pt"
+				:placeholder="strings.legal_alert_published_on.pt"
 			/>
 
 			<app-input
 				class="col-md-6 col-lg-8"
 				type="text"
 				v-model="article.publicationName"
-				:label="strings.media_article_publication_name"
-				:placeholder="strings.media_article_publication_name"
+				:label="strings.media_article_publication_name.pt"
+				:placeholder="strings.media_article_publication_name.pt"
 			/>
 		</div>
 
@@ -192,8 +192,8 @@ async function reloadMediaArticle(): Promise<void> {
 			<app-input
 				type="text"
 				v-model="article.href"
-				:label="strings.media_article_href"
-				:placeholder="strings.media_article_href"
+				:label="strings.media_article_href.pt"
+				:placeholder="strings.media_article_href.pt"
 			/>
 		</div>
 
@@ -223,8 +223,8 @@ async function reloadMediaArticle(): Promise<void> {
 				type="text"
 				v-model="article.lawyerName"
 				:disabled="article.lawyerUuid?.length > 0"
-				:label="strings.media_article_lawyer_name"
-				:placeholder="strings.media_article_lawyer_name"
+				:label="strings.media_article_lawyer_name.pt"
+				:placeholder="strings.media_article_lawyer_name.pt"
 			/>
 		</div>
 		<div class="row mb-4">
@@ -232,8 +232,8 @@ async function reloadMediaArticle(): Promise<void> {
 				type="text"
 				v-model="article.lawyerLinkedIn"
 				:disabled="article.lawyerUuid?.length > 0"
-				:label="strings.media_article_lawyer_linkedin"
-				:placeholder="strings.media_article_lawyer_linkedin"
+				:label="strings.media_article_lawyer_linkedin.pt"
+				:placeholder="strings.media_article_lawyer_linkedin.pt"
 			/>
 		</div>
 

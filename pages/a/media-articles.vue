@@ -13,7 +13,7 @@ const { data: articles } = await useFetch<LocalizedMediaArticle[]>(
 		<admin-page-title>Artigos de Imprensa</admin-page-title>
 		<div class="d-flex justify-content-end">
 			<nuxt-link to="/a/edit-media-article?uuid=_new_">
-				<app-button lang="pt" pt="Adicionar" :dark="true" />
+				<app-button label="Adicionar" :dark="true" />
 			</nuxt-link>
 		</div>
 		<list-group>

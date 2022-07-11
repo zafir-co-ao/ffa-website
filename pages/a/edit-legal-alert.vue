@@ -154,8 +154,8 @@ async function reloadLegalAlert(): Promise<void> {
 				class="col-md-6"
 				type="date"
 				v-model="alert.publishedOn"
-				:label="strings.legal_alert_published_on"
-				:placeholder="strings.legal_alert_published_on"
+				:label="strings.legal_alert_published_on.pt"
+				:placeholder="strings.legal_alert_published_on.pt"
 			/>
 
 			<div class="col col-md-6">

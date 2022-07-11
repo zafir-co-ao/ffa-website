@@ -12,7 +12,7 @@ export default defineNuxtPlugin(() => {
 
 		const { username } = useAuth();
 
-		if (!username.value) {
+		if (!username) {
 			return navigateTo({
 				path: "/login",
 				query: { redirect: to.fullPath },

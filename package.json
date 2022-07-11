@@ -15,6 +15,7 @@
 	"dependencies": {
 		"antbox": "file:deps/antbox-0.0.2.tgz",
 		"he": "^1.2.0",
+		"jose": "^4.8.3",
 		"lightray": "file:deps/lightray-0.4.9.tgz"
 	}
 }

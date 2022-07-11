@@ -1,26 +1,81 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
+import useAuth from "~~/lib/useAuth";
 import useLanguage from "~~/lib/useLanguage";
 
 definePageMeta({ layout: "none" });
 
 const { lang } = useLanguage(useRouter(), useRoute());
+const auth = useAuth();
+const router = useRouter();
+const route = useRoute();
 
 const username = ref<string>();
-const password = ref<string>();
+const code = ref<string>();
 const errors = ref<string[]>();
 
 const hasErrors = computed(() => errors.value?.length > 0);
 
-function login() {
-	const validationErrors = validateForm(username.value, password.value);
+async function login() {
+	const validationErrors = validateForm(username.value, code.value);
 
 	if (validationErrors.length > 0) {
 		errors.value = validationErrors;
 		return;
 	}
 
-	errors.value = ["Nome de utilizador ou palavra-passe inválidos"];
+	const response = await sendLogin(username.value, code.value);
+
+	if (response.error) {
+		console.log(response);
+
+		return handleError(response.errorCode);
+	}
+
+	auth.login(username.value, response.token);
+
+	redirect();
+}
+
+function handleError(errorCode: number) {
+	switch (errorCode) {
+		case 401:
+			errors.value = ["Nome de utilizador ou palavra-passe inválidos"];
+			break;
+		default:
+			errors.value = [
+				"Erro desconhecido, contacte o administrador do sistema",
+			];
+	}
+}
+
+function sendLogin(
+	username: string,
+	code: string
+): Promise<{
+	error: boolean;
+	errorCode?: number;
+	token?: string;
+	errorMessage?: string;
+}> {
+	const headers = new Headers();
+	headers.set("Content-Type", "application/json");
+
+	return fetch("/api/login", {
+		method: "POST",
+		headers,
+		body: JSON.stringify({ username, code }),
+	})
+		.then(async (res) => {
+			if (res.status !== 200) {
+				return { error: true, errorCode: res.status };
+			}
+			const token = await res.text();
+			return { error: false, token };
+		})
+		.catch((err) => {
+			return { error: true, errorMessage: err.message };
+		});
 }
 
 function validateForm(username: string, password: string): string[] {
@@ -30,6 +85,14 @@ function validateForm(username: string, password: string): string[] {
 	if (!password) errors.push("Indique uma palavra passe");
 
 	return errors;
+}
+
+onMounted(() => {
+	if (auth.username) redirect();
+});
+
+function redirect() {
+	router.push((route.query.redirect as string) || "/a");
 }
 </script>
 
@@ -56,7 +119,7 @@ function validateForm(username: string, password: string): string[] {
 			<div class="form-floating w-100 mb-2">
 				<input
 					type="password"
-					v-model="password"
+					v-model="code"
 					class="form-control"
 					:placeholder="strings.password[lang]"
 				/>

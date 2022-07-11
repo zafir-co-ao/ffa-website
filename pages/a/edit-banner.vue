@@ -127,12 +127,7 @@ function createBannerImage() {
 			v-model="banner.subtitle"
 		/>
 
-		<app-input
-			type="text"
-			v-model="banner.href"
-			:label="{ pt: 'URL' }"
-			:placeholder="{ pt: 'URL' }"
-		/>
+		<app-input type="text" v-model="banner.href" label="URL" />
 
 		<hr />
 

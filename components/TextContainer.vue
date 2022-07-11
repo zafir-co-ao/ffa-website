@@ -20,7 +20,7 @@ const { lang } = useLanguage(useRouter(), useRoute());
 
 const uuid = () => fidToUuid(props.contentFid);
 
-const { username } = useAuth();
+const username = ref<string>();
 
 const content = ref();
 
@@ -64,6 +64,10 @@ async function editContent() {
 	dialogProps.content = webContent;
 	dialogProps.command = "show";
 }
+
+onMounted(() => {
+	username.value = useAuth().username;
+});
 </script>
 
 <template>

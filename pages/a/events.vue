@@ -11,7 +11,7 @@ const { data: events } = await useFetch<LocalizedEvent[]>("/api/events/-/pt");
 		<admin-page-title>Eventos</admin-page-title>
 		<div class="d-flex justify-content-end">
 			<nuxt-link to="/a/edit-event?uuid=_new_">
-				<app-button lang="pt" pt="Adicionar" :dark="true" />
+				<app-button label="Adicionar" :dark="true" />
 			</nuxt-link>
 		</div>
 		<list-group>
