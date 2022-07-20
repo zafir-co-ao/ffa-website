@@ -2,7 +2,7 @@
 import PortalLanguage from "~~/lib/model/portalLanguage";
 
 interface BannerProps {
-	title1: string;
+	title1?: string;
 	title2?: string;
 	href?: string;
 	subtitle?: string;

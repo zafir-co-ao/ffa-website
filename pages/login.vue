@@ -27,8 +27,6 @@ async function login() {
 	const response = await sendLogin(username.value, code.value);
 
 	if (response.error) {
-		console.log(response);
-
 		return handleError(response.errorCode);
 	}
 

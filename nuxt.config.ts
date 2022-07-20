@@ -49,11 +49,6 @@ export default defineNuxtConfig({
 		],
 	},
 
-	vue: {
-		config: {
-			devtools: true,
-		},
-	},
 	serverMiddleware: [
 		{
 			path: "/images/lightray",

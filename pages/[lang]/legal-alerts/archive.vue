@@ -58,10 +58,9 @@ function handleLoadMoreClick() {
 
 			<div class="my-5 text-center">
 				<app-button
-					:lang="lang"
+					:label="strings.load_more[lang]"
 					:dark="true"
 					:pt="strings.load_more.pt"
-					:en="strings.load_more.en"
 					:disabled="!hasMore"
 					@click="handleLoadMoreClick"
 				/>

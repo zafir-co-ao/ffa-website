@@ -24,12 +24,8 @@ function isResource(path: string = ""): boolean {
 export default defineNuxtPlugin(() => {
 	addRouteMiddleware((to) => {
 		if (isResource(to.path) || isWellFormated(to.path)) {
-			console.log("[location-guard] Skipping resource");
-
 			return;
 		}
-
-		console.log("Redirecting to", getRedirectRoute(to.path));
 
 		return navigateTo(getRedirectRoute(to.path));
 	});
