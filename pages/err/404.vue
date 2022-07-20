@@ -1,10 +1,3 @@
-<script lang="ts"></script>
-
-<script lang="ts" setup>
-const props = defineProps();
-const emit = defineEmits([]);
-</script>
-
 <template>
 	<div class="ffa container">
 		<h1 class>
