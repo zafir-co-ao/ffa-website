@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useAntboxServerUrl } from "./composables/containerConfig";
 import { configureAntboxServer } from "./lib/deps";
 
 const antboxServerUrl = useAntboxServerUrl();

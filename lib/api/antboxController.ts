@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { ANTBOX_SERVER_URL } from "~~/composables/containerConfig";
+import { ANTBOX_URL } from "~~/composables/useAntboxServerUrl";
 
 import {
 	configureAntboxServer,
@@ -14,7 +14,7 @@ import useParams from "../useParams";
 import extractBody from "./bodyExtractor";
 import nodeGetter from "./nodeGetter";
 
-configureAntboxServer(ANTBOX_SERVER_URL);
+configureAntboxServer(ANTBOX_URL);
 
 export interface AntboxController<T, L> {
 	updateNode(): Promise<string | void>;

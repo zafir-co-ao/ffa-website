@@ -21,12 +21,10 @@ function isResource(path: string = ""): boolean {
 	return resourcesRe.test(path);
 }
 
-export default defineNuxtPlugin(() => {
-	addRouteMiddleware((to) => {
-		if (isResource(to.path) || isWellFormated(to.path)) {
-			return;
-		}
+export default defineNuxtRouteMiddleware((to) => {
+	if (isResource(to.path) || isWellFormated(to.path)) {
+		return;
+	}
 
-		return navigateTo(getRedirectRoute(to.path));
-	});
+	return navigateTo(getRedirectRoute(to.path));
 });
