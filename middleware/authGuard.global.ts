@@ -1,3 +1,4 @@
+import { log } from "console";
 import useAuth from "~~/lib/useAuth";
 
 function isBackoffice(path: string = ""): boolean {
