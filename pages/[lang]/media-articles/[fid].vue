@@ -74,7 +74,7 @@ onMounted(() => {
 				Link: <a :href="article.href">{{ article.href }}</a>
 			</div>
 
-			<app-article-back-link :lang="lang" :back-page="BACK_PAGE" />
+			<app-article-back-link :lang="lang" />
 		</div>
 		<div v-else>
 			<error404 />

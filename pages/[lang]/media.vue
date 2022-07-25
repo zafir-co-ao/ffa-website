@@ -54,6 +54,11 @@ const { data: alerts } = await useFetch<LocalizedLegalAlert[]>(alertsEndpoint);
 						:uuid="article.uuid"
 						:lang="lang"
 					/>
+					<div class="text-center body2 mt-5">
+						<nuxt-link :to="`/${lang}/media-articles/archive`">{{
+							strings.see_all_media_articles[lang]
+						}}</nuxt-link>
+					</div>
 				</div>
 			</div>
 		</div>

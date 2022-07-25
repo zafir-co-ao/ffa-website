@@ -29,6 +29,10 @@ export const strings: I18nMessages = {
 	archive: { pt: "Arquivo", en: "Archive" },
 	events: { pt: "Eventos", en: "Events" },
 	media_articles: { pt: "Artigos de Imprensa", en: "Media Articles" },
+	see_all_media_articles: {
+		pt: "Ver todos os artigos de imprensa",
+		en: "See all media articles",
+	},
 	press: { pt: "Imprensa", en: "Press" },
 
 	about_us_teaser_title: {

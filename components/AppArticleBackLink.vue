@@ -1,19 +1,16 @@
-<script lang="ts"></script>
-
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
 import PortalLanguage from "~~/lib/model/portalLanguage";
-defineProps<{ lang: PortalLanguage; backPage: string }>();
-const emit = defineEmits([]);
+defineProps<{ lang: PortalLanguage }>();
 </script>
 
 <template>
 	<div class="my-5 wrapper">
 		<!-- Mesma cor que os breadcrumbs -->
 		<span>&lt;&lt;</span>
-		<router-link :to="backPage">
+		<a href="#" @click="$router.back()">
 			{{ strings.back[lang] }}
-		</router-link>
+		</a>
 	</div>
 </template>
 
