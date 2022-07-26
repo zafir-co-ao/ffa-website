@@ -7,7 +7,7 @@ configureAntboxServer(antboxServerUrl.value);
 const router = useRouter();
 
 router.afterEach(() => {
-	if (window) {
+	if (process.client) {
 		window.scrollTo({ top: 0 });
 	}
 });

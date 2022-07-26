@@ -22,16 +22,21 @@ onMounted(() => {
 <template>
 	<div ref="bannerRef" class="container-fluid banner">
 		<div class="text-center">
-			<h1 class="titulo fw-bold text-white text-uppercase">
+			<h1
+				v-if="title1 && title2"
+				class="titulo fw-bold text-white text-uppercase"
+			>
 				{{ title1 }}
 				<span v-if="title2"><br />{{ title2 }}</span>
 			</h1>
 
 			<p
+				v-if="subtitle"
 				id="legendabanner"
 				class="h4 fw-normal text-white"
 				v-html="subtitle ?? ''"
 			/>
+
 			<a v-if="href" :href="href">
 				<know-more-button :lang="lang" />
 			</a>
@@ -44,19 +49,17 @@ onMounted(() => {
 .banner {
 	position: relative;
 
-	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
+	box-sizing: border-box;
 	height: 472px !important;
 
-	width: 100%;
 	overflow: hidden;
 	background-position: center top;
 	background-repeat: no-repeat;
 	background-size: cover;
-	padding: 0;
-
-	padding-top: 10%;
-	padding-bottom: 10%;
 
 	animation: fadein 5s;
 
@@ -87,7 +90,7 @@ onMounted(() => {
 
 .titulo {
 	font-size: 1.5rem;
-	line-height: 1.25em;
+	line-height: 1em;
 }
 
 /* sm */
@@ -99,7 +102,6 @@ onMounted(() => {
 
 	.titulo {
 		font-size: 1.8rem;
-		line-height: 26px;
 	}
 }
 
@@ -112,29 +114,17 @@ onMounted(() => {
 
 	.titulo {
 		font-size: 2.5rem;
-		line-height: 32px;
 	}
 }
 
 /* lg */
-
-@media (min-width: 992px) {
-	.titulo {
-		font-size: 2.5rem;
-		line-height: 40px;
-	}
-}
+/* @media (min-width: 992px) {
+} */
 
 /* xl */
+/* @media (min-width: 1200px) {
+} */
 
-@media (min-width: 1200px) {
-	.titulo {
-		font-size: 2.5rem;
-		line-height: 32px;
-	}
-
-	/* Acerto dos gradientes para internet explorer */
-}
 _:-ms-fullscreen,
 :root .corte {
 	background: linear-gradient(

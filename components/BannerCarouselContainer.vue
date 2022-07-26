@@ -1,6 +1,5 @@
 <script lang="ts">
 import { Ref } from "vue";
-import PortalLanguage from "~~/lib/model/portalLanguage";
 
 function initializeComponent(
 	currentIndex: Ref<number>,
@@ -44,7 +43,7 @@ const { lang } = useLanguage(useRouter(), useRoute());
 const currentIndex = ref(0);
 const intervalIdRef = ref(-1);
 
-const { data: banners } = await useFetch<any[]>("/api/banners/-/" + lang);
+const { data: banners } = await useFetch<any[]>("/api/banners/-/" + lang.value);
 
 const hasBanners = computed(() => banners.value?.length > 0);
 
@@ -71,7 +70,7 @@ watch(banners, () => initializeComponent(currentIndex, banners, intervalIdRef));
 
 		<div class="banner-ellipsis">
 			<div
-				v-for="(banner, index) in banners"
+				v-for="(_, index) in banners"
 				class="banner-selector"
 				:class="{ 'banner-selector__selected': index === currentIndex }"
 				@click="selectIndex(index)"

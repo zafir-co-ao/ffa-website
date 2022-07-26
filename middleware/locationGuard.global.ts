@@ -22,6 +22,8 @@ function isResource(path: string = ""): boolean {
 }
 
 export default defineNuxtRouteMiddleware((to) => {
+	console.log(to);
+
 	if (isResource(to.path) || isWellFormated(to.path)) {
 		return;
 	}
