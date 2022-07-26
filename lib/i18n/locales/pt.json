@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"description": "A Fátima Freitas & Associados, Sociedade de Advogados é um dos mais antigos e maiores escritórios de advogados estabelecidos em Angola. A nossa equipa conta actualmente com 35 advogados, sendo 7  sócios, e uma ímpar projecção nacional e internacional.",
+		"keywords": "advogados, escritório de advogados, angola, luanda, benguela, lobito, cabinda, áfrica",
+		"title": "FFA - Escritórios de Advogados em Angola",
+		"og_site_name": "Fatima Freitas & Associados"
+	},
+	"pages": {
+		"careers": {
+			"text": {
+				"page_title": "Carreiras",
+				"name": "Nome",
+				"email": "Endereço de e-mail",
+				"message": "Mensagem",
+				"attach_and_send": "Anexar e Enviar",
+				"leave_you_message": "Deixe a sua mensagem",
+				"thanks_for_your_application": "Obrigado pela tua candidatura",
+				"warning_file_formats": "Ficheiros apenas nos formatos .pdf .doc .docx até 1 MB"
+			}
+		}
+	},
+	"components": {
+		"navbar": {
+			"text": {
+				"about_us": "Sobre Nós",
+				"services": "Serviços",
+				"media": "Media e Conhecimento",
+				"people": "Colaboradores",
+				"careers": "Carreiras"
+			}
+		}
+	}
+}

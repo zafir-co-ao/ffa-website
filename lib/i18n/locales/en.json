@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"description": "Fátima Freitas Advogados is one of the longest-established and most pre-eminent law offices in Angola.Today we are a firm of 35 lawyers, including 7 partners, with the widest national and international reach of any Angolan law office.",
+		"keywords": "lawyers, attorneys, legal advice, law firm, angola, luanda, benguela, lobito, cabinda, africa",
+		"title": "FFA - Full Service Law Firm in Angola",
+		"og_site_name": "Fatima Freitas & Associates"
+	},
+	"pages": {
+		"careers": {
+			"text": {
+				"page_title": "Careers",
+				"name": "Name",
+				"email": "Email Address",
+				"message": "Mensage",
+				"attach_and_send": "Attach and Send",
+				"leave_you_message": "Leave your message",
+				"thanks_for_your_application": "Thanks for your application",
+				"warning_file_formats": " Only .pdf .doc .docx with less than 1 MB are allowed"
+			}
+		}
+	},
+	"components": {
+		"navbar": {
+			"text": {
+				"about_us": "About Us",
+				"services": "Services",
+				"media": "Media & Insights",
+				"people": "People",
+				"careers": "Careers"
+			}
+		}
+	}
+}
