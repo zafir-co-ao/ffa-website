@@ -1,5 +1,3 @@
-import { log } from "console";
-
 const SUPPORTED_LOCALES_RE = /^\/?(pt|en)($|\/)/;
 const REDIRECT_ROUTE = "/pt";
 
@@ -22,8 +20,6 @@ function isResource(path: string = ""): boolean {
 }
 
 export default defineNuxtRouteMiddleware((to) => {
-	console.log(to);
-
 	if (isResource(to.path) || isWellFormated(to.path)) {
 		return;
 	}
