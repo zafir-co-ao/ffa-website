@@ -63,7 +63,6 @@
 
 <script lang="ts" setup>
 import offices from "~~/lib/stubs/offices";
-import useLanguage from "~~/lib/useLanguage";
 
 const messages = {
 	pt: {
@@ -76,7 +75,7 @@ const messages = {
 	},
 };
 
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale: lang } = useI18n();
 const selectedMap = ref(offices[0].pin);
 
 const message = computed(() => messages[lang.value]);

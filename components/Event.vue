@@ -1,6 +1,6 @@
 <script lang="ts">
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedEvent } from "~~/lib/model/event";
+import { LocalizedEvent } from "~~/lib/model/types/event";
 import PortalLanguage from "~~/lib/model/portalLanguage";
 
 function getVCalendarContentFromEvent(

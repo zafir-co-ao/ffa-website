@@ -6,17 +6,13 @@ import {
 } from "~~/lib/deps";
 
 import WebContentEditorDialog from "~lightray/WebContentEditorDialog.vue";
-
-import useLanguage from "~~/lib/useLanguage";
-import useAuth from "~~/lib/useAuth";
-
 import { makeDialogProps } from "./editIntField";
 
+const { $locale } = useI18n();
+const auth = useAuth();
+
 const dialogProps = reactive(makeDialogProps());
-
 const props = defineProps<{ contentFid: string }>();
-
-const { lang } = useLanguage(useRouter(), useRoute());
 
 const uuid = () => fidToUuid(props.contentFid);
 
@@ -27,7 +23,7 @@ const content = ref();
 await reloadContent();
 
 async function reloadContent() {
-	content.value = await webContentServiceClient.get(uuid(), lang.value);
+	content.value = await webContentServiceClient.get(uuid(), $locale.value);
 }
 
 async function saveContentHandler() {
@@ -66,7 +62,7 @@ async function editContent() {
 }
 
 onMounted(() => {
-	username.value = useAuth().username;
+	username.value = auth.username;
 });
 </script>
 

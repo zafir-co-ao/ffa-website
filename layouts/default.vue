@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import ScreenSizeIndicator from "~lightray/ScreenSizeIndicator.vue";
-import useLanguage from "~~/lib/useLanguage";
+
 import { strings } from "~~/lib/intl/strings";
 
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale: lang } = useI18n();
 const runtimeMode = useRuntimeMode();
 
 const development = computed(() => runtimeMode.value === "development");

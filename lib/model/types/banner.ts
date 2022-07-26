@@ -1,5 +1,5 @@
-import { nodeServiceClient, Node } from "../deps";
-import { I18nMessagesEntry } from "../intl/strings";
+import { nodeServiceClient, Node } from "../../deps";
+import { I18nMessagesEntry } from "../../intl/strings";
 
 // Aspect: banner
 export default interface Banner {

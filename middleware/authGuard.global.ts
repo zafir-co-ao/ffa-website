@@ -1,5 +1,4 @@
-import { log } from "console";
-import useAuth from "~~/lib/useAuth";
+import useAuth from "~~/composables/useAuth";
 
 function isBackoffice(path: string = ""): boolean {
 	return path.startsWith("/a");

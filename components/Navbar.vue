@@ -1,18 +1,20 @@
 <script lang="ts" setup>
-import useLanguage from "~~/lib/useLanguage";
+import { PortalLocale } from "~~/lib/model/types/portalLocale";
 
 const router = useRouter();
 const route = useRoute();
-const { lang, changePortalLanguage } = useLanguage(router, route);
+const { $messages, $locale, switchLocalePath, localePath } = useI18n();
 
 const navbarRef = ref(null);
-const message = computed(() => scopedMessages[lang.value]);
-const routeTo = (dst: string) => `/${lang.value}/${dst}`;
 
 onMounted(() => setupIntersectionObserver());
 
 function closeNavbar() {
 	new (window as any).bootstrap.Collapse(navbarRef.value);
+}
+
+function changeLocale(locale: PortalLocale) {
+	switchLocalePath(locale);
 }
 
 function setupIntersectionObserver() {
@@ -59,7 +61,7 @@ const scopedMessages = {
 	<div class="navbar-container">
 		<nav class="navbar navbar-expand-xl navbar-light bgwhite pt-0 pb-0">
 			<div class="container pt-0 pb-0">
-				<nuxt-link class="navbar-brand" :to="routeTo('')">
+				<nuxt-link class="navbar-brand" :to="localePath('')">
 					<img
 						class="logo"
 						src="/images/ffa-logo-2.svg"
@@ -70,21 +72,21 @@ const scopedMessages = {
 				<div class="order-lg-1 order-0 ml-auto ml-lg-3 mr-3 mr-lg-0">
 					<a
 						class="btnlingua"
-						:class="{ active: lang === 'en' }"
+						:class="{ active: $locale === 'en' }"
 						href="#"
-						@click="changePortalLanguage('en')"
+						@click="changeLocale('en')"
 						>EN</a
 					>
 					|
 					<a
 						class="btnlingua"
-						:class="{ active: lang === 'pt' }"
+						:class="{ active: $locale === 'pt' }"
 						href="#"
-						@click="changePortalLanguage('pt')"
+						@click="changeLocale('pt')"
 						>PT</a
 					>
 					&nbsp;
-					<nuxt-link :to="`/${lang}/search`"
+					<nuxt-link :to="localePath('/search')"
 						><i class="bi bi-search"></i
 					></nuxt-link>
 				</div>
@@ -109,44 +111,46 @@ const scopedMessages = {
 						<li class="nav-item">
 							<nuxt-link
 								class="nav-link"
-								:to="routeTo('about-us')"
+								:to="localePath('about-us')"
 								@click="closeNavbar()"
-								>{{ message.aboutUs }}</nuxt-link
+								>{{
+									$messages.components.navbar.text.about_us
+								}}</nuxt-link
 							>
 						</li>
 
 						<li class="nav-item">
 							<nuxt-link
 								class="nav-link"
-								:to="routeTo('services')"
+								:to="localePath('services')"
 								@click="closeNavbar()"
-								>{{ message.services }}
+								>{{ $messages.components.navbar.text.services }}
 							</nuxt-link>
 						</li>
 
 						<li class="nav-item">
 							<nuxt-link
 								class="nav-link"
-								:to="routeTo('media')"
+								:to="localePath('media')"
 								@click="closeNavbar()"
-								>{{ message.media }}
+								>{{ $messages.components.navbar.text.media }}
 							</nuxt-link>
 						</li>
 
 						<li class="nav-item">
 							<nuxt-link
 								class="nav-link"
-								:to="routeTo('people')"
+								:to="localePath('people')"
 								@click="closeNavbar()"
-								>{{ message.people }}
+								>{{ $messages.components.navbar.text.people }}
 							</nuxt-link>
 						</li>
 						<li class="nav-item">
 							<nuxt-link
 								class="nav-link"
-								:to="routeTo('careers')"
+								:to="localePath('careers')"
 								@click="closeNavbar()"
-								>{{ message.careers }}
+								>{{ $messages.components.navbar.text.careers }}
 							</nuxt-link>
 						</li>
 					</ul>

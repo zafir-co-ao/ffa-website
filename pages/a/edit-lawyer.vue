@@ -13,7 +13,7 @@ import {
 	languages,
 	strings,
 } from "~~/lib/intl/strings";
-import Lawyer, { makeLawyer } from "~~/lib/model/lawyer";
+import Lawyer, { makeLawyer } from "~~/lib/model/types/lawyer";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import { forceReload, forceReplace } from "./forcedReloader";

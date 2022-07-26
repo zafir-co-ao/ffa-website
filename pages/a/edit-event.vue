@@ -15,7 +15,7 @@ import makeModelReloader from "./modelReloader";
 
 import { EVENTS_PARENT_FOLDER_FID } from "~~/lib/api/parentFolders";
 import assertFolderExist from "~~/lib/api/assertFolderExist";
-import Event, { makeEvent, fromEvent } from "~~/lib/model/event";
+import Event, { makeEvent, fromEvent } from "~~/lib/model/types/event";
 
 import { forceReload } from "./forcedReloader";
 

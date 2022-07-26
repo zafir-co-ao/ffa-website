@@ -13,7 +13,7 @@ import { forceReload } from "./forcedReloader";
 import SectionHeader, {
 	LocalizedSectionHeader,
 	makeSectionHeader,
-} from "~~/lib/model/sectionHeader";
+} from "~~/lib/model/types/sectionHeader";
 definePageMeta({ layout: "admin" });
 
 const toast = ref<Toast>();

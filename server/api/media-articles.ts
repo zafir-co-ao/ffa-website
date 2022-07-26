@@ -10,7 +10,7 @@ import MediaArticle, {
 	toMediaArticle,
 	toLocalizedMediaArticle,
 	LocalizedMediaArticle,
-} from "~~/lib/model/mediaArticle";
+} from "~~/lib/model/types/mediaArticle";
 
 import processApiServerError from "~~/lib/processApiServerError";
 

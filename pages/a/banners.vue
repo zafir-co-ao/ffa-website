@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LocalizedBanner } from "~~/lib/model/banner";
+import { LocalizedBanner } from "~~/lib/model/types/banner";
 
 definePageMeta({ layout: "admin" });
 

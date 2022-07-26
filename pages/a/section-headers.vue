@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LocalizedSectionHeader } from "~~/lib/model/sectionHeader";
+import { LocalizedSectionHeader } from "~~/lib/model/types/sectionHeader";
 
 definePageMeta({ layout: "admin" });
 

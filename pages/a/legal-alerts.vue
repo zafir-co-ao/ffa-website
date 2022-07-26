@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import LegalAlert, { LocalizedLegalAlert } from "~~/lib/model/legalAlerts";
+import LegalAlert, {
+	LocalizedLegalAlert,
+} from "~~/lib/model/types/legalAlerts";
 
 definePageMeta({ layout: "admin" });
 

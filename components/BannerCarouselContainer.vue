@@ -36,9 +36,7 @@ const ANIMATION_INTERVAL = 10000;
 </script>
 
 <script lang="ts" setup>
-import useLanguage from "~~/lib/useLanguage";
-
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale: lang } = useI18n();
 
 const currentIndex = ref(0);
 const intervalIdRef = ref(-1);

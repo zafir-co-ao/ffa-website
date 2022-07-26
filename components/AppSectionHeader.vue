@@ -1,5 +1,5 @@
 <script lang="ts">
-import { LocalizedSectionHeader } from "~~/lib/model/sectionHeader";
+import { LocalizedSectionHeader } from "~~/lib/model/types/sectionHeader";
 </script>
 
 <script lang="ts" setup>

@@ -18,8 +18,8 @@ import assertFolderExist from "~~/lib/api/assertFolderExist";
 import MediaArticle, {
 	makeMediaArticle,
 	fromMediaArticle,
-} from "~~/lib/model/mediaArticle";
-import Lawyer from "~~/lib/model/lawyer";
+} from "~~/lib/model/types/mediaArticle";
+import Lawyer from "~~/lib/model/types/lawyer";
 
 const API_BASE_URL = "/api/media-articles";
 const BACK_PAGE = "/a/media-articles";

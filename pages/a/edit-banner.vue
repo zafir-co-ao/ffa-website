@@ -1,6 +1,6 @@
 <script lang="ts">
 import { nodeServiceClient, useToast, Toast } from "~~/lib/deps";
-import Banner, { makeBanner } from "~~/lib/model/banner";
+import Banner, { makeBanner } from "~~/lib/model/types/banner";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";

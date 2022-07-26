@@ -4,17 +4,16 @@ import {
 	nodeServiceClient,
 	webContentServiceClient,
 } from "~~/lib/deps";
-import PortalLanguage from "~~/lib/model/portalLanguage";
+import { PortalLocale } from "~~/lib/model/types/portalLocale";
 
 import WebContentEditorDialog from "~lightray/WebContentEditorDialog.vue";
 
-import useLanguage from "~~/lib/useLanguage";
 import { makeDialogProps } from "./editIntField";
 const dialogProps = reactive(makeDialogProps());
 
-const props = defineProps<{ contentFid: string; lang: PortalLanguage }>();
+const props = defineProps<{ contentFid: string; lang: PortalLocale }>();
 
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale } = useI18n();
 
 const uuid = () => fidToUuid(props.contentFid);
 const content = ref();
@@ -22,7 +21,7 @@ const content = ref();
 await reloadContent();
 
 async function reloadContent() {
-	content.value = await webContentServiceClient.get(uuid(), lang.value);
+	content.value = await webContentServiceClient.get(uuid(), $locale.value);
 }
 
 async function saveContentHandler() {

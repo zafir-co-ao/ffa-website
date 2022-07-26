@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { nodeServiceClient } from "~~/lib/deps";
-import Lawyer from "~~/lib/model/lawyer";
+import Lawyer from "~~/lib/model/types/lawyer";
 
 definePageMeta({ layout: "admin" });
 

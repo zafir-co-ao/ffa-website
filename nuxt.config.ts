@@ -49,8 +49,6 @@ export default defineNuxtConfig({
 		],
 	},
 
-	modules: [],
-
 	serverMiddleware: [
 		{
 			path: "/images/lightray",

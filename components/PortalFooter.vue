@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import useLanguage from "~~/lib/useLanguage";
 
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale: lang } = useI18n();
 const fullYear = new Date().getFullYear();
 </script>
 

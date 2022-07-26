@@ -1,10 +1,11 @@
 <script lang="ts"></script>
 
 <script lang="ts" setup>
-const props = defineProps<{ fid: string; lang: string }>();
+const { fid } = defineProps<{ fid: string }>();
+const { $locale } = useI18n();
 
 const { data: header } = await useFetch(
-	`/api/section-headers/fid:${props.fid}/${props.lang}`
+	`/api/section-headers/fid:${fid}/${$locale.value}`
 );
 </script>
 

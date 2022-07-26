@@ -19,7 +19,7 @@ import makeModelReloader from "./modelReloader";
 import LegalAlert, {
 	fromLegalAlert,
 	makeLegalAlert,
-} from "~~/lib/model/legalAlerts";
+} from "~~/lib/model/types/legalAlerts";
 import { LEGAL_ALERTS_PARENT_FOLDER_FID } from "~~/lib/api/parentFolders";
 import assertFolderExist from "~~/lib/api/assertFolderExist";
 

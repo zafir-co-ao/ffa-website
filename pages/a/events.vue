@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Event, { LocalizedEvent } from "~~/lib/model/event";
+import Event, { LocalizedEvent } from "~~/lib/model/types/event";
 
 definePageMeta({ layout: "admin" });
 

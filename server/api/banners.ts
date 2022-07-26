@@ -4,17 +4,13 @@ import makeAntboxController, {
 } from "~~/lib/api/antboxController";
 import routeRequest, { RequestHandlers } from "~~/lib/api/apiRequestRouter";
 import extractBody from "~~/lib/api/bodyExtractor";
-import {
-	configureAntboxServer,
-	fidToUuid,
-	nodeServiceClient,
-} from "~~/lib/deps";
+import { fidToUuid, nodeServiceClient } from "~~/lib/deps";
 import Banner, {
 	fromBanner,
 	LocalizedBanner,
 	toBanner,
 	toLocalizedBanner,
-} from "~~/lib/model/banner";
+} from "~~/lib/model/types/banner";
 
 const BANNERS_PARENT_FOLDER_FID = "banners";
 const BANNERS_PARENT_FOLDER_UUID = fidToUuid(BANNERS_PARENT_FOLDER_FID);

@@ -10,7 +10,7 @@ import LegalAlert, {
 	LocalizedLegalAlert,
 	toLegalAlert,
 	toLocalizedLegalAlert,
-} from "~~/lib/model/legalAlerts";
+} from "~~/lib/model/types/legalAlerts";
 import processApiServerError from "~~/lib/processApiServerError";
 
 import useParams from "~~/lib/useParams";

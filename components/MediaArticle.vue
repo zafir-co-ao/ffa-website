@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { nodeServiceClient } from "~/lib/deps";
 import { strings } from "~~/lib/intl/strings";
-import MediaArticle, { LocalizedMediaArticle } from "~~/lib/model/mediaArticle";
-import PortalLanguage from "~~/lib/model/portalLanguage";
+import MediaArticle, {
+	LocalizedMediaArticle,
+} from "~~/lib/model/types/mediaArticle";
+import { PortalLocale } from "~~/lib/model/types/portalLocale";
 
 const props = defineProps<{
 	uuid: string;
-	lang: PortalLanguage;
+	lang: PortalLocale;
 }>();
 
 const endpoint = `/api/media-articles/${props.uuid}/${props.lang}`;

@@ -10,7 +10,7 @@ import Lawyer, {
 	LocalizedLawyer,
 	toLawyer,
 	toLocalizedLawyer,
-} from "~~/lib/model/lawyer";
+} from "~~/lib/model/types/lawyer";
 import useParams from "~~/lib/useParams";
 
 import { useBody } from "h3";

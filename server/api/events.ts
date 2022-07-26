@@ -10,7 +10,7 @@ import Event, {
 	toEvent,
 	toLocalizedEvent,
 	LocalizedEvent,
-} from "~~/lib/model/event";
+} from "~~/lib/model/types/event";
 
 import processApiServerError from "~~/lib/processApiServerError";
 

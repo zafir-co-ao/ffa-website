@@ -8,7 +8,7 @@ import SectionHeader, {
 	LocalizedSectionHeader,
 	toSectionHeader,
 	toLocalizedSectionHeader,
-} from "~~/lib/model/sectionHeader";
+} from "~~/lib/model/types/sectionHeader";
 
 /**
  * /api/section-headers/[uuid]/[lang]

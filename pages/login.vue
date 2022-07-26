@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import useAuth from "~~/lib/useAuth";
-import useLanguage from "~~/lib/useLanguage";
 
 definePageMeta({ layout: "none" });
 
-const { lang } = useLanguage(useRouter(), useRoute());
+const { $locale: lang } = useI18n();
 const auth = useAuth();
+
 const router = useRouter();
 const route = useRoute();
 
