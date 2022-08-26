@@ -39,7 +39,11 @@ function messages(locale: Ref<PortalLocale>) {
 }
 
 function localePath(locale: Ref<PortalLocale>, path: string) {
-	return `/${locale.value}${path}`;
+	if (path.startsWith("/")) {
+		return `/${locale.value}${path}`;
+	}
+
+	return `/${locale.value}/${path}`;
 }
 
 function switchLocalePath(
