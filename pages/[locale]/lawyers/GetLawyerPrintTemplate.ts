@@ -13,7 +13,7 @@ export default function getLawyerPrintTemplate(content: string) {
 	<body>
 		<div class="ffa main" >
 			<div>
-				<img class="mb-5" height="48px" src="/images/FatimaFreitas-01.png">			
+				<img class="mb-5" height="48px" src="/images/FatimaFreitas-02.png">			
 			</div>
 			${content}
 		</div>

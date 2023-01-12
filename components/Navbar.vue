@@ -64,7 +64,7 @@ const scopedMessages = {
 				<nuxt-link class="navbar-brand" :to="localePath('')">
 					<img
 						class="logo"
-						src="/images/FatimaFreitas-01.png"
+						src="/images/FatimaFreitas-02.png"
 						alt="Fátima Freitas Associados"
 					/>
 				</nuxt-link>
