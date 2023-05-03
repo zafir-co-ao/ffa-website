@@ -1,8 +1,9 @@
 import { nodeServiceClient, Node } from "../../deps";
 import { I18nMessagesEntry } from "../../intl/strings";
+import { PortalLocale } from "./portal_locale";
 
 // Aspect: banner
-export default interface Banner {
+export interface Banner {
 	uuid: string;
 	title1: I18nMessagesEntry;
 	title2?: I18nMessagesEntry;
@@ -29,18 +30,27 @@ export function makeBanner(): Banner {
 	return {} as Banner;
 }
 
-export function toLocalizedBanner(node: Node, lang: string): LocalizedBanner {
+export function toLocalizedBanner(
+	node: Node,
+	lang?: PortalLocale
+): Banner | LocalizedBanner {
+	const banner = toBanner(node);
+
+	if (!lang) {
+		return banner;
+	}
+
 	return {
-		uuid: node.uuid,
-		title1: node.properties["banner:title1"][lang],
-		title2: node.properties["banner:title2"]?.[lang],
-		subtitle: node.properties["banner:subtitle"]?.[lang],
-		href: node.properties["banner:href"] as string,
-		imageUrl: nodeServiceClient.getNodeUrl(node.uuid),
+		...banner,
+		title1: banner.title1[lang] as string,
+		title2: banner.title2?.[lang],
+		subtitle: banner.subtitle?.[lang],
 	};
 }
 
 export function toBanner(node: Node): Banner {
+	const imageUrl = useAntboxClient().nodesClient.getNodeUrl(node.uuid);
+
 	return {
 		uuid: node.uuid,
 		title1: node.properties?.["banner:title1"] as I18nMessagesEntry,
@@ -48,7 +58,7 @@ export function toBanner(node: Node): Banner {
 		subtitle: node.properties?.["banner:subtitle"] as I18nMessagesEntry,
 		href: node.properties?.["banner:href"] as string,
 		priority: node.properties?.["banner:priority"] as number,
-		imageUrl: nodeServiceClient.getNodeUrl(node.uuid),
+		imageUrl,
 	};
 }
 

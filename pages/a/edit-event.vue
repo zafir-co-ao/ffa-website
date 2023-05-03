@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Toast, useToast } from "~~/lib/deps";
+import {} from "~~/lib/deps";
 import WebContentEditorDialog from "~lightray/WebContentEditorDialog.vue";
 import editIntlField, {
 	makeDialogProps,
@@ -14,8 +14,8 @@ import { forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
 
 import { EVENTS_PARENT_FOLDER_FID } from "~~/lib/api/parentFolders";
-import assertFolderExist from "~~/lib/api/assertFolderExist";
-import Event, { makeEvent, fromEvent } from "~~/lib/model/types/event";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
+import { Event, makeEvent, fromEvent } from "~~/lib/model/types/event";
 
 import { forceReload } from "./forcedReloader";
 
@@ -73,8 +73,8 @@ async function handleSave(): Promise<void> {
 	}
 }
 
-function makeFile(alert, title: string) {
-	return new File([JSON.stringify(alert.value.body)], title, {
+function makeFile(event: Event, title: string) {
+	return new File([JSON.stringify(event.body)], title, {
 		type: "application/json",
 	});
 }
@@ -88,7 +88,10 @@ async function createOrUpdateNodeFile(
 		return uuid;
 	}
 
-	const parent = await assertFolderExist(EVENTS_PARENT_FOLDER_FID, "Eventos");
+	const parent = await assertFolderExists(
+		EVENTS_PARENT_FOLDER_FID,
+		"Eventos"
+	);
 
 	return await nodeServiceClient.createFile(file, parent);
 }
@@ -141,7 +144,10 @@ function updateBannerImage() {
 }
 
 async function createBannerImage() {
-	const parent = await assertFolderExist(EVENTS_PARENT_FOLDER_FID, "Eventos");
+	const parent = await assertFolderExists(
+		EVENTS_PARENT_FOLDER_FID,
+		"Eventos"
+	);
 
 	nodeServiceClient
 		.createFile(uploadImageRef.value.files[0], parent)

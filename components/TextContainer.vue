@@ -5,7 +5,6 @@ import {
 	webContentServiceClient,
 } from "~~/lib/deps";
 
-import WebContentEditorDialog from "~lightray/WebContentEditorDialog.vue";
 import { makeDialogProps } from "./editIntField";
 
 const { $locale } = useI18n();

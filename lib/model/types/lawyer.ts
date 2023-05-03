@@ -1,5 +1,7 @@
-import { Node } from "../deps";
-import { I18nMessagesEntry } from "../intl/strings";
+import { I18nMessagesEntry } from "~/lib/intl/strings";
+import { Node } from "~~/lib/deps";
+import { PortalLocale } from "./portal_locale";
+import { FOLDER_MIMETYPE } from "@zafir.co.ao/lightray";
 
 export default interface Lawyer {
 	uuid: string;
@@ -71,7 +73,7 @@ export function fromLawyer(lawyer: Lawyer): Node {
 		fid: lawyer.fid,
 		parent: lawyer.parent,
 		title: lawyer.name,
-		mimetype: "application/folder",
+		mimetype: FOLDER_MIMETYPE,
 		aspects: ["lawyer"],
 		properties: {
 			"lawyer:category": lawyer.category,
@@ -111,24 +113,20 @@ export function toLawyer(node: Node): Lawyer {
 	};
 }
 
-export function toLocalizedLawyer(node: Node, lang: string): LocalizedLawyer {
-	const stage = toLawyer(node);
+export function toLocalizedLawyer(
+	node: Node,
+	lang?: PortalLocale
+): Lawyer | LocalizedLawyer {
+	const lawyer = toLawyer(node);
+
+	if (!lang) {
+		return lawyer;
+	}
 
 	return {
-		uuid: stage.uuid,
-		fid: stage.fid,
-		name: stage.name,
-		parent: stage.parent,
-		category: stage.category,
-		officeTelephones: stage.officeTelephones,
-		mobilePhone: stage.mobilePhone,
-		email: stage.email,
-		areas: stage.areas,
-		languages: stage.languages,
-		portraitUuid: stage.portraitUuid,
-		thumbnailUuid: stage.thumbnailUuid,
-		position: stage.position?.[lang],
-		bio: stage.bio?.[lang],
-		career: stage.career?.[lang],
+		...lawyer,
+		position: lawyer.position[lang] ?? lawyer.position.pt,
+		bio: lawyer.bio[lang] ?? lawyer.bio.pt,
+		career: lawyer.career[lang] ?? lawyer.career.pt,
 	};
 }

@@ -16,11 +16,11 @@ async function loadLegalAlert(fid: string, lang: string) {
 <script lang="ts" setup>
 import { nodeServiceClient, fidToUuid } from "~/lib/deps";
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedLegalAlert } from "~~/lib/model/types/legalAlerts";
+import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
 import {
 	makeLinkedinShareUrl,
 	makeWhatsappShareUrl,
-} from "~~/lib/socialShareLinkBuilder";
+} from "~/lib/social_share_link_builder";
 
 import error404 from "../../err/404.vue";
 

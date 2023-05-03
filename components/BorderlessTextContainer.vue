@@ -4,7 +4,7 @@ import {
 	nodeServiceClient,
 	webContentServiceClient,
 } from "~~/lib/deps";
-import { PortalLocale } from "~~/lib/model/types/portalLocale";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 import WebContentEditorDialog from "~lightray/WebContentEditorDialog.vue";
 

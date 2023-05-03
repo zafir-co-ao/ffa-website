@@ -19,9 +19,9 @@ import makeModelReloader from "./modelReloader";
 import LegalAlert, {
 	fromLegalAlert,
 	makeLegalAlert,
-} from "~~/lib/model/types/legalAlerts";
+} from "~/lib/model/types/legal_alert";
 import { LEGAL_ALERTS_PARENT_FOLDER_FID } from "~~/lib/api/parentFolders";
-import assertFolderExist from "~~/lib/api/assertFolderExist";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
 
 const API_BASE_URL = "/api/legal-alerts";
 const BACK_PAGE = "/a/legal-alerts";
@@ -102,7 +102,7 @@ async function createOrUpdateNodeFile(
 		return uuid;
 	}
 
-	const parent = await assertFolderExist(
+	const parent = await assertFolderExists(
 		LEGAL_ALERTS_PARENT_FOLDER_FID,
 		"Alertas Jurídicos"
 	);

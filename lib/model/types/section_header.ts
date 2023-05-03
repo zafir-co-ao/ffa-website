@@ -1,9 +1,10 @@
+import { I18nMessagesEntry } from "~/lib/intl/strings";
 import { Node, nodeServiceClient } from "~~/lib/deps";
-import { I18nMessagesEntry } from "../intl/strings";
+import { PortalLocale } from "./portal_locale";
 
 // Aspect: section-header
 // Aspect Constraints: [image/png, image/jpg]
-export default interface SectionHeader {
+export interface SectionHeader {
 	uuid: string;
 	fid: string;
 	nodeTitle: string;
@@ -35,24 +36,24 @@ export function makeSectionHeader(): SectionHeader {
 
 export function toLocalizedSectionHeader(
 	node: Node,
-	lang: string
-): LocalizedSectionHeader {
-	return {
-		uuid: node.uuid,
-		fid: node.fid,
-		nodeTitle: node.title,
-		title: node.properties["section-header:title"][lang],
-		subtitle: node.properties["section-header:subtitle"]?.[lang],
-		clipTop:
-			(node.properties["section-header:clipTop"] as boolean) ?? false,
-		clipBottom:
-			(node.properties["section-header:clipBottom"] as boolean) ?? false,
+	lang?: PortalLocale
+): SectionHeader | LocalizedSectionHeader {
+	const sectionHeader = toSectionHeader(node);
 
-		imageUrl: nodeServiceClient.getNodeUrl(node.uuid),
+	if (!lang) {
+		return sectionHeader;
+	}
+
+	return {
+		...sectionHeader,
+		title: sectionHeader.title[lang] ?? sectionHeader.title.pt,
+		subtitle: sectionHeader.subtitle?.[lang] ?? sectionHeader.subtitle?.pt,
 	};
 }
 
 export function toSectionHeader(node: Node): SectionHeader {
+	const imageUrl = useAntboxClient().nodesClient.getNodeUrl(node.uuid);
+
 	return {
 		uuid: node.uuid,
 		fid: node.fid,
@@ -62,11 +63,12 @@ export function toSectionHeader(node: Node): SectionHeader {
 			"section-header:subtitle"
 		] as I18nMessagesEntry,
 		clipTop:
-			(node.properties["section-header:clipTop"] as boolean) ?? false,
+			(node.properties?.["section-header:clipTop"] as boolean) ?? false,
 		clipBottom:
-			(node.properties["section-header:clipBottom"] as boolean) ?? false,
+			(node.properties?.["section-header:clipBottom"] as boolean) ??
+			false,
 
-		imageUrl: nodeServiceClient.getNodeUrl(node.uuid),
+		imageUrl,
 	};
 }
 

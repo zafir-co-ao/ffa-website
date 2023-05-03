@@ -1,4 +1,4 @@
-import useAuth from "~~/composables/useAuth";
+import useAuth from "~/composables/use_auth";
 
 function isBackoffice(path: string = ""): boolean {
 	return path.startsWith("/a");

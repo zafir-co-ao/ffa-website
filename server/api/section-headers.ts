@@ -1,43 +1,74 @@
-import { IncomingMessage, ServerResponse } from "http";
-import makeAntboxController, {
-	AntboxController,
-} from "~~/lib/api/antboxController";
-import routeRequest, { RequestHandlers } from "~~/lib/api/apiRequestRouter";
-import SectionHeader, {
-	fromSectionHeader,
-	LocalizedSectionHeader,
-	toSectionHeader,
+import { createRouter, defineEventHandler, useBase, H3Event } from "h3";
+import { Node, NodeFilter, NodeServiceClient, fidToUuid } from "~~/lib/deps";
+
+import {
+	deleteNode,
+	getNode,
+	searchNodes,
+	updateNode,
+} from "~/lib/api/antbox_proxy";
+import {
+	SectionHeader,
 	toLocalizedSectionHeader,
-} from "~~/lib/model/types/sectionHeader";
+	toSectionHeader,
+	LocalizedSectionHeader,
+	fromSectionHeader,
+} from "~/lib/model/types/section_header";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
 
-/**
- * /api/section-headers/[uuid]/[lang]
- * uuid = '-' --> list all
- */
-export default async function (req: IncomingMessage, res: ServerResponse) {
-	const ctrl = makeAntboxController(
-		req,
-		res,
-		fromSectionHeader,
-		toSectionHeader,
-		toLocalizedSectionHeader
+const BANNERS_FOLDER_FID = "banners";
+const BANNERS_FOLDER_NAME = "SectionHeaders";
+const TARGET_ASPECT = "banner";
+
+const listSectionHeadersHandler = defineEventHandler((evt) => {
+	const lang = getQuery(evt).lang as PortalLocale | undefined;
+	const to = lang
+		? (n: Node) => toLocalizedSectionHeader(n, lang)
+		: toSectionHeader;
+	const filters: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
+
+	return searchNodes<SectionHeader, LocalizedSectionHeader>(evt, to, filters);
+});
+
+const createSectionHeaderHandler = defineEventHandler(async (evt) => {
+	const client = useAntboxClient().nodesClient;
+	const parent = await assertFolderExists(
+		BANNERS_FOLDER_FID,
+		BANNERS_FOLDER_NAME
 	);
+	const parts = await readParts(evt);
 
-	const handlers = {
-		PUT: ctrl.updateNode,
-		DELETE: ctrl.delete,
-		GET: ctrl.get,
-		LIST: listSectionHeaders(ctrl),
-	};
+	if (!parts.metadata) {
+		return;
+	}
 
-	return routeRequest(req, handlers as unknown as RequestHandlers);
+	const banner = JSON.parse(parts.metadata.toString("utf-8"));
+	const node = fromSectionHeader(banner);
+	node.parent = parent;
+
+	const file = new File([parts.file], banner.title);
+
+	return client.createFile(file, node);
+});
+
+async function readParts(evt: H3Event): Promise<Record<string, Buffer>> {
+	const req = await readMultipartFormData(evt);
+
+	return (
+		req?.reduce((acc, cur) => {
+			acc[cur.name as string] = cur.data;
+			return acc;
+		}, {} as Record<string, Buffer>) ?? {}
+	);
 }
 
-function listSectionHeaders(
-	ctrl: AntboxController<SectionHeader, LocalizedSectionHeader>
-): () => Promise<(SectionHeader | LocalizedSectionHeader)[]> {
-	return () =>
-		ctrl.list([["aspects", "array-contains", "section-header"]]) as Promise<
-			(SectionHeader | LocalizedSectionHeader)[]
-		>;
-}
+const router = createRouter();
+
+router.get("/", listSectionHeadersHandler);
+router.get("/:uuid", defineEventHandler(getNode(toLocalizedSectionHeader)));
+router.post("/", createSectionHeaderHandler);
+router.put("/:uuid", defineEventHandler(updateNode(fromSectionHeader)));
+router.delete("/:uuid", defineEventHandler(deleteNode));
+
+export default useBase("/api/banners", router.handler);

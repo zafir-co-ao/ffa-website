@@ -14,11 +14,11 @@ import { forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
 
 import { MEDIA_ARTICLES_PARENT_FOLDER_FID } from "~~/lib/api/parentFolders";
-import assertFolderExist from "~~/lib/api/assertFolderExist";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
 import MediaArticle, {
 	makeMediaArticle,
 	fromMediaArticle,
-} from "~~/lib/model/types/mediaArticle";
+} from "~/lib/model/types/media_article";
 import Lawyer from "~~/lib/model/types/lawyer";
 
 const API_BASE_URL = "/api/media-articles";
@@ -91,7 +91,7 @@ async function createOrUpdateNodeFile(
 		return uuid;
 	}
 
-	const parent = await assertFolderExist(
+	const parent = await assertFolderExists(
 		MEDIA_ARTICLES_PARENT_FOLDER_FID,
 		"Artigos de Imprensa"
 	);

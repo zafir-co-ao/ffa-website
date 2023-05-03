@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedLegalAlert } from "~~/lib/model/types/legalAlerts";
+import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
 import PortalLanguage from "~~/lib/model/portalLanguage";
 
 const props = withDefaults(

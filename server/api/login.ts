@@ -1,27 +1,28 @@
-import { useBody } from "h3";
-import { IncomingMessage, ServerResponse } from "http";
+import { H3Event, H3Error, readBody, sendError, setResponseStatus } from "h3";
 
 import * as jose from "jose";
 
-const VALID_CREDENTIALS = {
+const VALID_CREDENTIALS: Record<string, string> = {
 	"vanessa.silva@fatimafreitas.com": "0932",
 	"luisa.moreira@fatimafreitas.com": "7819",
 	"webdev@qwerty.academy": "0180",
 };
 
-export default async function (req: IncomingMessage, res: ServerResponse) {
-	const { username, code }: { username: string; code: string } =
-		await useBody(req);
+interface LoginPayload {
+	username: string;
+	code: string;
+}
 
+export default defineEventHandler(async (req: H3Event) => {
+	const { username, code }: LoginPayload = await readBody(req);
 	const validCode = VALID_CREDENTIALS[username];
 
-	if (validCode === code) {
-		return await buildToken(username);
+	if (validCode !== code) {
+		return sendNoContent(req, 401);
 	}
 
-	res.statusCode = 401;
-	res.end("NOK");
-}
+	return buildToken(username);
+});
 
 function buildToken(username: string) {
 	const payload = {

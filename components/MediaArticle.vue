@@ -3,8 +3,8 @@ import { nodeServiceClient } from "~/lib/deps";
 import { strings } from "~~/lib/intl/strings";
 import MediaArticle, {
 	LocalizedMediaArticle,
-} from "~~/lib/model/types/mediaArticle";
-import { PortalLocale } from "~~/lib/model/types/portalLocale";
+} from "~/lib/model/types/media_article";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 const props = defineProps<{
 	uuid: string;

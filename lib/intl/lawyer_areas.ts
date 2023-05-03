@@ -1,4 +1,4 @@
-import areasOfPractice from "./areasOfPractice";
+import areasOfPractice from "./areas_of_practice";
 import industries from "./industries";
 import { I18nMessagesEntry } from "./strings";
 

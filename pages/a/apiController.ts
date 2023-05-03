@@ -1,5 +1,5 @@
 import either, { Either } from "~~/lib/either";
-import fetchRequest from "~~/lib/fetchRequest";
+import fetchRequest from "~/lib/fetch_request";
 
 export interface BaseData {
 	uuid: string;

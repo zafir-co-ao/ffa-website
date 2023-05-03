@@ -1,129 +1,156 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { H3Event, readBody } from "h3";
+import {
+	createFile as createFileNode,
+	deleteNode,
+} from "~/lib/api/antbox_proxy";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
+import processApiError from "~/lib/process_api_error";
 
-import makeAntboxController, {
-	AntboxController,
-} from "~~/lib/api/antboxController";
-import routeRequest, { RequestHandlers } from "~~/lib/api/apiRequestRouter";
-import { NodeFilter, nodeServiceClient } from "~~/lib/deps";
-import Event, {
+import { NodeFilter, Node, NodeFilterResult } from "~~/lib/deps";
+import {
+	Event,
 	fromEvent,
-	toEvent,
 	toLocalizedEvent,
 	LocalizedEvent,
 } from "~~/lib/model/types/event";
 
-import processApiServerError from "~~/lib/processApiServerError";
-
-import useParams from "~~/lib/useParams";
-
+const EVENTS_FOLDER_FID = "events";
+const EVENTS_FOLDER_NAME = "Eventos";
 const TARGET_ASPECT = "event";
 
-export default async function (req: IncomingMessage, res: ServerResponse) {
-	const ctrl = makeAntboxController(
-		req,
-		res,
-		fromEvent,
-		toEvent,
-		toLocalizedEvent
+export const getEventHandler = defineEventHandler(async (evt) => {
+	const client = useAntboxClient().nodesClient;
+
+	const uuid = evt.context.params?.uuid;
+	const lang = getQuery(evt).lang as PortalLocale | undefined;
+
+	const [nodeOrErr, blobOrErr] = await Promise.all([
+		client.get(uuid!),
+		client.export(uuid!),
+	]);
+
+	if (nodeOrErr.isLeft()) {
+		return processApiError(evt, nodeOrErr.value);
+	}
+
+	if (blobOrErr.isLeft()) {
+		return processApiError(evt, blobOrErr.value);
+	}
+
+	const bodyText = await blobOrErr.value.text();
+
+	return toLocalizedEvent(nodeOrErr.value, bodyText, lang);
+});
+
+const listEventsHandler = defineEventHandler(async (evt: H3Event) => {
+	const query = getQuery(evt) as Record<string, string | undefined>;
+	const count = query.latest
+		? Number.parseInt(query.latest ?? "4")
+		: Number.MAX_SAFE_INTEGER;
+
+	const lang = query.lang as PortalLocale | undefined;
+	const nodes = await search(query.q as string);
+
+	return nodes
+		.map((n) => toLocalizedEvent(n, "{}", lang))
+		.sort(newerFirst)
+		.slice(0, count);
+});
+
+export const createEventHandler = defineEventHandler(async (evt) => {
+	const parent = await assertFolderExists(
+		EVENTS_FOLDER_FID,
+		EVENTS_FOLDER_NAME
 	);
 
-	const handlers = {
-		DELETE: ctrl.delete,
-		GET: getEvent(ctrl, res),
-		LIST: listEvents(ctrl, req),
-	};
+	const event = (await readBody(evt)) as Event;
 
-	return routeRequest(req, handlers as RequestHandlers);
-}
+	const { node, file } = fromEvent(event);
 
-function getEvent(
-	ctrl: AntboxController<Event, LocalizedEvent>,
-	res: ServerResponse
-): () => Promise<Event | LocalizedEvent | void> {
-	return () =>
-		ctrl
-			.get()
-			.then((a: Event) => appendEventBody(a, ctrl.lang))
-			.catch((err: unknown) => processApiServerError(res, err));
-}
+	node.parent = parent;
+	node.aspects = [TARGET_ASPECT];
 
-async function appendEventBody(
-	alert: Event | LocalizedEvent,
-	lang: string
-): Promise<Event | LocalizedEvent> {
-	const blob = await nodeServiceClient.export(alert.uuid);
-	const blobText = await blob.text();
-	const body = JSON.parse(blobText);
+	return createFileNode(evt, file, node);
+});
 
-	if (lang) {
-		return { ...alert, body: body[lang] };
+export const updateEventHandler = defineEventHandler(async (evt) => {
+	const uuid = evt.context.params?.uuid as string;
+	const event = (await readBody(evt)) as Event;
+	const { node, file } = fromEvent(event);
+
+	if (!node.aspects?.includes(TARGET_ASPECT)) {
+		node.aspects = [TARGET_ASPECT, ...(node.aspects ?? [])];
 	}
 
-	return { ...alert, body };
-}
+	const client = useAntboxClient().nodesClient;
 
-function listEvents(
-	ctrl: AntboxController<Event, LocalizedEvent>,
-	req: IncomingMessage
-) {
-	const alertsCriteria: NodeFilter[] = [
-		["aspects", "array-contains", TARGET_ASPECT],
-	];
-
-	const { query } = useParams(req);
-	const count = Number.parseInt(query.latest ?? "4");
-
-	if (query.q) {
-		return () => search(ctrl, query.q);
+	const updateFileErr = await client.updateFile(uuid, file);
+	if (updateFileErr.isLeft()) {
+		return processApiError(evt, updateFileErr.value);
 	}
 
-	return () =>
-		ctrl
-			.list(alertsCriteria)
-			.then((alerts: Event[]) => alerts?.sort(newerFirst))
-			.then((alerts: Event[]) => {
-				if (query.latest) {
-					return alerts.slice(0, count);
-				}
+	const updateNodeErr = await client.update(uuid, node);
+	if (updateNodeErr.isLeft()) {
+		return processApiError(evt, updateNodeErr.value);
+	}
+});
 
-				return alerts;
-			});
-}
-
-function search(ctrl: AntboxController<Event, LocalizedEvent>, query: string) {
-	const alertsCriteria: NodeFilter = [
-		"aspects",
-		"array-contains",
-		TARGET_ASPECT,
-	];
-
-	const titlePTCriteria: NodeFilter[] = [
-		alertsCriteria,
-		["properties.event:title.pt", "match", query],
-	];
-
-	const titleENCriteria: NodeFilter[] = [
-		alertsCriteria,
-		["properties.event:title.pt", "match", query],
-	];
-
-	return Promise.all([ctrl.list(titleENCriteria), ctrl.list(titlePTCriteria)])
-		.then(([en, pt]: [Event[], Event[]]) => [...en, ...pt])
-		.then((alerts) => {
-			const result = {};
-
-			for (const alert of alerts) {
-				result[alert.uuid] = alert;
-			}
-
-			return Object.values(result);
-		})
-		.then((alerts: Event[]) => alerts?.sort(newerFirst));
-}
-
-function newerFirst(l1: Event, l2: Event): number {
+function newerFirst(
+	l1: Event | LocalizedEvent,
+	l2: Event | LocalizedEvent
+): number {
 	if (l1.publishedOn > l2.publishedOn) {
 		return -1;
 	}
 	return 1;
 }
+
+async function search(q?: string) {
+	const alertsCriteria: NodeFilter = ["aspects", "contains", TARGET_ASPECT];
+
+	if (q) {
+		return or([alertsCriteria]);
+	}
+
+	const titlePtCriteria: NodeFilter[] = [
+		alertsCriteria,
+		["properties.event:title.pt", "match", q],
+	];
+
+	const titleEnCriteria: NodeFilter[] = [
+		alertsCriteria,
+		["properties.event:title.en", "match", q],
+	];
+
+	return or(titlePtCriteria, titleEnCriteria);
+}
+
+async function or(...filters: NodeFilter[][]) {
+	const client = useAntboxClient().nodesClient;
+	const req = filters.map((f) => client.query(f, Number.MAX_SAFE_INTEGER));
+
+	const eventsOrErr = await Promise.all(req);
+
+	const nodes = eventsOrErr
+		.filter((e) => e.isRight())
+		.map((e) => (e.value as NodeFilterResult).nodes)
+		.flat();
+
+	const result: Record<string, Node> = {};
+	for (const node of nodes) {
+		result[node.uuid] = node;
+	}
+
+	return Object.values(result);
+}
+
+const router = createRouter();
+
+router.get("/", listEventsHandler);
+router.get("/:uuid", getEventHandler);
+router.post("/", createEventHandler);
+router.put("/:uuid", updateEventHandler);
+router.delete("/:uuid", defineEventHandler(deleteNode));
+
+export default useBase("/api/events", router.handler);

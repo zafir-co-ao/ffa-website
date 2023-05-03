@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PortalLocale } from "~~/lib/model/types/portalLocale";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 const router = useRouter();
 const route = useRoute();

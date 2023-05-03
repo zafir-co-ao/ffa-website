@@ -1,5 +1,5 @@
 <script lang="ts">
-import areasOfPractice from "~~/lib/intl/areasOfPractice";
+import areasOfPractice from "~/lib/intl/areas_of_practice";
 import industries from "~~/lib/intl/industries";
 import { I18nMessagesEntry, strings } from "~~/lib/intl/strings";
 

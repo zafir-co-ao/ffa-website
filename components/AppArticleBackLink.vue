@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import PortalLanguage from "~~/lib/model/portalLanguage";
-defineProps<{ lang: PortalLanguage }>();
+import { PortalLocale } from "~~/lib/model/types/portal_locale";
+defineProps<{ lang: PortalLocale }>();
 </script>
 
 <template>

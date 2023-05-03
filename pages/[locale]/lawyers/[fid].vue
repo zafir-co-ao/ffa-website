@@ -5,7 +5,7 @@ import { strings } from "~~/lib/intl/strings";
 import getLawyerPrintTemplate from "./GetLawyerPrintTemplate";
 import { fidToUuid, nodeServiceClient } from "~~/lib/deps";
 import { languages } from "~~/lib/intl/strings";
-import lawyerAreas from "~~/lib/intl/lawyerAreas";
+import lawyerAreas from "~/lib/intl/lawyer_areas";
 
 const fid = useRoute().params.fid as string;
 const { $locale: lang } = useI18n();

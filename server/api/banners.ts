@@ -1,77 +1,72 @@
-import { IncomingMessage, ServerResponse } from "http";
-import makeAntboxController, {
-	AntboxController,
-} from "~~/lib/api/antboxController";
-import routeRequest, { RequestHandlers } from "~~/lib/api/apiRequestRouter";
-import extractBody from "~~/lib/api/bodyExtractor";
-import { fidToUuid, nodeServiceClient } from "~~/lib/deps";
-import Banner, {
-	fromBanner,
-	LocalizedBanner,
-	toBanner,
+import { createRouter, defineEventHandler, useBase, H3Event } from "h3";
+import { Node, NodeFilter, NodeServiceClient, fidToUuid } from "~~/lib/deps";
+
+import {
+	deleteNode,
+	getNode,
+	searchNodes,
+	updateNode,
+} from "~/lib/api/antbox_proxy";
+import {
+	Banner,
 	toLocalizedBanner,
-} from "~~/lib/model/types/banner";
+	toBanner,
+	LocalizedBanner,
+	fromBanner,
+} from "~/lib/model/types/banner";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
 
-const BANNERS_PARENT_FOLDER_FID = "banners";
-const BANNERS_PARENT_FOLDER_UUID = fidToUuid(BANNERS_PARENT_FOLDER_FID);
+const BANNERS_FOLDER_FID = "banners";
+const BANNERS_FOLDER_NAME = "Banners";
+const TARGET_ASPECT = "banner";
 
-/**
- * /api/banners/[uuid]/[lang]
- * uuid = '-' --> list all
- */
+const listBannersHandler = defineEventHandler((evt) => {
+	const lang = getQuery(evt).lang as PortalLocale | undefined;
+	const to = lang ? (n: Node) => toLocalizedBanner(n, lang) : toBanner;
+	const filters: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
 
-export default async function (req: IncomingMessage, res: ServerResponse) {
-	const ctrl = makeAntboxController(
-		req,
-		res,
-		fromBanner,
-		toBanner,
-		toLocalizedBanner
+	return searchNodes<Banner, LocalizedBanner>(evt, to, filters);
+});
+
+const createBannerHandler = defineEventHandler(async (evt) => {
+	const client = useAntboxClient().nodesClient;
+	const parent = await assertFolderExists(
+		BANNERS_FOLDER_FID,
+		BANNERS_FOLDER_NAME
 	);
+	const parts = await readParts(evt);
 
-	const handlers = {
-		PUT: ctrl.updateNode,
-		DELETE: ctrl.delete,
-		GET: ctrl.get,
-		POST: createBanner(ctrl, req),
-		LIST: listBanners(ctrl),
-	};
-
-	return routeRequest(req, handlers as unknown as RequestHandlers);
-}
-
-function listBanners(
-	ctrl: AntboxController<Banner, LocalizedBanner>
-): () => Promise<(Banner | LocalizedBanner)[]> {
-	return () =>
-		ctrl
-			.list([["aspects", "array-contains", "banner"]])
-			.then((nodes: Banner[]) =>
-				nodes?.sort((a, b) => b.priority - a.priority)
-			);
-}
-
-function createBanner(_: any, req: IncomingMessage) {
-	return async () => {
-		const parentUuid = await assertParentFolder();
-
-		const node = await extractBody(req, fromBanner);
-		node.parent = parentUuid;
-
-		return nodeServiceClient.update(node.uuid, node).then(() => node.uuid);
-	};
-}
-
-async function assertParentFolder(): Promise<string> {
-	const parent = await nodeServiceClient.get(BANNERS_PARENT_FOLDER_UUID);
-	if (parent) {
-		return parent.uuid;
+	if (!parts.metadata) {
+		return;
 	}
 
-	const parentUuid = await nodeServiceClient.createFolder("Banners");
-	await nodeServiceClient.update(parentUuid, {
-		fid: BANNERS_PARENT_FOLDER_FID,
-	});
+	const banner = JSON.parse(parts.metadata.toString("utf-8"));
+	const node = fromBanner(banner);
+	node.parent = parent;
 
-	return parentUuid;
+	const file = new File([parts.file], banner.title);
+
+	return client.createFile(file, node);
+});
+
+async function readParts(evt: H3Event): Promise<Record<string, Buffer>> {
+	const req = await readMultipartFormData(evt);
+
+	return (
+		req?.reduce((acc, cur) => {
+			acc[cur.name as string] = cur.data;
+			return acc;
+		}, {} as Record<string, Buffer>) ?? {}
+	);
 }
+
+const router = createRouter();
+
+router.get("/", listBannersHandler);
+router.get("/:uuid", defineEventHandler(getNode(toLocalizedBanner)));
+router.post("/", createBannerHandler);
+router.put("/:uuid", defineEventHandler(updateNode(fromBanner)));
+router.delete("/:uuid", defineEventHandler(deleteNode));
+
+export default useBase("/api/banners", router.handler);

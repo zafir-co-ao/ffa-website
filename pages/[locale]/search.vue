@@ -4,8 +4,8 @@
 import { strings } from "~~/lib/intl/strings";
 import { LocalizedEvent } from "~~/lib/model/types/event";
 import { LocalizedLawyer } from "~~/lib/model/types/lawyer";
-import { LocalizedLegalAlert } from "~~/lib/model/types/legalAlerts";
-import { LocalizedMediaArticle } from "~~/lib/model/types/mediaArticle";
+import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
+import { LocalizedMediaArticle } from "~/lib/model/types/media_article";
 
 const { $locale } = useI18n();
 

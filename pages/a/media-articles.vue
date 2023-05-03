@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LocalizedMediaArticle } from "~~/lib/model/types/mediaArticle";
+import { LocalizedMediaArticle } from "~/lib/model/types/media_article";
 
 definePageMeta({ layout: "admin" });
 

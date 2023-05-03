@@ -1,133 +1,156 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { H3Event, readBody } from "h3";
+import {
+	createFile as createFileNode,
+	deleteNode,
+} from "~/lib/api/antbox_proxy";
+import assertFolderExists from "~/lib/api/assert_folder_exists";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
+import processApiError from "~/lib/process_api_error";
 
-import makeAntboxController, {
-	AntboxController,
-} from "~~/lib/api/antboxController";
-import routeRequest, { RequestHandlers } from "~~/lib/api/apiRequestRouter";
-import { NodeFilter, nodeServiceClient } from "~~/lib/deps";
-import LegalAlert, {
+import { NodeFilter, Node, NodeFilterResult } from "~~/lib/deps";
+import {
+	LegalAlert,
 	fromLegalAlert,
-	LocalizedLegalAlert,
-	toLegalAlert,
 	toLocalizedLegalAlert,
-} from "~~/lib/model/types/legalAlerts";
-import processApiServerError from "~~/lib/processApiServerError";
+	LocalizedLegalAlert,
+} from "~/lib/model/types/legal_alert";
 
-import useParams from "~~/lib/useParams";
+const LEGAL_ALERTS_FOLDER_FID = "legal-alerts";
+const LEGAL_ALERTS_FOLDER_NAME = "Alertas Jurídicos";
+const TARGET_ASPECT = "legal-alert;";
 
-const TARGET_ASPECT = "legal-alert";
+export const getLegalAlertHandler = defineEventHandler(async (evt) => {
+	const client = useAntboxClient().nodesClient;
 
-export default async function (req: IncomingMessage, res: ServerResponse) {
-	const ctrl = makeAntboxController(
-		req,
-		res,
-		fromLegalAlert,
-		toLegalAlert,
-		toLocalizedLegalAlert
+	const uuid = evt.context.params?.uuid;
+	const lang = getQuery(evt).lang as PortalLocale | undefined;
+
+	const [nodeOrErr, blobOrErr] = await Promise.all([
+		client.get(uuid!),
+		client.export(uuid!),
+	]);
+
+	if (nodeOrErr.isLeft()) {
+		return processApiError(evt, nodeOrErr.value);
+	}
+
+	if (blobOrErr.isLeft()) {
+		return processApiError(evt, blobOrErr.value);
+	}
+
+	const bodyText = await blobOrErr.value.text();
+
+	return toLocalizedLegalAlert(nodeOrErr.value, bodyText, lang);
+});
+
+const listLegalAlertsHandler = defineEventHandler(async (evt: H3Event) => {
+	const query = getQuery(evt) as Record<string, string | undefined>;
+	const count = query.latest
+		? Number.parseInt(query.latest ?? "4")
+		: Number.MAX_SAFE_INTEGER;
+
+	const lang = query.lang as PortalLocale | undefined;
+	const nodes = await search(query.q as string);
+
+	return nodes
+		.map((n) => toLocalizedLegalAlert(n, "{}", lang))
+		.sort(newerFirst)
+		.slice(0, count);
+});
+
+export const createLegalAlertHandler = defineEventHandler(async (evt) => {
+	const parent = await assertFolderExists(
+		LEGAL_ALERTS_FOLDER_FID,
+		LEGAL_ALERTS_FOLDER_NAME
 	);
 
-	const handlers = {
-		DELETE: ctrl.delete,
-		GET: getLegalAlert(ctrl, res),
-		LIST: listLegalAlerts(ctrl, req),
-	};
+	const event = (await readBody(evt)) as LegalAlert;
 
-	return routeRequest(req, handlers as RequestHandlers);
-}
+	const { node, file } = fromLegalAlert(event);
 
-function getLegalAlert(
-	ctrl: AntboxController<LegalAlert, LocalizedLegalAlert>,
-	res: ServerResponse
-): () => Promise<LegalAlert | LocalizedLegalAlert | void> {
-	return () =>
-		ctrl
-			.get()
-			.then((a: LegalAlert) => appendLegalAlertBody(a, ctrl.lang))
-			.catch((err: unknown) => processApiServerError(res, err));
-}
+	node.parent = parent;
+	node.aspects = [TARGET_ASPECT];
 
-async function appendLegalAlertBody(
-	alert: LegalAlert | LocalizedLegalAlert,
-	lang: string
-): Promise<LegalAlert | LocalizedLegalAlert> {
-	const blob = await nodeServiceClient.export(alert.uuid);
-	const blobText = await blob.text();
-	const body = JSON.parse(blobText);
+	return createFileNode(evt, file, node);
+});
 
-	if (lang) {
-		return { ...alert, body: body[lang] };
+export const updateLegalAlertHandler = defineEventHandler(async (evt) => {
+	const uuid = evt.context.params?.uuid as string;
+	const event = (await readBody(evt)) as LegalAlert;
+	const { node, file } = fromLegalAlert(event);
+
+	if (!node.aspects?.includes(TARGET_ASPECT)) {
+		node.aspects = [TARGET_ASPECT, ...(node.aspects ?? [])];
 	}
 
-	return { ...alert, body };
-}
+	const client = useAntboxClient().nodesClient;
 
-function listLegalAlerts(
-	ctrl: AntboxController<LegalAlert, LocalizedLegalAlert>,
-	req: IncomingMessage
-) {
-	const alertsCriteria: NodeFilter[] = [
-		["aspects", "array-contains", TARGET_ASPECT],
-	];
-
-	const { query } = useParams(req);
-	const count = Number.parseInt(query.latest ?? "4");
-	const pageSize = Number.parseInt(query["page-size"] ?? "1000");
-	const pageToken = Number.parseInt(query["page-token"] ?? "1");
-
-	if (query.q) {
-		return () => search(ctrl, query.q);
+	const updateFileErr = await client.updateFile(uuid, file);
+	if (updateFileErr.isLeft()) {
+		return processApiError(evt, updateFileErr.value);
 	}
 
-	return () =>
-		ctrl
-			.list(alertsCriteria, pageSize, pageToken)
-			.then((alerts: LegalAlert[]) => alerts?.sort(newerFirst))
-			.then((alerts: LegalAlert[]) => {
-				if (query.latest) {
-					return alerts.slice(0, count);
-				}
+	const updateNodeErr = await client.update(uuid, node);
+	if (updateNodeErr.isLeft()) {
+		return processApiError(evt, updateNodeErr.value);
+	}
+});
 
-				return alerts;
-			});
-}
-
-function search(
-	ctrl: AntboxController<LegalAlert, LocalizedLegalAlert>,
-	query: string
-) {
-	const alertsCriteria: NodeFilter = [
-		"aspects",
-		"array-contains",
-		TARGET_ASPECT,
-	];
-
-	const titlePTCriteria: NodeFilter[] = [
-		alertsCriteria,
-		["properties.legal-alert:title.pt", "match", query],
-	];
-
-	const titleENCriteria: NodeFilter[] = [
-		alertsCriteria,
-		["properties.legal-alert:title.pt", "match", query],
-	];
-
-	return Promise.all([ctrl.list(titleENCriteria), ctrl.list(titlePTCriteria)])
-		.then(([en, pt]: [LegalAlert[], LegalAlert[]]) => [...en, ...pt])
-		.then((alerts) => {
-			const result = {};
-
-			for (const alert of alerts) {
-				result[alert.uuid] = alert;
-			}
-
-			return Object.values(result);
-		})
-		.then((alerts: LegalAlert[]) => alerts?.sort(newerFirst));
-}
-
-function newerFirst(l1: LegalAlert, l2: LegalAlert): number {
+function newerFirst(
+	l1: LegalAlert | LocalizedLegalAlert,
+	l2: LegalAlert | LocalizedLegalAlert
+): number {
 	if (l1.publishedOn > l2.publishedOn) {
 		return -1;
 	}
 	return 1;
 }
+
+async function search(q?: string) {
+	const alertsCriteria: NodeFilter = ["aspects", "contains", TARGET_ASPECT];
+
+	if (q) {
+		return or([alertsCriteria]);
+	}
+
+	const titlePtCriteria: NodeFilter[] = [
+		alertsCriteria,
+		["properties.legal-alert:title.pt", "match", q],
+	];
+
+	const titleEnCriteria: NodeFilter[] = [
+		alertsCriteria,
+		["properties.legal-alert:title.en", "match", q],
+	];
+
+	return or(titlePtCriteria, titleEnCriteria);
+}
+
+async function or(...filters: NodeFilter[][]) {
+	const client = useAntboxClient().nodesClient;
+	const req = filters.map((f) => client.query(f, Number.MAX_SAFE_INTEGER));
+
+	const eventsOrErr = await Promise.all(req);
+
+	const nodes = eventsOrErr
+		.filter((e) => e.isRight())
+		.map((e) => (e.value as NodeFilterResult).nodes)
+		.flat();
+
+	const result: Record<string, Node> = {};
+	for (const node of nodes) {
+		result[node.uuid] = node;
+	}
+
+	return Object.values(result);
+}
+
+const router = createRouter();
+
+router.get("/", listLegalAlertsHandler);
+router.get("/:uuid", getLegalAlertHandler);
+router.post("/", createLegalAlertHandler);
+router.put("/:uuid", updateLegalAlertHandler);
+router.delete("/:uuid", defineEventHandler(deleteNode));
+
+export default useBase("/api/events", router.handler);

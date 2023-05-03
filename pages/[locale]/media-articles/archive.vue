@@ -1,6 +1,6 @@
 <script lang="ts">
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedMediaArticle } from "~~/lib/model/types/mediaArticle";
+import { LocalizedMediaArticle } from "~/lib/model/types/media_article";
 </script>
 
 <script lang="ts" setup>

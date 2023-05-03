@@ -18,7 +18,7 @@ import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import { forceReload, forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
-import lawyerAreas from "~~/lib/intl/lawyerAreas";
+import lawyerAreas from "~/lib/intl/lawyer_areas";
 
 const API_BASE_URL = "/api/lawyers";
 const BACK_PAGE = "/a/lawyers";

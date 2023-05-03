@@ -1,14 +1,14 @@
 import { Node } from "~/lib/deps";
-
-import { I18nMessagesEntry } from "../intl/strings";
+import { I18nMessagesEntry } from "~/lib/intl/strings";
+import { PortalLocale } from "./portal_locale";
 
 // Aspect: event
-export default interface Event {
+export interface Event {
 	uuid: string;
 	fid: string;
 	title: I18nMessagesEntry;
 	body: I18nMessagesEntry;
-	publishedOn?: string;
+	publishedOn: string;
 	eventPlace?: string;
 	eventDateTime: string;
 	bannerUuid?: string;
@@ -20,23 +20,30 @@ export interface LocalizedEvent {
 	fid: string;
 	title: string;
 	body: string;
-	publishedOn?: string;
+	publishedOn: string;
 	eventPlace?: string;
 	eventDateTime: string;
 	bannerUuid?: string;
 	registrationUrl?: string;
 }
 
-export function makeEvent(): Event {
+const UNDEFINED_STRING: string = undefined as unknown as string;
+
+interface EventDesc {
+	node: Node;
+	file: File;
+}
+
+export function makeEvent(): Partial<Event> {
 	return {
 		publishedOn: new Date().toISOString().substring(0, 10),
 		eventDateTime: new Date().toISOString().substring(0, 16),
-		title: { pt: undefined, en: undefined },
-		body: { pt: undefined, en: undefined },
-	} as Event;
+		title: { pt: UNDEFINED_STRING, en: UNDEFINED_STRING },
+		body: { pt: UNDEFINED_STRING, en: UNDEFINED_STRING },
+	};
 }
 
-export function toEvent(node: Node): Event {
+export function toEvent(node: Node, bodyText: string): Event {
 	const event = {
 		uuid: node.uuid,
 		fid: node.fid,
@@ -46,35 +53,49 @@ export function toEvent(node: Node): Event {
 		eventDateTime: node.properties?.["event:eventDateTime"] as string,
 		bannerUuid: node.properties?.["event:bannerUuid"] as string,
 		registrationUrl: node.properties?.["event:registrationUrl"] as string,
-		body: undefined,
+		body: JSON.parse(bodyText) as I18nMessagesEntry,
 	};
 
 	return event;
 }
 
-export function toLocalizedEvent(node: Node, lang: string): LocalizedEvent {
-	const { title, body, ...stage } = toEvent(node);
+export function toLocalizedEvent(
+	node: Node,
+	bodyText: string,
+	lang?: PortalLocale
+): Event | LocalizedEvent {
+	const event = toEvent(node, bodyText);
+
+	if (!lang) {
+		return event;
+	}
 
 	return {
-		title: title?.[lang] ?? title.pt,
-		body: undefined,
-		...stage,
-	};
+		...event,
+		title: event.title[lang] ?? event.title.pt,
+		body: event.body[lang] ?? event.body.pt,
+	} as LocalizedEvent;
 }
 
-export function fromEvent(article: Event): Node {
+export function fromEvent(event: Event): EventDesc {
 	return {
-		uuid: article.uuid,
-		title: article.title.pt,
-		aspects: ["event"],
+		node: {
+			uuid: event.uuid,
+			title: event.title.pt,
+			aspects: ["event"],
 
-		properties: {
-			"event:title": article.title,
-			"event:publishedOn": article.publishedOn,
-			"event:eventPlace": article.eventPlace,
-			"event:eventDateTime": article.eventDateTime,
-			"event:bannerUuid": article.bannerUuid,
-			"event:registrationUrl": article.registrationUrl,
-		},
-	} as unknown as Node;
+			properties: {
+				"event:title": event.title,
+				"event:publishedOn": event.publishedOn,
+				"event:eventPlace": event.eventPlace,
+				"event:eventDateTime": event.eventDateTime,
+				"event:bannerUuid": event.bannerUuid,
+				"event:registrationUrl": event.registrationUrl,
+			},
+		} as unknown as Node,
+
+		file: new File([JSON.stringify(event.body)], `${event.title.pt}.json`, {
+			type: "application/json",
+		}),
+	};
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedLegalAlert } from "~~/lib/model/types/legalAlerts";
+import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
 </script>
 
 <script lang="ts" setup>

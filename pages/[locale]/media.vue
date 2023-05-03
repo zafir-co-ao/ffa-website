@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import { LocalizedMediaArticle } from "~~/lib/model/types/mediaArticle";
+import { LocalizedMediaArticle } from "~/lib/model/types/media_article";
 
 import LegalAlert from "~~/components/LegalAlert.vue";
-import { LocalizedLegalAlert } from "~~/lib/model/types/legalAlerts";
+import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
 import { LocalizedEvent } from "~~/lib/model/types/event";
 
 const { $locale: lang } = useI18n();

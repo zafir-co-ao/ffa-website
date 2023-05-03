@@ -20,7 +20,7 @@ import { LocalizedEvent } from "~~/lib/model/types/event";
 import {
 	makeLinkedinShareUrl,
 	makeWhatsappShareUrl,
-} from "~~/lib/socialShareLinkBuilder";
+} from "~/lib/social_share_link_builder";
 
 import error404 from "../../err/404.vue";
 
