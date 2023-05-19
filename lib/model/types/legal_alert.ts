@@ -17,7 +17,7 @@ export interface LegalAlert {
 	category: LegalAlertsCategory;
 }
 
-export interface LocalizedLegalAlert {
+export interface I18nLegalAlert {
 	uuid: string;
 	fid: string;
 	title: string;
@@ -47,9 +47,7 @@ export function toLegalAlert(node: Node, bodyText: string): LegalAlert {
 		uuid: node.uuid,
 		fid: node.fid,
 		publishedOn: node.properties?.["legal-alert:publishedOn"] as string,
-		category: node.properties?.[
-			"legal-alert:category"
-		] as LegalAlertsCategory,
+		category: node.properties?.["legal-alert:category"] as LegalAlertsCategory,
 		pdfUuid: node.properties?.["legal-alert:pdfUuid"] as string,
 		title: node.properties?.["legal-alert:title"] as I18nMessagesEntry,
 		body: JSON.parse(bodyText) as I18nMessagesEntry,
@@ -58,11 +56,7 @@ export function toLegalAlert(node: Node, bodyText: string): LegalAlert {
 	return legalAlert;
 }
 
-export function toLocalizedLegalAlert(
-	node: Node,
-	bodyText: string,
-	lang?: PortalLocale
-): LegalAlert | LocalizedLegalAlert {
+export function toLocalizedLegalAlert(node: Node, bodyText: string, lang?: PortalLocale): LegalAlert | I18nLegalAlert {
 	const legalAlert = toLegalAlert(node, bodyText);
 
 	if (!lang) {

@@ -1,23 +1,21 @@
 <script lang="ts" setup>
-import { LocalizedLawyer } from "~~/lib/model/types/lawyer";
-import { strings } from "~~/lib/intl/strings";
+import { strings } from "~/lib/intl/strings";
 
 import getLawyerPrintTemplate from "./GetLawyerPrintTemplate";
-import { fidToUuid, nodeServiceClient } from "~~/lib/deps";
-import { languages } from "~~/lib/intl/strings";
+import { languages } from "~/lib/intl/strings";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
+import { I18nLawyer } from "~/lib/model/types/lawyer";
+import { getI18nLawyer } from "~/lib/server_api_clients/lawyers_client";
+
+const { nodeClient } = useAntboxClient();
 
 const fid = useRoute().params.fid as string;
 const { $locale: lang } = useI18n();
 
-const { data: lawyer } = await useFetch<LocalizedLawyer>(
-	`/api/lawyers/${fidToUuid(fid)}/${lang.value}`
-);
+const lawyer = ref<I18nLawyer>();
 
 const portraitUrl = computed(() =>
-	lawyer.value?.uuid
-		? nodeServiceClient.getNodeUrl(lawyer.value?.portraitUuid)
-		: "/images/anonymous-headshot.png"
+	lawyer.value?.uuid ? nodeClient.getNodeUrl(lawyer.value?.portraitUuid!) : "/images/anonymous-headshot.png"
 );
 
 const lawyerLanguages = computed(() => {
@@ -25,10 +23,12 @@ const lawyerLanguages = computed(() => {
 });
 
 const areasOfExpertise = computed(() =>
-	lawyer.value?.areas
-		?.map((a) => lawyerAreas[a]?.[lang.value] ?? `%${a}%`)
-		.sort((a, b) => a.localeCompare(b))
+	lawyer.value?.areas?.map((a) => lawyerAreas[a]?.[lang.value] ?? `%${a}%`).sort((a, b) => a.localeCompare(b))
 );
+
+onMounted(() => {
+	getI18nLawyer(fid, lang.value).then((l) => (lawyer.value = l));
+});
 
 function printCurriculum() {
 	const content = document.getElementById("curriculopartner")?.innerHTML;
@@ -41,7 +41,7 @@ function printCurriculum() {
 function translateLanguages(rawLanguages: string[]): string[] {
 	if (!rawLanguages || rawLanguages.length === 0) return [];
 
-	return rawLanguages.map((l: string) => languages[l][lang.value]);
+	return rawLanguages.map((l: string) => languages[l][lang.value] as string);
 }
 
 function formatLanguages(languages: string[]): string {
@@ -74,7 +74,7 @@ const ldJson = JSON.stringify({
 	"@context": "https://schema.org",
 	"@type": "Person",
 	name: lawyer.value?.name,
-	url: `https://fatimafreitas.com/${lang.value}/lawyers/${lawyer.value.fid}`,
+	url: `https://fatimafreitas.com/${lang.value}/lawyers/${lawyer.value?.fid}`,
 	image: portraitUrl.value,
 	affiliation: {
 		"@type": "Organization",
@@ -89,102 +89,84 @@ const ldJson = JSON.stringify({
 
 <template>
 	<div class="container">
-		<Script type="application/ld+json" :children="ldJson" />
+		<div v-if="lawyer">
+			<Script type="application/ld+json" :children="ldJson" />
 
-		<Title>{{ lawyer.name }} - {{ strings.meta_title[lang] }}</Title>
-		<nav class="pt-3" aria-label="breadcrumb">
-			<div class="breadcrumb fs-085">
-				<span class="breadcrumb-item"><a href="/">Home</a></span>
-				<span class="breadcrumb-item">
-					<router-link to="../people">
-						<span>{{ scopedMessages.people[lang] }}</span>
-					</router-link>
-				</span>
-				<span class="breadcrumb-item active" aria-current="page">{{
-					lawyer.name
-				}}</span>
-			</div>
-		</nav>
-
-		<div class="row mt-5 mb-5">
-			<div class="col-md-4 mb-5 text-center">
-				<div class="portrait-img-container">
-					<img
-						:src="portraitUrl"
-						class="anonymous-headshot w-100"
-						alt=""
-					/>
+			<Title>{{ lawyer.name }} - {{ strings.meta_title[lang] }}</Title>
+			<nav class="pt-3" aria-label="breadcrumb">
+				<div class="breadcrumb fs-085">
+					<span class="breadcrumb-item"><a href="/">Home</a></span>
+					<span class="breadcrumb-item">
+						<router-link to="../people">
+							<span>{{ scopedMessages.people[lang] }}</span>
+						</router-link>
+					</span>
+					<span class="breadcrumb-item active" aria-current="page">{{ lawyer.name }}</span>
 				</div>
-			</div>
+			</nav>
 
-			<div id="curriculopartner" class="col-md-8">
-				<div class="mb-3 curriculum-header">
-					<h1 class="h4 fw-bold azul mb-2 mb-0">
-						{{ lawyer?.name }}
-					</h1>
-					<div class="h5 font-weight-500 azulescuro">
-						{{ lawyer.position }}
+			<div class="row mt-5 mb-5">
+				<div class="col-md-4 mb-5 text-center">
+					<div class="portrait-img-container">
+						<img :src="portraitUrl" class="anonymous-headshot w-100" alt="" />
 					</div>
 				</div>
-				<div class="mt-3" v-html="lawyer.bio"></div>
-				<div class="fs-0925">
-					<p class="mt-3">
-						<span id="labelemail" class="azul">E-mail</span>
-						<br />
-						<a :href="'mailto:' + lawyer?.email">{{
-							lawyer?.email
-						}}</a>
-					</p>
-					<p class="mt-3">
-						<span id="labelcontacto" class="azul">{{
-							scopedMessages.contacts[lang]
-						}}</span>
-						<br />
-						<label>{{ scopedMessages.officeContacts[lang] }}</label
-						>&nbsp;
-						<span>{{ lawyer?.officeTelephones }}</span>
-						<span v-if="lawyer.mobilePhone">
+
+				<div id="curriculopartner" class="col-md-8">
+					<div class="mb-3 curriculum-header">
+						<h1 class="h4 fw-bold azul mb-2 mb-0">
+							{{ lawyer?.name }}
+						</h1>
+						<div class="h5 font-weight-500 azulescuro">
+							{{ lawyer.position }}
+						</div>
+					</div>
+					<div class="mt-3" v-html="lawyer.bio"></div>
+					<div class="fs-0925">
+						<p class="mt-3">
+							<span id="labelemail" class="azul">E-mail</span>
 							<br />
-							<label>{{ scopedMessages.mobilePhone[lang] }}</label
+							<a :href="'mailto:' + lawyer?.email">{{ lawyer?.email }}</a>
+						</p>
+						<p class="mt-3">
+							<span id="labelcontacto" class="azul">{{ scopedMessages.contacts[lang] }}</span>
+							<br />
+							<label>{{ scopedMessages.officeContacts[lang] }}</label
 							>&nbsp;
-							<a :href="'tel:' + lawyer?.mobilePhone">{{
-								lawyer.mobilePhone
-							}}</a>
-						</span>
-					</p>
-					<div class="mt-3">
-						<span class="azul">{{
-							scopedMessages.career[lang]
-						}}</span>
-						<div v-html="lawyer.career"></div>
+							<span>{{ lawyer?.officeTelephones }}</span>
+							<span v-if="lawyer.mobilePhone">
+								<br />
+								<label>{{ scopedMessages.mobilePhone[lang] }}</label
+								>&nbsp;
+								<a :href="'tel:' + lawyer?.mobilePhone">{{ lawyer.mobilePhone }}</a>
+							</span>
+						</p>
+						<div class="mt-3">
+							<span class="azul">{{ scopedMessages.career[lang] }}</span>
+							<div v-html="lawyer.career"></div>
+						</div>
+						<div class="mt-3">
+							<span id="labelarea" class="azul">{{ scopedMessages.areas[lang] }}</span>
+							<br />
+							<ul>
+								<li v-for="area in areasOfExpertise">{{ area }}</li>
+							</ul>
+						</div>
+						<p class="mt-3">
+							<span class="azul">{{ scopedMessages.languages[lang] }}</span>
+							<br />
+							<span id="linguaspartner">{{ lawyerLanguages }}</span>
+						</p>
 					</div>
-					<div class="mt-3">
-						<span id="labelarea" class="azul">{{
-							scopedMessages.areas[lang]
-						}}</span>
-						<br />
-						<ul>
-							<li v-for="area in areasOfExpertise">{{ area }}</li>
-						</ul>
-					</div>
-					<p class="mt-3">
-						<span class="azul">{{
-							scopedMessages.languages[lang]
-						}}</span>
-						<br />
-						<span id="linguaspartner">{{ lawyerLanguages }}</span>
-					</p>
-				</div>
 
-				<a @click="printCurriculum" href="#"
-					><i class="bi bi-printer azul"></i
-				></a>
-			</div>
-			<div class="mt-5 fs-085">
-				<span class="color-gray">&lt;&lt;</span>
-				<router-link to="../people"
-					><span>{{ scopedMessages.back[lang] }}</span></router-link
-				>
+					<a @click="printCurriculum" href="#"><i class="bi bi-printer azul"></i></a>
+				</div>
+				<div class="mt-5 fs-085">
+					<span class="color-gray">&lt;&lt;</span>
+					<router-link to="../people"
+						><span>{{ scopedMessages.back[lang] }}</span></router-link
+					>
+				</div>
 			</div>
 		</div>
 	</div>

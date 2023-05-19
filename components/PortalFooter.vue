@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { strings } from "~~/lib/intl/strings";
+import { strings } from "~/lib/intl/strings";
 
 const { $locale: lang } = useI18n();
 const fullYear = new Date().getFullYear();
@@ -11,10 +11,7 @@ const fullYear = new Date().getFullYear();
 			<div class="row">
 				<div class="col-md-6 pt-3 pt-md-4 pb-md-4 text-left">
 					<p id="disclaimer" class="h6">
-						<nuxt-link
-							:to="`/${lang}/disclaimer`"
-							class="disclaimer"
-						>
+						<nuxt-link :to="`/${lang}/disclaimer`" class="disclaimer">
 							<i class="bi bi-share text-white"></i>&nbsp;
 							{{ strings.disclaimer_and_privacy[lang] }}
 						</nuxt-link>

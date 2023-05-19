@@ -1,4 +1,4 @@
-import { setResponseStatus, H3Event, send } from "h3";
+import { setResponseStatus, H3Event } from "h3";
 
 export default function processApiError(evt: H3Event, err: unknown) {
 	setResponseStatus(evt, 500);

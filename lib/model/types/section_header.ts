@@ -1,6 +1,7 @@
 import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { Node, nodeServiceClient } from "~~/lib/deps";
+import { Node, nodeServiceClient } from "~/lib/deps";
 import { PortalLocale } from "./portal_locale";
+import useAntboxClient from "~/composables/use_antbox_client";
 
 // Aspect: section-header
 // Aspect Constraints: [image/png, image/jpg]
@@ -34,10 +35,7 @@ export function makeSectionHeader(): SectionHeader {
 	return { clipBottom: true, clipTop: false } as SectionHeader;
 }
 
-export function toLocalizedSectionHeader(
-	node: Node,
-	lang?: PortalLocale
-): SectionHeader | LocalizedSectionHeader {
+export function toLocalizedSectionHeader(node: Node, lang?: PortalLocale): SectionHeader | LocalizedSectionHeader {
 	const sectionHeader = toSectionHeader(node);
 
 	if (!lang) {
@@ -52,21 +50,16 @@ export function toLocalizedSectionHeader(
 }
 
 export function toSectionHeader(node: Node): SectionHeader {
-	const imageUrl = useAntboxClient().nodesClient.getNodeUrl(node.uuid);
+	const imageUrl = useAntboxClient().nodeClient.getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,
 		fid: node.fid,
 		nodeTitle: node.title,
 		title: node.properties?.["section-header:title"] as I18nMessagesEntry,
-		subtitle: node.properties?.[
-			"section-header:subtitle"
-		] as I18nMessagesEntry,
-		clipTop:
-			(node.properties?.["section-header:clipTop"] as boolean) ?? false,
-		clipBottom:
-			(node.properties?.["section-header:clipBottom"] as boolean) ??
-			false,
+		subtitle: node.properties?.["section-header:subtitle"] as I18nMessagesEntry,
+		clipTop: (node.properties?.["section-header:clipTop"] as boolean) ?? false,
+		clipBottom: (node.properties?.["section-header:clipBottom"] as boolean) ?? false,
 
 		imageUrl,
 	};

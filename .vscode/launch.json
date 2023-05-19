@@ -1,26 +1,23 @@
 {
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "pwa-chrome",
+			"type": "chrome",
 			"request": "launch",
 			"name": "client:chrome",
 			"url": "http://localhost:3000",
 			"webRoot": "${workspaceFolder}"
 		},
 		{
-			"type": "pwa-node",
+			"type": "node",
 			"request": "launch",
 			"name": "server:nuxt",
+			"program": "${workspaceFolder}/node_modules/nuxi/bin/nuxi.mjs",
 			"args": ["dev"],
-			"osx": {
-				"program": "${workspaceFolder}/node_modules/.bin/nuxt"
-			},
-			"linux": {
-				"program": "${workspaceFolder}/node_modules/.bin/nuxt"
-			},
-			"windows": {
-				"program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.js"
+			"env": {
+				"ANTBOX_URL": "http://km1:7180"
 			}
 		}
 	],

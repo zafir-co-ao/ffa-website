@@ -131,7 +131,7 @@ export const strings: I18nMessages = {
 	do_login: { pt: "Fazer Login", en: "Sign In" },
 };
 
-export const languages = {
+export const languages: Record<string, I18nMessagesEntry> = {
 	pt: { en: "Portuguese", pt: "Português" },
 	en: { en: "English", pt: "Inglês" },
 	es: { en: "Spanish", pt: "Espanhol" },

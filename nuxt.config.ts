@@ -1,34 +1,14 @@
-import serveStatic from "serve-static";
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	// alias: {
-	// 	"~lightray":
-	// 		"/<rootDir>/node_modules/@zafir.co.ao/lightray/src/components",
-	// },
+	sourcemap: {
+		server: true,
+		client: true,
+	},
 
-	// build: {
-	// 	transpile: ["@tinymce/tinymce-vue"],
-	// },
-
-	css: [
-		"~~/assets/sass/fatimafreitas.scss",
-		"@zafir.co.ao/lightray/styles.css",
-		"@zafir.co.ao/lightray/clientOnlyComponents.css",
-		"bootstrap/dist/css/bootstrap.min.css",
-		"bootstrap-icons/font/bootstrap-icons.css",
-	],
+	css: ["~~/assets/sass/fatimafreitas.scss", "@zafir.co.ao/lightray/style.css"],
 	app: {
 		head: {
-			script: [
-				{
-					src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js",
-				},
-
-				{
-					src: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.min.js",
-				},
-			],
+			script: [],
 			link: [
 				{
 					rel: "icon",

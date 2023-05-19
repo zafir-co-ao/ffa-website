@@ -1,6 +1,7 @@
 import { nodeServiceClient, Node } from "../../deps";
 import { I18nMessagesEntry } from "../../intl/strings";
 import { PortalLocale } from "./portal_locale";
+import useAntboxClient from "~/composables/use_antbox_client";
 
 // Aspect: banner
 export interface Banner {
@@ -30,10 +31,7 @@ export function makeBanner(): Banner {
 	return {} as Banner;
 }
 
-export function toLocalizedBanner(
-	node: Node,
-	lang?: PortalLocale
-): Banner | LocalizedBanner {
+export function toLocalizedBanner(node: Node, lang?: PortalLocale): Banner | LocalizedBanner {
 	const banner = toBanner(node);
 
 	if (!lang) {
@@ -49,7 +47,7 @@ export function toLocalizedBanner(
 }
 
 export function toBanner(node: Node): Banner {
-	const imageUrl = useAntboxClient().nodesClient.getNodeUrl(node.uuid);
+	const imageUrl = useAntboxClient().nodeClient.getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,

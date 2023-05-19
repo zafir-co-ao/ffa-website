@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-import { configureAntboxServer } from "./lib/deps";
-
-const antboxServerUrl = useAntboxServerUrl();
-configureAntboxServer(antboxServerUrl.value);
-
 const router = useRouter();
 
 router.afterEach(() => {
@@ -14,7 +9,7 @@ router.afterEach(() => {
 </script>
 
 <template>
-	<nuxt-layout>
-		<nuxt-page />
-	</nuxt-layout>
+	<NuxtLayout>
+		<NuxtPage />
+	</NuxtLayout>
 </template>

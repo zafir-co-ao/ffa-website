@@ -9,11 +9,7 @@ const email = ref("");
 const comments = ref("");
 
 function attachCurriculum() {
-	const validationErrors = validateForm(
-		getRecaptcha(),
-		name.value,
-		email.value
-	);
+	const validationErrors = validateForm(getRecaptcha(), name.value, email.value);
 
 	fileRef.value.click();
 }
@@ -23,23 +19,15 @@ function submitApplication() {
 }
 
 function getRecaptcha(): string {
-	return (
-		(document.getElementById("g-recaptcha-response") as HTMLTextAreaElement)
-			?.value ?? ""
-	);
+	return (document.getElementById("g-recaptcha-response") as HTMLTextAreaElement)?.value ?? "";
 }
 
-function validateForm(
-	recaptcha: string,
-	name: string,
-	email: string
-): string[] {
+function validateForm(recaptcha: string, name: string, email: string): string[] {
 	const errors: string[] = [];
 
 	if (recaptcha === "") errors.push("Prove-nos que não é um robot");
 	if (!validateName(name)) errors.push("Indique um nome válido");
-	if (!validateEmail(email))
-		errors.push("Indique um endereço de email válido");
+	if (!validateEmail(email)) errors.push("Indique um endereço de email válido");
 
 	return errors;
 }
@@ -60,8 +48,7 @@ function validateEmail(email: string): boolean {
 	const emailRe =
 		/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	if (!email || typeof email !== "string" || !email.trim().match(emailRe))
-		return false;
+	if (!email || typeof email !== "string" || !email.trim().match(emailRe)) return false;
 
 	return true;
 }
@@ -81,28 +68,26 @@ function addScripts() {
 </script>
 
 <script lang="ts" setup>
-const { $messages } = useI18n();
+import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
+import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+
+const { $messages, $locale: lang } = useI18n();
 
 onMounted(addScripts);
 </script>
 
 <template>
 	<div>
-		<Title
-			>{{ $messages.pages.careers.text.page_title }} -
-			{{ $messages.meta.title }}</Title
-		>
+		<Title>{{ $messages.pages.careers.text.page_title }} - {{ $messages.meta.title }}</Title>
 
-		<app-section-header-container fid="carreiras__separador_1" />
+		<app-section-header :getter="i18nSectionHeaderGetter('carreiras__separador_1', lang)" />
 
-		<text-container contentFid="carreiras__texto_1" />
+		<app-web-content :getter="i18nWebContentGetter('carreiras__texto_1', lang)" />
 
 		<div class="container">
 			<div v-if="applicationSent" class="my-5">
 				<h3 class="text-center">
-					{{
-						$messages.pages.careers.text.thanks_for_your_application
-					}}
+					{{ $messages.pages.careers.text.thanks_for_your_application }}
 				</h3>
 			</div>
 			<template v-else>
@@ -114,9 +99,7 @@ onMounted(addScripts);
 								class="form-control"
 								:placeholder="$messages.pages.careers.text.name"
 							/>
-							<label for="floatingInput">{{
-								$messages.pages.careers.text.name
-							}}</label>
+							<label for="floatingInput">{{ $messages.pages.careers.text.name }}</label>
 						</div>
 					</div>
 					<div class="col">
@@ -125,13 +108,9 @@ onMounted(addScripts);
 								v-model="email"
 								type="email"
 								class="form-control"
-								:placeholder="
-									$messages.pages.careers.text.email
-								"
+								:placeholder="$messages.pages.careers.text.email"
 							/>
-							<label>{{
-								$messages.pages.careers.text.email
-							}}</label>
+							<label>{{ $messages.pages.careers.text.email }}</label>
 						</div>
 					</div>
 				</div>
@@ -141,22 +120,15 @@ onMounted(addScripts);
 						<textarea
 							v-model="comments"
 							class="form-control h-10"
-							:placeholder="
-								$messages.pages.careers.text.leave_you_message
-							"
+							:placeholder="$messages.pages.careers.text.leave_you_message"
 							maxlength="600"
 						></textarea>
-						<label>{{
-							$messages.pages.careers.text.message
-						}}</label>
+						<label>{{ $messages.pages.careers.text.message }}</label>
 					</div>
 				</div>
 				<div class="row g-2 mb-2">
 					<div class="col">
-						<div
-							class="g-recaptcha"
-							data-sitekey="6LeWvCUcAAAAAL-Jm7O5rvk3CyExhFWzfOLJCF9r"
-						/>
+						<div class="g-recaptcha" data-sitekey="6LeWvCUcAAAAAL-Jm7O5rvk3CyExhFWzfOLJCF9r" />
 					</div>
 				</div>
 				<div class="row g-2 mb-5">
@@ -170,27 +142,16 @@ onMounted(addScripts);
 								@change="submitApplication"
 							/>
 							<app-button
-								:label="
-									$messages.pages.careers.text.attach_and_send
-								"
+								:label="$messages.pages.careers.text.attach_and_send"
 								@click="attachCurriculum"
 							/>
 
 							<div class="azul mt-1 fs-085">
-								{{
-									$messages.pages.careers.text
-										.warning_file_formats
-								}}
+								{{ $messages.pages.careers.text.warning_file_formats }}
 							</div>
 						</div>
-						<div
-							v-if="hasErrors"
-							class="alert alert-danger me-3"
-							role="alert"
-						>
-							<div v-for="error in errorMessages">
-								* {{ error }}
-							</div>
+						<div v-if="hasErrors" class="alert alert-danger me-3" role="alert">
+							<div v-for="error in errorMessages">* {{ error }}</div>
 						</div>
 					</div>
 				</div>

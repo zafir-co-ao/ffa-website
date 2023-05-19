@@ -15,7 +15,7 @@ export interface Event {
 	registrationUrl?: string;
 }
 
-export interface LocalizedEvent {
+export interface I18nEvent {
 	uuid: string;
 	fid: string;
 	title: string;
@@ -59,11 +59,7 @@ export function toEvent(node: Node, bodyText: string): Event {
 	return event;
 }
 
-export function toLocalizedEvent(
-	node: Node,
-	bodyText: string,
-	lang?: PortalLocale
-): Event | LocalizedEvent {
+export function toLocalizedEvent(node: Node, bodyText: string, lang?: PortalLocale): Event | I18nEvent {
 	const event = toEvent(node, bodyText);
 
 	if (!lang) {
@@ -74,7 +70,7 @@ export function toLocalizedEvent(
 		...event,
 		title: event.title[lang] ?? event.title.pt,
 		body: event.body[lang] ?? event.body.pt,
-	} as LocalizedEvent;
+	} as I18nEvent;
 }
 
 export function fromEvent(event: Event): EventDesc {

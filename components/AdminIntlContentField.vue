@@ -1,7 +1,7 @@
 <script lang="ts"></script>
 
 <script lang="ts" setup>
-import { I18nMessagesEntry } from "~~/lib/intl/strings";
+import { I18nMessagesEntry } from "~/lib/intl/strings";
 
 interface FieldProps {
 	modelValue: I18nMessagesEntry;

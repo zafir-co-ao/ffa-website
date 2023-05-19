@@ -1,5 +1,5 @@
 <script lang="ts">
-import PortalLanguage from "~~/lib/model/portalLanguage";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
 </script>
 
 <script lang="ts" setup>
@@ -24,12 +24,8 @@ const emit = defineEmits([]);
 					{{ backPageTile }}
 				</nuxt-link>
 			</span>
-			<span class="breadcrumb-item active" aria-current="page">{{
-				thirdLevelTitle
-			}}</span>
-			<span class="breadcrumb-item active" aria-current="page">{{
-				articleTitle
-			}}</span>
+			<span class="breadcrumb-item active" aria-current="page">{{ thirdLevelTitle }}</span>
+			<span class="breadcrumb-item active" aria-current="page">{{ articleTitle }}</span>
 		</div>
 	</nav>
 </template>

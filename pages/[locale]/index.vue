@@ -1,20 +1,23 @@
 <script lang="ts" setup>
-import { fidToUuid, nodeServiceClient } from "~~/lib/deps";
+import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import { i18nBannersGetter } from "~/lib/server_api_clients/banners_client";
+import { getLatestLegalAlerts } from "~/lib/server_api_clients/legal_alerts_client";
+import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+import { i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
 
-import { strings } from "~~/lib/intl/strings";
-import BannerCarouselContainer from "~~/components/BannerCarouselContainer.vue";
+import { fidToUuid } from "~/lib/deps";
+import { strings } from "~/lib/intl/strings";
 
-const endpoint = (lang: string) => `/api/legal-alerts/-/${lang}?latest=2`;
-
+const { nodeClient } = useAntboxClient();
 const { $locale: lang } = useI18n();
 
-const latestNews = await useFetch(endpoint(lang.value)).then(
-	({ data }) => data as any
-);
+const latestNews = ref<I18nLegalAlert[]>([]);
 
-const mediaImageUrl = nodeServiceClient.getNodeUrl(
-	fidToUuid("home_media__imagem_1.jpg")
-);
+onMounted(async () => {
+	latestNews.value = (await getLatestLegalAlerts(lang.value)) as I18nLegalAlert[];
+});
+
+const mediaImageUrl = nodeClient.getNodeUrl(fidToUuid("home_media__imagem_1.jpg"));
 
 const scopedMessages = {
 	knowMore: { pt: "Saiba mais", en: "Know more" },
@@ -33,12 +36,11 @@ const scopedMessages = {
 
 <template>
 	<div>
-		<banner-carousel-container />
+		<banner-carousel-container :lang="lang" :getter="i18nBannersGetter(lang)" />
 
 		<div class="container mt-5">
-			<text-container content-fid="home__titulo_1" />
-
-			<text-container class="fs-5" content-fid="home__texto_1" />
+			<app-web-content :getter="i18nWebContentGetter('home__titulo_1', lang)" />
+			<app-web-content :getter="i18nWebContentGetter('home__texto_1', lang)" />
 		</div>
 
 		<div class="container-fluid bgseparadorhome mt-5 position-relative">
@@ -55,10 +57,7 @@ const scopedMessages = {
 							{{ scopedMessages.aboutUsTeaserContent[lang] }}
 						</p>
 						<br />
-						<a
-							target="_blank"
-							href="https://www.mirandalawfirm.com/pt/alliance/overview"
-						>
+						<a target="_blank" href="https://www.mirandalawfirm.com/pt/alliance/overview">
 							<know-more-button :dark="false" :lang="lang" />
 						</a>
 					</div>
@@ -66,15 +65,8 @@ const scopedMessages = {
 			</div>
 			<div class="row">
 				<div class="col-md-6 offset-md-6 text-right mt-3 mt-md-0 mb-5">
-					<a
-						href="https://www.mirandalawfirm.com/alliance/overview/"
-						target="_blank"
-						class="miranda-link"
-					>
-						<img
-							src="/images/mirandaalliance.png"
-							alt="Miranda Alliance"
-						/>
+					<a href="https://www.mirandalawfirm.com/alliance/overview/" target="_blank" class="miranda-link">
+						<img src="/images/mirandaalliance.png" alt="Miranda Alliance" />
 					</a>
 				</div>
 			</div>
@@ -86,16 +78,9 @@ const scopedMessages = {
 					<p class="h2 fw-bold azul mb-3">
 						{{ scopedMessages.media[lang] }}
 					</p>
-					<img
-						class="mb-3 events"
-						:src="mediaImageUrl"
-						alt="events"
-					/>
+					<img class="mb-3 events" :src="mediaImageUrl" alt="events" />
 					<div class="body1 text-black">
-						<borderless-text-container
-							contentFid="home_media__text"
-							:lang="lang"
-						/>
+						<app-web-content :getter="i18nWebContentGetter('home_media__text', lang)" />
 					</div>
 					<div class="body2">
 						<nuxt-link :to="`/${lang}/media`">
@@ -108,11 +93,7 @@ const scopedMessages = {
 						{{ scopedMessages.legalAlerts[lang] }}
 					</p>
 					<div v-for="article in latestNews">
-						<legal-alert
-							:uuid="article.uuid"
-							:big-button="true"
-							:lang="lang"
-						/>
+						<app-legal-alert :getter="i18nLegalAlertGetter(article.uuid, lang, false)" :lang="lang" />
 					</div>
 				</div>
 			</div>
@@ -133,20 +114,12 @@ const scopedMessages = {
 
 .parabranco {
 	bottom: 0px;
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 49.5%,
-		white 50.5%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 49.5%, white 50.5%);
 }
 
 .paratransparente {
 	top: 0px;
-	background: linear-gradient(
-		to right bottom,
-		white 49.5%,
-		rgba(255, 255, 255, 0) 50.5%
-	);
+	background: linear-gradient(to right bottom, white 49.5%, rgba(255, 255, 255, 0) 50.5%);
 }
 
 .miranda-link {
@@ -181,20 +154,12 @@ const scopedMessages = {
 @media (min-width: 1200px) {
 	_:-ms-fullscreen,
 	:root .parabranco {
-		background: linear-gradient(
-			to right bottom,
-			rgba(255, 255, 255, 0) 50%,
-			white 50%
-		);
+		background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 50%, white 50%);
 	} /* IE 11 */
 
 	_:-ms-fullscreen,
 	:root .paratransparente {
-		background: linear-gradient(
-			to right bottom,
-			white 50%,
-			rgba(255, 255, 255, 0) 50%
-		);
+		background: linear-gradient(to right bottom, white 50%, rgba(255, 255, 255, 0) 50%);
 	} /* IE 11 */
 }
 </style>

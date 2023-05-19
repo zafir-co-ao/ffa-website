@@ -1,9 +1,10 @@
-import { nodeServiceClient, webContentServiceClient } from "~~/lib/deps";
+import { nodeServiceClient, webContentServiceClient } from "~/lib/deps";
+import useAntboxUrl from "./use_antbox_url";
 
 export default function () {
 	const url = useAntboxUrl();
 	return {
-		nodesClient: nodeServiceClient(useAntboxUrl().value),
+		nodeClient: nodeServiceClient(useAntboxUrl().value),
 		webContentClient: webContentServiceClient(url.value),
 	};
 }

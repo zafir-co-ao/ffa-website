@@ -1,12 +1,6 @@
-import { I18nMessagesEntry } from "~~/lib/intl/strings";
-import { WebContentEditorProps } from "~~/lib/deps";
-
-export interface IntlDialogProps extends WebContentEditorProps {
-	callback?: (value: I18nMessagesEntry) => void;
-}
+import { I18nMessagesEntry } from "~/lib/intl/strings";
 
 export default function editIntlField(
-	props: IntlDialogProps,
 	title: string,
 	value: I18nMessagesEntry,
 	transformFn?: (value: string) => string

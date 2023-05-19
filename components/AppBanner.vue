@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import PortalLanguage from "~~/lib/model/portalLanguage";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 interface BannerProps {
 	title1?: string;
@@ -7,35 +7,26 @@ interface BannerProps {
 	href?: string;
 	subtitle?: string;
 	imageUrl: string;
-	lang: PortalLanguage;
+	lang: PortalLocale;
 }
 
 const props = defineProps<BannerProps>();
 const bannerRef = ref<HTMLDivElement>();
 
 onMounted(() => {
-	const el = bannerRef.value;
-	el.style.backgroundImage = `url(${props.imageUrl})`;
+	bannerRef.value!.style.backgroundImage = `url(${props.imageUrl})`;
 });
 </script>
 
 <template>
 	<div ref="bannerRef" class="container-fluid banner">
 		<div class="text-center">
-			<h1
-				v-if="title1 && title2"
-				class="titulo fw-bold text-white text-uppercase"
-			>
+			<h1 v-if="title1 && title2" class="titulo fw-bold text-white text-uppercase">
 				{{ title1 }}
 				<span v-if="title2"><br />{{ title2 }}</span>
 			</h1>
 
-			<p
-				v-if="subtitle"
-				id="legendabanner"
-				class="h4 fw-normal text-white"
-				v-html="subtitle ?? ''"
-			/>
+			<p v-if="subtitle" id="legendabanner" class="h4 fw-normal text-white" v-html="subtitle ?? ''" />
 
 			<a v-if="href" :href="href">
 				<know-more-button :lang="lang" />
@@ -81,11 +72,7 @@ onMounted(() => {
 	left: 0px;
 	width: 100%;
 	height: 60px;
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 49.5%,
-		white 50.5%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 49.5%, white 50.5%);
 }
 
 .titulo {
@@ -127,10 +114,6 @@ onMounted(() => {
 
 _:-ms-fullscreen,
 :root .corte {
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 50%,
-		white 50%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 50%, white 50%);
 } /* IE 11 */
 </style>

@@ -4,6 +4,7 @@
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"allowJs": true,
-		"types": ["@nuxt/types"]
+		"types": ["@nuxt/types"],
+		"noUnusedLocals": true
 	}
 }

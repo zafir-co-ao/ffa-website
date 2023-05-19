@@ -1,9 +1,9 @@
 import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { Node } from "~~/lib/deps";
+import { Node } from "~/lib/deps";
 import { PortalLocale } from "./portal_locale";
 import { FOLDER_MIMETYPE } from "@zafir.co.ao/lightray";
 
-export default interface Lawyer {
+export interface Lawyer {
 	uuid: string;
 	fid: string;
 	parent?: string;
@@ -22,7 +22,7 @@ export default interface Lawyer {
 	career: I18nMessagesEntry;
 }
 
-export interface LocalizedLawyer {
+export interface I18nLawyer {
 	uuid: string;
 	fid: string;
 	parent?: string;
@@ -98,9 +98,7 @@ export function toLawyer(node: Node): Lawyer {
 		parent: node.parent,
 		name: node.title,
 		category: node.properties?.["lawyer:category"] as LawyerCategory,
-		officeTelephones: node.properties?.[
-			"lawyer:officeTelephones"
-		] as string,
+		officeTelephones: node.properties?.["lawyer:officeTelephones"] as string,
 		mobilePhone: node.properties?.["lawyer:officeMobilePhone"] as string,
 		email: node.properties?.["lawyer:email"] as string,
 		areas: (node.properties?.["lawyer:areas"] as []) ?? [],
@@ -113,10 +111,7 @@ export function toLawyer(node: Node): Lawyer {
 	};
 }
 
-export function toLocalizedLawyer(
-	node: Node,
-	lang?: PortalLocale
-): Lawyer | LocalizedLawyer {
+export function toLocalizedLawyer(node: Node, lang?: PortalLocale): Lawyer | I18nLawyer {
 	const lawyer = toLawyer(node);
 
 	if (!lang) {

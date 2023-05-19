@@ -1,17 +1,16 @@
 import { H3Event } from "h3";
 
-import { Node, NodeFilter } from "~~/lib/deps";
+import { Node, NodeFilter } from "~/lib/deps";
 
 import processApiError from "../process_api_error";
 import { mapBody } from "./map_body";
 import { PortalLocale } from "../model/types/portal_locale";
+import useAntboxClient from "~/composables/use_antbox_client";
 
-function client() {
-	return useAntboxClient().nodesClient;
-}
+const client = useAntboxClient().nodeClient;
 
 export async function createFile(evt: H3Event, file: File, node: Node) {
-	const voidOrErr = await client().createFile(file, node);
+	const voidOrErr = await client.createFile(file, node);
 
 	if (voidOrErr.isLeft()) {
 		return processApiError(evt, voidOrErr);
@@ -19,7 +18,7 @@ export async function createFile(evt: H3Event, file: File, node: Node) {
 }
 
 export async function updateFile(evt: H3Event, uuid: string, file: File) {
-	const voidOrErr = await client().updateFile(uuid, file);
+	const voidOrErr = await client.updateFile(uuid, file);
 
 	if (voidOrErr.isLeft()) {
 		return processApiError(evt, voidOrErr);
@@ -27,7 +26,7 @@ export async function updateFile(evt: H3Event, uuid: string, file: File) {
 }
 
 export async function exportNode(evt: H3Event, uuid: string) {
-	const voidOrErr = await client().export(uuid);
+	const voidOrErr = await client.export(uuid);
 
 	if (voidOrErr.isLeft()) {
 		return processApiError(evt, voidOrErr);
@@ -40,7 +39,7 @@ export function updateNode<T>(from: (t: T) => Node) {
 	return async (evt: H3Event) => {
 		const uuid = evt.context.params?.uuid;
 		const node = await mapBody(evt, from);
-		const voidOrErr = await client().update(uuid!, { ...node, uuid });
+		const voidOrErr = await client.update(uuid!, { ...node, uuid });
 
 		if (voidOrErr.isLeft()) {
 			return processApiError(evt, voidOrErr);
@@ -50,7 +49,7 @@ export function updateNode<T>(from: (t: T) => Node) {
 
 export async function deleteNode(evt: H3Event) {
 	const uuid = evt.context.params?.uuid;
-	const voidOrrErr = await client().delete(uuid!);
+	const voidOrrErr = await client.delete(uuid!);
 
 	if (voidOrrErr.isLeft()) {
 		return processApiError(evt, voidOrrErr);
@@ -60,7 +59,7 @@ export async function deleteNode(evt: H3Event) {
 export function getNode<T>(to: (n: Node, lang?: PortalLocale) => T) {
 	return async (evt: H3Event) => {
 		const uuid = evt.context.params?.uuid;
-		const nodeOrErr = await client().get(uuid!);
+		const nodeOrErr = await client.get(uuid!);
 
 		if (nodeOrErr.isLeft()) {
 			return processApiError(evt, nodeOrErr);
@@ -78,7 +77,7 @@ export async function searchNodes<T, L>(
 	pageSize = 1000,
 	pageToken = 1
 ) {
-	const resultOrErr = await client().query(criteria, pageSize, pageToken);
+	const resultOrErr = await client.query(criteria, pageSize, pageToken);
 
 	if (resultOrErr.isLeft()) {
 		return processApiError(evt, resultOrErr);

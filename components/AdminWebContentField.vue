@@ -1,7 +1,7 @@
 <script lang="ts"></script>
 
 <script lang="ts" setup>
-import { I18nMessagesEntry } from "~~/lib/intl/strings";
+import { I18nMessagesEntry } from "~/lib/intl/strings";
 
 interface FieldProps {
 	content: I18nMessagesEntry;
@@ -19,11 +19,7 @@ const emit = defineEmits<FieldEvents>();
 	<div>
 		<div class="d-flex">
 			<label class="fw-bolder flex-fill"> {{ label }}</label>
-			<app-icon-button
-				class="field-icon"
-				iconClass="bi bi-pencil"
-				@click="emit('edit')"
-			/>
+			<app-icon-button class="field-icon" iconClass="bi bi-pencil" @click="emit('edit')" />
 		</div>
 		<div class="d-flex">
 			<admin-html-field class="w-50 me-3" :content="content?.pt ?? ''" />

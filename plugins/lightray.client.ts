@@ -1,6 +1,5 @@
-//@ts-ignore
-import LightrayComponentsClientOnly from "@zafir.co.ao/lightray/clientOnlyComponents";
+import Lightray, { components } from "@zafir.co.ao/lightray/dist/plugin";
 
-export default defineNuxtPlugin((nuxt) => {
-  nuxt.vueApp.use(LightrayComponentsClientOnly);
+export default defineNuxtPlugin(async (nuxt) => {
+	nuxt.vueApp.use(Lightray);
 });

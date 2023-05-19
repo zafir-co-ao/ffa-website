@@ -1,21 +1,16 @@
 <script lang="ts">
 import { Ref } from "vue";
+import { LocalizedBanner } from "~/lib/model/types/banner";
+import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { I18nBannersGetter } from "~/lib/server_api_clients/banners_client";
 
-function initializeComponent(
-	currentIndex: Ref<number>,
-	banners: Ref,
-	intervalId: Ref<number>
-) {
-	if (banners.value.length == 0) return;
+function initializeComponent(currentIndex: Ref<number>, banners: LocalizedBanner[], intervalId: Ref<number>) {
+	if (banners.length == 0) return;
 	currentIndex.value = 0;
-	animateBanners(currentIndex, banners.value.length, intervalId);
+	animateBanners(currentIndex, banners.length, intervalId);
 }
 
-function animateBanners(
-	indexRef: Ref<number>,
-	bannersCount: number,
-	intervalIdRef: Ref<unknown>
-) {
+function animateBanners(indexRef: Ref<number>, bannersCount: number, intervalIdRef: Ref<unknown>) {
 	intervalIdRef.value = setInterval(() => {
 		indexRef.value = indexRef.value + 1;
 
@@ -23,11 +18,7 @@ function animateBanners(
 	}, ANIMATION_INTERVAL);
 }
 
-function restartBannersAnimation(
-	indexRef: Ref<number>,
-	bannersCount: number,
-	intervalIdRef: Ref<unknown>
-) {
+function restartBannersAnimation(indexRef: Ref<number>, bannersCount: number, intervalIdRef: Ref<unknown>) {
 	clearInterval(intervalIdRef.value as number);
 	animateBanners(indexRef, bannersCount, intervalIdRef);
 }
@@ -36,21 +27,24 @@ const ANIMATION_INTERVAL = 10000;
 </script>
 
 <script lang="ts" setup>
-const { $locale: lang } = useI18n();
+const props = defineProps<{ getter: I18nBannersGetter; lang: PortalLocale }>();
 
 const currentIndex = ref(0);
 const intervalIdRef = ref(-1);
+const banners = ref<LocalizedBanner[]>([]);
 
-const { data: banners } = await useFetch<any[]>("/api/banners/-/" + lang.value);
-
-const hasBanners = computed(() => banners.value?.length > 0);
+const hasBanners = computed(() => (banners.value?.length ?? 0) > 0);
 
 const selectIndex = (index: number) => {
 	currentIndex.value = index;
-	restartBannersAnimation(currentIndex, banners.value.length, intervalIdRef);
+	restartBannersAnimation(currentIndex, banners.value?.length ?? 0, intervalIdRef);
 };
 
-watch(banners, () => initializeComponent(currentIndex, banners, intervalIdRef));
+watch(banners, () => initializeComponent(currentIndex, banners.value ?? [], intervalIdRef));
+
+onMounted(async () => {
+	banners.value = await props.getter();
+});
 </script>
 
 <template>

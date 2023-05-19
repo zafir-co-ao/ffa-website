@@ -1,34 +1,28 @@
 <script lang="ts">
-import { strings } from "~~/lib/intl/strings";
-import { LocalizedMediaArticle } from "~/lib/model/types/media_article";
+import { strings } from "~/lib/intl/strings";
+import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import { i18nLawyerGetter } from "~/lib/server_api_clients/lawyers_client";
+import { i18nMediaArticleGetter } from "~/lib/server_api_clients/media_articles_client";
+import { searchMediaArticlesArchive } from "~/lib/server_api_clients/media_articles_client";
+import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>
 
 <script lang="ts" setup>
 const { $locale: lang } = useI18n();
-const articlesEndpoint = `/api/media-articles/-/${lang.value}`;
 
 const pageSize = 6;
 const pageToken = ref(1);
-const alerts = ref<LocalizedMediaArticle[]>([]);
-await loadMore();
+const alerts = ref<I18nMediaArticle[]>([]);
 
-const hasMore = computed(
-	() => pageSize * pageToken.value === alerts.value.length
-);
+const hasMore = computed(() => pageSize * pageToken.value === alerts.value.length);
 
 async function loadMore() {
-	const endpoint = articlesEndpoint.concat(
-		"?page-size=",
-		pageSize.toString(),
-		"&page-token=",
-		pageToken.value.toString()
-	);
-	const { data: newAlerts } = await useFetch<LocalizedMediaArticle[]>(
-		endpoint
-	);
+	const newAlerts = await searchMediaArticlesArchive(lang.value, pageSize, pageToken.value);
 
-	alerts.value = [...alerts.value, ...newAlerts.value];
+	alerts.value = [...alerts.value, ...newAlerts];
 }
+
+onMounted(loadMore);
 
 function handleLoadMoreClick() {
 	pageToken.value++;
@@ -39,11 +33,9 @@ function handleLoadMoreClick() {
 
 <template>
 	<div>
-		<Title
-			>{{ strings.archive[lang] }} - {{ strings.meta_title[lang] }}</Title
-		>
+		<Title>{{ strings.archive[lang] }} - {{ strings.meta_title[lang] }}</Title>
 
-		<app-section-header-container fid="media__separador_1" :lang="lang" />
+		<app-section-header :getter="i18nSectionHeaderGetter('media__separador_1', lang)" />
 
 		<div class="container">
 			<h2 class="h3 font-weight-700 azul text-center">
@@ -53,13 +45,17 @@ function handleLoadMoreClick() {
 
 			<div class="row gx-5">
 				<div v-for="alert in alerts" class="bg-azul-1 mb-3 pb-4">
-					<media-article :uuid="alert.uuid" :lang="lang" />
+					<app-media-article
+						:getter="i18nMediaArticleGetter(alert.uuid, lang, false)"
+						:lawyer-getter="i18nLawyerGetter(alert.lawyerUuid!, lang, false)"
+						:lang="lang"
+					/>
 				</div>
 			</div>
 
 			<div class="my-5 text-center">
 				<app-button
-					:label="strings.load_more[lang]"
+					:label="strings.load_more[lang]!"
 					:dark="true"
 					:pt="strings.load_more.pt"
 					:disabled="!hasMore"

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { strings } from "~~/lib/intl/strings";
+import { strings } from "~/lib/intl/strings";
 
 definePageMeta({ layout: "none" });
 
@@ -40,9 +40,7 @@ function handleError(errorCode: number) {
 			errors.value = ["Nome de utilizador ou palavra-passe inválidos"];
 			break;
 		default:
-			errors.value = [
-				"Erro desconhecido, contacte o administrador do sistema",
-			];
+			errors.value = ["Erro desconhecido, contacte o administrador do sistema"];
 	}
 }
 
@@ -105,30 +103,16 @@ function redirect() {
 			<div class="h2 text-center mb-3 azulescuro">Área Reservada</div>
 
 			<div class="form-floating w-100 mb-2">
-				<input
-					v-model="username"
-					class="form-control"
-					:placeholder="strings.username[lang]"
-				/>
+				<input v-model="username" class="form-control" :placeholder="strings.username[lang]" />
 				<label for="floatingInput">{{ strings.username[lang] }}</label>
 			</div>
 
 			<div class="form-floating w-100 mb-2">
-				<input
-					type="password"
-					v-model="code"
-					class="form-control"
-					:placeholder="strings.password[lang]"
-				/>
+				<input type="password" v-model="code" class="form-control" :placeholder="strings.password[lang]" />
 				<label for="floatingInput">{{ strings.password[lang] }}</label>
 			</div>
 
-			<app-button
-				class="w-100"
-				:dark="false"
-				:label="strings.login[lang]"
-				@click="login"
-			/>
+			<app-button class="w-100" :dark="false" :label="strings.login[lang]" @click="login" />
 
 			<div v-if="hasErrors" class="alert alert-danger mt-4" role="alert">
 				<div v-for="error in errors">* {{ error }}</div>

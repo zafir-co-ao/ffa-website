@@ -1,37 +1,24 @@
 <script lang="ts" setup>
-import ScreenSizeIndicator from "~lightray/ScreenSizeIndicator.vue";
-
-import { strings } from "~~/lib/intl/strings";
+import { strings } from "~/lib/intl/strings";
 
 const { $locale: lang } = useI18n();
-const runtimeMode = useRuntimeMode();
 
-const development = computed(() => runtimeMode.value === "development");
+useSeoMeta({
+	title: strings.meta_title[lang.value],
+	description: strings.meta_description[lang.value],
 
-useMeta({
-	meta: [
-		{ name: "title", content: strings.meta_title[lang.value] },
-		{ name: "description", content: strings.meta_description[lang.value] },
-		{ name: "keywords", content: strings.meta_keywords[lang.value] },
-		{ name: "og:title", content: strings.meta_title[lang.value] },
-		{ name: "og:url", content: "https://fatimafreitas.com" },
-		{
-			name: "og:image",
-			content: "https://fatimafreitas.com/images/ffa-icon.jpg",
-		},
+	// keywords: ,
+	ogTitle: strings.meta_title[lang.value],
+	ogUrl: "https://fatimafreitas.com",
+	ogImage: "https://fatimafreitas.com/images/ffa-icon.jpg",
+	ogSiteName: strings.meta_og_site_name[lang.value],
+	ogType: "website",
+	ogLocale: lang.value,
+	ogDescription: strings.meta_description[lang.value],
+});
 
-		{
-			name: "og:site_name",
-			content: strings.meta_og_site_name[lang.value],
-		},
-		{ name: "og:type", content: "website" },
-		{ name: "og:locale", content: lang.value },
-
-		{
-			name: "og:description",
-			content: strings.meta_description[lang.value],
-		},
-	],
+useHead({
+	meta: [{ name: "keywords", content: strings.meta_keywords[lang.value] }],
 });
 </script>
 
@@ -39,7 +26,6 @@ useMeta({
 	<div class="ffa">
 		<Title>{{ strings.meta_title[lang] }}</Title>
 
-		<screen-size-indicator v-if="development" />
 		<navbar />
 
 		<slot />

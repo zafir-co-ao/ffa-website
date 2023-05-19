@@ -1,9 +1,11 @@
 <script lang="ts">
 import areasOfPractice from "~/lib/intl/areas_of_practice";
-import industries from "~~/lib/intl/industries";
-import { I18nMessagesEntry, strings } from "~~/lib/intl/strings";
+import industries from "~/lib/intl/industries";
+import { I18nMessagesEntry, strings } from "~/lib/intl/strings";
+import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
+import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
 
-import offices from "~~/lib/stubs/offices";
+import offices from "~/lib/stubs/offices";
 </script>
 
 <script lang="ts" setup>
@@ -15,7 +17,7 @@ const localizedIndustries = computed(() => compute(industries));
 function compute(obj: Record<string, I18nMessagesEntry>) {
 	return Object.values(obj)
 		.map((value) => value[lang.value])
-		.sort((a1, a2) => (a1 > a2 ? 1 : -1));
+		.sort((a1, a2) => ((a1 ?? "") > (a2 ?? "") ? 1 : -1));
 }
 
 const scopedMessages = {
@@ -72,24 +74,12 @@ const ldJson = JSON.stringify({
 
 <template>
 	<div>
-		<Title
-			>{{ strings.services[lang] }} -
-			{{ strings.meta_title[lang] }}</Title
-		>
+		<Title>{{ strings.services[lang] }} - {{ strings.meta_title[lang] }}</Title>
 		<Script type="application/ld+json" :children="ldJson"></Script>
-		<app-section-header-container
-			id="services"
-			fid="servicos__separador_1"
-			:lang="lang"
-		/>
+		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_1', lang)" />
+		<app-web-content :getter="i18nWebContentGetter('servicos__texto_1', lang)" />
 
-		<text-container contentFid="servicos__texto_1" :lang="lang" />
-
-		<app-section-header-container
-			id="industries"
-			fid="servicos__separador_2"
-			:lang="lang"
-		/>
+		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_2', lang)" />
 
 		<div class="container mt-5 mb-5">
 			<div class="row">
@@ -119,17 +109,22 @@ const ldJson = JSON.stringify({
 		<div class="container mt-5 mb-5">
 			<div class="row justify-content-center">
 				<div class="col-auto">
-					<a class="btnmenuabout active" href="#services">{{
-						scopedMessages.ourServices[lang]
-					}}</a>
+					<a class="btnmenuabout active" href="#services">{{ scopedMessages.ourServices[lang] }}</a>
 				</div>
 
 				<div class="col-auto">
-					<a class="btnmenuabout" href="#industries">
-						{{ scopedMessages.areasAndIndustries[lang] }}</a
-					>
+					<a class="btnmenuabout" href="#industries"> {{ scopedMessages.areasAndIndustries[lang] }}</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+// media query for mobile
+@media (max-width: 767px) {
+	.col-auto {
+		flex: 0 0 100%;
+	}
+}
+</style>

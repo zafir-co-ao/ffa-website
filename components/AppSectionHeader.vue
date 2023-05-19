@@ -1,19 +1,21 @@
 <script lang="ts">
 import { LocalizedSectionHeader } from "~/lib/model/types/section_header";
+import { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>
 
 <script lang="ts" setup>
 interface SectionHeaderProps {
-	header: LocalizedSectionHeader;
+	getter: I18nSectionHeaderGetter;
 }
 
 const props = defineProps<SectionHeaderProps>();
 
+const header = ref<LocalizedSectionHeader>();
 const headerRef = ref<HTMLElement>();
 
-onMounted(() => {
-	const el = headerRef.value;
-	el.style.backgroundImage = `url(${props.header?.imageUrl})`;
+onMounted(async () => {
+	header.value = await props.getter();
+	headerRef.value!.style.backgroundImage = `url(${header.value?.imageUrl})`;
 });
 </script>
 
@@ -21,14 +23,8 @@ onMounted(() => {
 	<div ref="headerRef" class="section-header container-fluid bg-azul">
 		<div class="container">
 			<div class="text-center">
-				<h1
-					class="titulo fw-bold text-white text-uppercase"
-					v-html="header?.title ?? ''"
-				/>
-				<p
-					class="h4 fw-normal text-white"
-					v-html="header?.subtitle ?? ''"
-				/>
+				<h1 class="titulo fw-bold text-white text-uppercase" v-html="header?.title ?? ''" />
+				<p class="h4 fw-normal text-white" v-html="header?.subtitle ?? ''" />
 			</div>
 		</div>
 		<div v-if="header?.clipTop ?? false" class="paratransparente" />
@@ -67,20 +63,12 @@ onMounted(() => {
 
 .parabranco {
 	bottom: 0px;
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 49.5%,
-		white 50.5%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 49.5%, white 50.5%);
 }
 
 .paratransparente {
 	top: 0px;
-	background: linear-gradient(
-		to right bottom,
-		white 49.5%,
-		rgba(255, 255, 255, 0) 50.5%
-	);
+	background: linear-gradient(to right bottom, white 49.5%, rgba(255, 255, 255, 0) 50.5%);
 }
 
 @media (min-width: 576px) {
@@ -100,20 +88,12 @@ onMounted(() => {
 @media (min-width: 1200px) {
 	_:-ms-fullscreen,
 	:root .parabranco {
-		background: linear-gradient(
-			to right bottom,
-			rgba(255, 255, 255, 0) 50%,
-			white 50%
-		);
+		background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 50%, white 50%);
 	} /* IE 11 */
 
 	_:-ms-fullscreen,
 	:root .paratransparente {
-		background: linear-gradient(
-			to right bottom,
-			white 50%,
-			rgba(255, 255, 255, 0) 50%
-		);
+		background: linear-gradient(to right bottom, white 50%, rgba(255, 255, 255, 0) 50%);
 	} /* IE 11 */
 }
 </style>

@@ -15,7 +15,7 @@ export interface MediaArticle {
 	href?: string;
 }
 
-export interface LocalizedMediaArticle {
+export interface I18nMediaArticle {
 	uuid: string;
 	fid: string;
 	title: string;
@@ -50,15 +50,11 @@ export function toMediaArticle(node: Node, bodyText: string): MediaArticle {
 		fid: node.fid,
 		title: node.properties?.["media-article:title"] as I18nMessagesEntry,
 		publishedOn: node.properties?.["media-article:publishedOn"] as string,
-		publicationName: node.properties?.[
-			"media-article:publicationName"
-		] as string,
+		publicationName: node.properties?.["media-article:publicationName"] as string,
 		pdfUuid: node.properties?.["media-article:pdfUuid"] as string,
 		lawyerUuid: node.properties?.["media-article:lawyerUuid"] as string,
 		lawyerName: node.properties?.["media-article:lawyerName"] as string,
-		lawyerLinkedIn: node.properties?.[
-			"media-article:lawyerLinkedIn"
-		] as string,
+		lawyerLinkedIn: node.properties?.["media-article:lawyerLinkedIn"] as string,
 		href: node.properties?.["media-article:href"] as string,
 		body: JSON.parse(bodyText) as I18nMessagesEntry,
 	};
@@ -70,7 +66,7 @@ export function toLocalizedMediaArticle(
 	node: Node,
 	bodyText: string,
 	lang?: PortalLocale
-): MediaArticle | LocalizedMediaArticle {
+): MediaArticle | I18nMediaArticle {
 	const article = toMediaArticle(node, bodyText);
 
 	if (!lang) {
@@ -102,10 +98,6 @@ export function fromMediaArticle(article: MediaArticle): MediaArticleDesc {
 			},
 		} as unknown as Node,
 
-		file: new File(
-			[JSON.stringify(article.body)],
-			`${article.title.pt}.json`,
-			{ type: "application/json" }
-		),
+		file: new File([JSON.stringify(article.body)], `${article.title.pt}.json`, { type: "application/json" }),
 	};
 }

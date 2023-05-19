@@ -1,9 +1,8 @@
-import { log } from "console";
 import { Ref } from "vue";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-import pt from "~~/lib/i18n/locales/pt.json";
-import en from "~~/lib/i18n/locales/en.json";
+import pt from "~/lib/i18n/locales/pt.json";
+import en from "~/lib/i18n/locales/en.json";
 
 import { RouteLocationNormalizedLoaded, Router } from "vue-router";
 
@@ -16,8 +15,7 @@ export default function () {
 	return {
 		$locale: locale,
 		$messages: messages(locale),
-		switchLocalePath: (l: PortalLocale) =>
-			switchLocalePath(router, route, locale, l),
+		switchLocalePath: (l: PortalLocale) => switchLocalePath(router, route, locale, l),
 		localePath: (path: string) => localePath(locale, path),
 	};
 }

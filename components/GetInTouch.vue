@@ -29,14 +29,8 @@
 		<div class="container-fluid bgcinzaescuro">
 			<div class="container pt-2 pb-2">
 				<div class="row city-address-container">
-					<div
-						class="col-lg-3 col-md-4 col-sm-6"
-						v-for="office in offices"
-					>
-						<OfficeLocation
-							:officeInfo="office"
-							@changeMap="changeMap"
-						/>
+					<div class="col-lg-3 col-md-4 col-sm-6" v-for="office in offices">
+						<OfficeLocation :officeInfo="office" @changeMap="changeMap" />
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6">
 						<div class="text-white p-3 pt-5">
@@ -47,9 +41,7 @@
 									target="_blank"
 									href="https://ao.linkedin.com/company/fatima-freitas-advogados"
 								>
-									<img
-										src="/images/linkedin-icon-white.svg"
-									/>
+									<img src="/images/linkedin-icon-white.svg" />
 									LinkedIn
 								</a>
 							</p>
@@ -62,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import offices from "~~/lib/stubs/offices";
+import offices from "~/lib/stubs/offices";
 
 const messages = {
 	pt: {
@@ -109,11 +101,7 @@ function changeMap(officeId: string) {
 	left: 0px;
 	width: 100%;
 	height: 60px;
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 49.5%,
-		rgb(38, 50, 56) 50.5%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 49.5%, rgb(38, 50, 56) 50.5%);
 }
 
 @media (min-width: 576px) {
@@ -128,10 +116,6 @@ function changeMap(officeId: string) {
 }
 _:-ms-fullscreen,
 :root .paracinzentoescuro {
-	background: linear-gradient(
-		to right bottom,
-		rgba(255, 255, 255, 0) 50%,
-		#333333 50%
-	);
+	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 50%, #333333 50%);
 }
 </style>
