@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-const router = useRouter();
-const route = useRoute();
 const { $messages, $locale, switchLocalePath, localePath } = useI18n();
 
 const navbarRef = ref(null);
@@ -34,23 +32,6 @@ function setupIntersectionObserver() {
 
 	observer.observe(document.querySelector("body") as Element);
 }
-
-const scopedMessages = {
-	pt: {
-		aboutUs: "Sobre Nós",
-		services: "Serviços",
-		media: "Media e Conhecimento",
-		people: "Colaboradores",
-		careers: "Carreiras",
-	},
-	en: {
-		aboutUs: "About Us",
-		services: "Services",
-		media: "Media & Insights",
-		people: "People",
-		careers: "Careers",
-	},
-};
 </script>
 
 <template>
@@ -61,7 +42,7 @@ const scopedMessages = {
 					<img class="logo" src="/images/FatimaFreitas-02.png" alt="Fátima Freitas Associados" />
 				</nuxt-link>
 
-				<div class="order-lg-1 order-0 ml-auto ml-lg-3 mr-3 mr-lg-0">
+				<div class="locale-search-container order-lg-1 order-0 ml-auto ml-lg-3 mr-3 mr-lg-0">
 					<a class="btnlingua" :class="{ active: $locale === 'en' }" href="#" @click="changeLocale('en')"
 						>EN</a
 					>
@@ -126,6 +107,10 @@ const scopedMessages = {
 </template>
 
 <style lang="scss" scoped>
+.locale-search-container {
+	min-width: 80px;
+	max-width: 80px;
+}
 .bi {
 	font-size: 00.85em;
 }
@@ -164,13 +149,16 @@ ul.navbar-nav li::before {
 }
 
 .navbar-light .navbar-nav .nav-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	color: #1470b9;
 	text-transform: uppercase;
 	font-weight: 400;
 	font-size: 14px;
-	line-height: 60px;
 	padding-left: 12px;
 	padding-right: 12px;
+	min-height: 70px;
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
@@ -194,7 +182,6 @@ ul.navbar-nav li::before {
 		text-transform: uppercase;
 		font-weight: 400;
 		font-size: 14px;
-		line-height: 60px;
 		padding-left: 12px;
 		padding-right: 12px;
 	}
@@ -207,7 +194,6 @@ ul.navbar-nav li::before {
 		text-transform: uppercase;
 		font-weight: 400;
 		font-size: 14px;
-		line-height: 60px;
 		padding-left: 12px;
 		padding-right: 12px;
 	}
@@ -234,7 +220,6 @@ ul.navbar-nav li::before {
 		text-transform: uppercase;
 		font-weight: 400;
 		font-size: 14px;
-		line-height: 60px;
 		padding-left: 12px;
 		padding-right: 12px;
 	}
@@ -247,56 +232,8 @@ ul.navbar-nav li::before {
 		text-transform: uppercase;
 		font-weight: 400;
 		font-size: 14px;
-		line-height: 60px;
 		padding-left: 24px;
 		padding-right: 24px;
 	}
-}
-
-/* dropdown items */
-.dropdown-menu {
-	color: white;
-	background-color: rgba(20, 112, 185, 0.8);
-	border-radius: 0;
-	border: 0px solid white;
-	margin-top: -1px;
-}
-
-.dropdown-item {
-	color: white;
-	border-bottom: solid 1px rgba(20, 112, 185, 1);
-	line-height: 40px;
-	text-transform: uppercase;
-}
-
-.dropdown-item:hover,
-.dropdown-item:focus {
-	color: #003152;
-	text-decoration: none;
-	/* background-color: #f8f9fa; */
-	background-color: transparent;
-	font-weight: 500;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-	color: #003152;
-	text-decoration: none;
-	/* background-color: #007bff; */
-	background-color: transparent;
-	font-weight: 500;
-}
-
-.dropdown-item.disabled,
-.dropdown-item:disabled {
-	color: #6c757d;
-	pointer-events: none;
-	background-color: transparent;
-}
-
-/* borders com angulos rectos nos botoes e no hamburger */
-.navbar-toggler,
-.btn {
-	border-radius: 0px;
 }
 </style>

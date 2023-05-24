@@ -5,7 +5,7 @@ import { I18nMessagesEntry } from "~/lib/intl/strings";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 interface MultichoiceOptionProps<T> {
-	lang?: PortalLanguage;
+	lang?: PortalLocale;
 	label: I18nMessagesEntry;
 	options: { value: T; label: string }[];
 	modelValue?: T[];
@@ -18,10 +18,12 @@ const props = withDefaults(defineProps<MultichoiceOptionProps<any>>(), {
 
 const emit = defineEmits(["update:modelValue"]);
 
-const values = ref(props.modelValue);
-
-function updateParent() {
-	emit("update:modelValue", props.modelValue);
+function updateParent(value: any) {
+	if (props.modelValue?.includes(value)) {
+		emit("update:modelValue", props.modelValue?.filter((v) => v !== value) ?? []);
+	} else {
+		emit("update:modelValue", [...(props.modelValue ?? []), value]);
+	}
 }
 </script>
 
@@ -32,9 +34,8 @@ function updateParent() {
 			<input
 				class="form-check-input"
 				type="checkbox"
-				v-model="modelValue"
-				:value="option.value"
-				@change="updateParent"
+				:checked="modelValue?.includes(option.value)"
+				@change="updateParent(option.value)"
 			/>
 			<label class="form-check-label">{{ option.label }}</label>
 		</div>

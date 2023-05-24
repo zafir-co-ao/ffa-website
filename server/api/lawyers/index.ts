@@ -1,45 +1,47 @@
 import { H3Event, getQuery } from "h3";
 
-import { NodeFilter } from "~/lib/deps";
+import { NodeFilter, nodeServiceClient } from "~/lib/deps";
 import { I18nLawyer, fromLawyer, toLocalizedLawyer, Lawyer } from "~/lib/model/types/lawyer";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 import { mapBody } from "~/lib/api/map_body";
 import processApiError from "~/lib/process_api_error";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-import useAntboxClient from "~/composables/use_antbox_client";
-
 const LAWYERS_FOLDER_FID = "lawyers";
 const LAWYERS_FOLDER_NAME = "Advogados";
 
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
-const createLawyerHandler = defineEventHandler((evt) => {
-	return async () => {
-		const parent = await assertFolderExists(LAWYERS_FOLDER_FID, LAWYERS_FOLDER_NAME);
+const createLawyerHandler = defineEventHandler(async (evt) => {
+	const parent = await assertFolderExists(LAWYERS_FOLDER_FID, LAWYERS_FOLDER_NAME);
 
-		const node = await mapBody(evt, fromLawyer);
-		node.parent = parent;
+	const node = await mapBody(evt, fromLawyer);
+	node.parent = parent;
 
-		return client.createFolder(node);
-	};
+	const lawyer = await client.createFolder(node);
+
+	if (lawyer.isLeft()) {
+		return processApiError(evt, lawyer.value);
+	}
+
+	return lawyer.value;
 });
 
 const listLawyersHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt);
 	const lang = query.lang as PortalLocale;
 
-	const lawyersCriteria: NodeFilter[] = [["aspects", "contains", "lawyer"]];
+	const criteria: NodeFilter[] = [["aspects", "contains", "lawyer"]];
 
 	if (query.category) {
-		lawyersCriteria.push(["properties.lawyer:category", "==", query.category]);
+		criteria.push(["properties.lawyer:category", "==", query.category]);
 	}
 
 	if (query.q) {
-		lawyersCriteria.push(["title", "match", query.q]);
+		criteria.push(["fulltext", "match", query.q]);
 	}
 
-	const nodesOrErr = await client.query(lawyersCriteria, Number.MAX_SAFE_INTEGER);
+	const nodesOrErr = await client.query(criteria, Number.MAX_SAFE_INTEGER);
 
 	if (nodesOrErr.isLeft()) {
 		return processApiError(evt, nodesOrErr.value);

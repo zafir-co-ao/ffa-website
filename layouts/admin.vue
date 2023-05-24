@@ -1,12 +1,6 @@
-<script setup>
-definePageMeta({ middleware: "auth-guard" });
-</script>
-
 <template>
 	<main>
-		<div
-			class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar"
-		>
+		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
 			<a
 				href="/"
 				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
@@ -20,17 +14,13 @@ definePageMeta({ middleware: "auth-guard" });
 
 			<admin-nav>
 				<admin-nav-item title="Advogados" url="/a/lawyers" />
-				<admin-nav-item
-					title="Alertas Jurídicos"
-					url="/a/legal-alerts"
-				/>
+				<admin-nav-item title="Alertas Jurídicos" url="/a/legal-alerts" />
 				<admin-nav-item title="Banners" url="/a/banners" />
 				<admin-nav-item title="Eventos" url="/a/events" />
 				<admin-nav-item title="Media" url="/a/media-articles" />
 				<admin-nav-item title="Separadores" url="/a/section-headers" />
 				<hr />
 				<admin-nav-item title="Discovery" url="/a/discovery" />
-				<admin-nav-item title="Aspectos" url="/a/aspects" />
 			</admin-nav>
 			<hr />
 			<!--
@@ -77,8 +67,7 @@ main {
 	background-color: rgba(0, 0, 0, 0.1);
 	border: solid rgba(0, 0, 0, 0.15);
 	border-width: 1px 0;
-	box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
-		inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+	box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 }
 
 .scrollarea {

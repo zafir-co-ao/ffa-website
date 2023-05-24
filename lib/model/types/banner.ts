@@ -1,7 +1,6 @@
-import { nodeServiceClient, Node } from "../../deps";
+import { Node, nodeServiceClient } from "../../deps";
 import { I18nMessagesEntry } from "../../intl/strings";
 import { PortalLocale } from "./portal_locale";
-import useAntboxClient from "~/composables/use_antbox_client";
 
 // Aspect: banner
 export interface Banner {
@@ -47,7 +46,9 @@ export function toLocalizedBanner(node: Node, lang?: PortalLocale): Banner | Loc
 }
 
 export function toBanner(node: Node): Banner {
-	const imageUrl = useAntboxClient().nodeClient.getNodeUrl(node.uuid);
+	const imageUrl = nodeServiceClient(
+		process.client ? useAntboxUrl().value : process.env.NUXT_ANTBOX_URL!
+	).getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,

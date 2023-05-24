@@ -14,19 +14,24 @@ const props = defineProps<BannerProps>();
 const bannerRef = ref<HTMLDivElement>();
 
 onMounted(() => {
-	bannerRef.value!.style.backgroundImage = `url(${props.imageUrl})`;
+	bannerRef.value!.style.backgroundImage = `url(${props.imageUrl}?t=${Date.now()})`;
 });
 </script>
 
 <template>
 	<div ref="bannerRef" class="container-fluid banner">
 		<div class="text-center">
-			<h1 v-if="title1 && title2" class="titulo fw-bold text-white text-uppercase">
+			<h1 v-if="title1" class="titulo fw-bold text-white text-uppercase">
 				{{ title1 }}
 				<span v-if="title2"><br />{{ title2 }}</span>
 			</h1>
 
-			<p v-if="subtitle" id="legendabanner" class="h4 fw-normal text-white" v-html="subtitle ?? ''" />
+			<p
+				v-if="subtitle"
+				id="legendabanner"
+				class="h4 fw-normal text-white"
+				v-html="subtitle ?? ''"
+			/>
 
 			<a v-if="href" :href="href">
 				<know-more-button :lang="lang" />

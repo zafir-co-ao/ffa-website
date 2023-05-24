@@ -1,5 +1,5 @@
 <script lang="ts">
-import { LocalizedSectionHeader } from "~/lib/model/types/section_header";
+import { I18nSectionHeader } from "~/lib/model/types/section_header";
 import { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>
 
@@ -10,12 +10,12 @@ interface SectionHeaderProps {
 
 const props = defineProps<SectionHeaderProps>();
 
-const header = ref<LocalizedSectionHeader>();
+const header = ref<I18nSectionHeader>();
 const headerRef = ref<HTMLElement>();
 
 onMounted(async () => {
 	header.value = await props.getter();
-	headerRef.value!.style.backgroundImage = `url(${header.value?.imageUrl})`;
+	headerRef.value!.style.backgroundImage = `url(${header.value?.imageUrl}?t=${Date.now()})`;
 });
 </script>
 

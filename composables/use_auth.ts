@@ -1,35 +1,50 @@
-export default function () {
-	return {
-		get username() {
-			return retrieveCredentials().username;
-		},
+const USERNAME_PARAM = "ffa:username";
+const TOKEN_PARAM = "ffa:token";
 
-		login(theUsername: string, theToken: string) {
-			storeCredentials(theUsername, theToken);
+export default function () {
+	const username = useState("username", getUsernameFromLocalStorage);
+	const token = useState("token", getTokenFromLocalStorage);
+
+	return {
+		username: username.value,
+		token: token.value,
+
+		login: (theUsername: string, theToken: string) => {
+			username.value = theUsername;
+			token.value = theToken;
+			storeUsernameAndToken(theUsername, theToken);
 		},
 
 		logout: () => {
-			clearCredentials();
+			username.value = null as unknown as string;
+			token.value = null as unknown as string;
+			clearUsernameAndToken();
 		},
 	};
 }
 
-function storeCredentials(username: string, token: string) {
-	localStorage.setItem("ffa-username", username);
-	localStorage.setItem("ffa-token", token);
-}
-
-function retrieveCredentials() {
-	if (process.server) {
-		return { username: null, token: "" };
+function getUsernameFromLocalStorage() {
+	if (!process.client) {
+		return null;
 	}
 
-	const username = localStorage.getItem("ffa-username");
-	const token = localStorage.getItem("ffa-token");
-	return { username, token };
+	return localStorage.getItem(USERNAME_PARAM);
 }
 
-function clearCredentials() {
-	localStorage.removeItem("ffa-username");
-	localStorage.removeItem("ffa-token");
+function getTokenFromLocalStorage() {
+	if (!process.client) {
+		return null;
+	}
+
+	return localStorage.getItem(TOKEN_PARAM);
+}
+
+function storeUsernameAndToken(username: string, token: string) {
+	localStorage.setItem(USERNAME_PARAM, username);
+	localStorage.setItem(TOKEN_PARAM, token);
+}
+
+function clearUsernameAndToken() {
+	localStorage.removeItem(USERNAME_PARAM);
+	localStorage.removeItem(TOKEN_PARAM);
 }

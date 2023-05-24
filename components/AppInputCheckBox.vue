@@ -18,7 +18,7 @@ function updateParent(evt: any) {
 	<input
 		class="form-check-input"
 		type="checkbox"
-		:value="modelValue"
+		:checked="modelValue"
 		@change="updateParent($event)"
 	/>
 	<label class="form-check-label">{{ label }}</label>

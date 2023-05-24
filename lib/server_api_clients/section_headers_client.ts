@@ -1,9 +1,9 @@
 import { fidToUuid } from "@zafir.co.ao/lightray";
 import { PortalLocale } from "../model/types/portal_locale";
-import { LocalizedSectionHeader } from "../model/types/section_header";
+import { I18nSectionHeader } from "../model/types/section_header";
 
 export interface I18nSectionHeaderGetter {
-	(): Promise<LocalizedSectionHeader | undefined>;
+	(): Promise<I18nSectionHeader | undefined>;
 }
 
 export function i18nSectionHeaderGetter(uuidOrFid: string, lang: PortalLocale, useFid = true): I18nSectionHeaderGetter {
@@ -14,6 +14,6 @@ export function i18nSectionHeaderGetter(uuidOrFid: string, lang: PortalLocale, u
 			return;
 		}
 
-		return res.json() as Promise<LocalizedSectionHeader>;
+		return res.json() as Promise<I18nSectionHeader>;
 	};
 }

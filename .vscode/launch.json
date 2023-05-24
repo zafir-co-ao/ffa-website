@@ -17,7 +17,7 @@
 			"program": "${workspaceFolder}/node_modules/nuxi/bin/nuxi.mjs",
 			"args": ["dev"],
 			"env": {
-				"ANTBOX_URL": "http://km1:7180"
+				"ANTBOX_URL": "http://klinux:7180"
 			}
 		}
 	],

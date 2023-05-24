@@ -3,16 +3,14 @@ import { deleteNode } from "~/lib/api/antbox_proxy";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
-import useAntboxClient from "~/composables/use_antbox_client";
-
-import { Node } from "~/lib/deps";
+import { Node, nodeServiceClient } from "~/lib/deps";
 
 import { LegalAlert, fromLegalAlert, toLocalizedLegalAlert } from "~/lib/model/types/legal_alert";
 import processFetchException from "~/lib/process_fetch_exception";
 
 const TARGET_ASPECT = "legal-alert";
 
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 export const getLegalAlertHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;
@@ -45,19 +43,17 @@ export const updateLegalAlertHandler = defineEventHandler(async (evt) => {
 		node.aspects = [TARGET_ASPECT, ...(node.aspects ?? [])];
 	}
 
-	try {
-		const updateFileErr = await client.updateFile(uuid, file).catch(processFetchException(evt));
-		if (updateFileErr.isLeft()) {
-			return processApiError(evt, updateFileErr.value);
-		}
-
-		const updateNodeErr = await client.update(uuid, node).catch(processFetchException(evt));
-		if (updateNodeErr.isLeft()) {
-			return processApiError(evt, updateNodeErr.value);
-		}
-	} catch (error) {
-		console.error(error);
+	const updateFileErr = await client.updateFile(uuid, file).catch(processFetchException(evt));
+	if (updateFileErr.isLeft()) {
+		return processApiError(evt, updateFileErr.value);
 	}
+
+	const updateNodeErr = await client.update(uuid, node).catch(processFetchException(evt));
+	if (updateNodeErr.isLeft()) {
+		return processApiError(evt, updateNodeErr.value);
+	}
+
+	return "OK";
 });
 
 const router = createRouter();

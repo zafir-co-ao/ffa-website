@@ -151,11 +151,11 @@ export const categories = {
 	Consultor: { pt: "Consultor", en: "Consultant" },
 	Consultores: { pt: "Consultores", en: "Of Counsels" },
 
-	AssociadoCoordenador: {
+	AssociadoSenior: {
 		pt: "Associado Coordenador",
 		en: "Managing Associate",
 	},
-	AssociadosCoordenadores: {
+	AssociadosSeniors: {
 		pt: "Associados Coordenadores",
 		en: "Managing Associates",
 	},

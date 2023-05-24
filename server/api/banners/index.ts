@@ -1,9 +1,14 @@
 import { createRouter, defineEventHandler, useBase, H3Event } from "h3";
-import { Node, NodeFilter } from "~/lib/deps";
-import useAntboxClient from "~/composables/use_antbox_client";
+import { Node, NodeFilter, nodeServiceClient } from "~/lib/deps";
 
 import { searchNodes } from "~/lib/api/antbox_proxy";
-import { Banner, toLocalizedBanner, toBanner, LocalizedBanner, fromBanner } from "~/lib/model/types/banner";
+import {
+	Banner,
+	toLocalizedBanner,
+	toBanner,
+	LocalizedBanner,
+	fromBanner,
+} from "~/lib/model/types/banner";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 
@@ -31,7 +36,7 @@ const listBannersHandler = defineEventHandler((evt) => {
 });
 
 const createBannerHandler = defineEventHandler(async (evt) => {
-	const client = useAntboxClient().nodeClient;
+	const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 	const parent = await assertFolderExists(BANNERS_FOLDER_FID, BANNERS_FOLDER_NAME);
 	const parts = await readParts(evt);
 

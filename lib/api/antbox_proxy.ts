@@ -1,20 +1,21 @@
 import { H3Event } from "h3";
 
-import { Node, NodeFilter } from "~/lib/deps";
+import { Node, NodeFilter, nodeServiceClient } from "~/lib/deps";
 
 import processApiError from "../process_api_error";
 import { mapBody } from "./map_body";
 import { PortalLocale } from "../model/types/portal_locale";
-import useAntboxClient from "~/composables/use_antbox_client";
 
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 export async function createFile(evt: H3Event, file: File, node: Node) {
-	const voidOrErr = await client.createFile(file, node);
+	const nodeOrErr = await client.createFile(file, node);
 
-	if (voidOrErr.isLeft()) {
-		return processApiError(evt, voidOrErr);
+	if (nodeOrErr.isLeft()) {
+		return processApiError(evt, nodeOrErr);
 	}
+
+	return nodeOrErr.value;
 }
 
 export async function updateFile(evt: H3Event, uuid: string, file: File) {
@@ -23,6 +24,8 @@ export async function updateFile(evt: H3Event, uuid: string, file: File) {
 	if (voidOrErr.isLeft()) {
 		return processApiError(evt, voidOrErr);
 	}
+
+	return "OK";
 }
 
 export async function exportNode(evt: H3Event, uuid: string) {
@@ -44,6 +47,8 @@ export function updateNode<T>(from: (t: T) => Node) {
 		if (voidOrErr.isLeft()) {
 			return processApiError(evt, voidOrErr);
 		}
+
+		return "OK";
 	};
 }
 
@@ -54,6 +59,8 @@ export async function deleteNode(evt: H3Event) {
 	if (voidOrrErr.isLeft()) {
 		return processApiError(evt, voidOrrErr);
 	}
+
+	return "OK";
 }
 
 export function getNode<T>(to: (n: Node, lang?: PortalLocale) => T) {

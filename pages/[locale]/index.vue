@@ -8,7 +8,7 @@ import { i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_clie
 import { fidToUuid } from "~/lib/deps";
 import { strings } from "~/lib/intl/strings";
 
-const { nodeClient } = useAntboxClient();
+const nodeClient = useAntboxClient();
 const { $locale: lang } = useI18n();
 
 const latestNews = ref<I18nLegalAlert[]>([]);
@@ -57,7 +57,10 @@ const scopedMessages = {
 							{{ scopedMessages.aboutUsTeaserContent[lang] }}
 						</p>
 						<br />
-						<a target="_blank" href="https://www.mirandalawfirm.com/pt/alliance/overview">
+						<a
+							target="_blank"
+							href="https://www.mirandalawfirm.com/pt/alliance/overview"
+						>
 							<know-more-button :dark="false" :lang="lang" />
 						</a>
 					</div>
@@ -65,7 +68,11 @@ const scopedMessages = {
 			</div>
 			<div class="row">
 				<div class="col-md-6 offset-md-6 text-right mt-3 mt-md-0 mb-5">
-					<a href="https://www.mirandalawfirm.com/alliance/overview/" target="_blank" class="miranda-link">
+					<a
+						href="https://www.mirandalawfirm.com/alliance/overview/"
+						target="_blank"
+						class="miranda-link"
+					>
 						<img src="/images/mirandaalliance.png" alt="Miranda Alliance" />
 					</a>
 				</div>
@@ -93,7 +100,10 @@ const scopedMessages = {
 						{{ scopedMessages.legalAlerts[lang] }}
 					</p>
 					<div v-for="article in latestNews">
-						<app-legal-alert :getter="i18nLegalAlertGetter(article.uuid, lang, false)" :lang="lang" />
+						<app-legal-alert
+							:getter="i18nLegalAlertGetter(article.uuid, lang, false)"
+							:lang="lang"
+						/>
 					</div>
 				</div>
 			</div>

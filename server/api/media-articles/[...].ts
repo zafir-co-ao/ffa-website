@@ -3,13 +3,16 @@ import { deleteNode } from "~/lib/api/antbox_proxy";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
-import useAntboxClient from "~/composables/use_antbox_client";
-
-import { MediaArticle, fromMediaArticle, toLocalizedMediaArticle } from "~/lib/model/types/media_article";
+import {
+	MediaArticle,
+	fromMediaArticle,
+	toLocalizedMediaArticle,
+} from "~/lib/model/types/media_article";
+import { nodeServiceClient } from "~/lib/deps";
 
 const TARGET_ASPECT = "media-article";
 
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 const getMediaArticleHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;
@@ -48,6 +51,8 @@ const updateMediaArticleHandler = defineEventHandler(async (evt) => {
 	if (updateNodeErr.isLeft()) {
 		return processApiError(evt, updateNodeErr.value);
 	}
+
+	return "OK";
 });
 
 const router = createRouter();

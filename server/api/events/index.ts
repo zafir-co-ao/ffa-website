@@ -3,21 +3,22 @@ import { createFile as createFileNode } from "~/lib/api/antbox_proxy";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-import useAntboxClient from "~/composables/use_antbox_client";
-
-import { NodeFilter, Node, NodeFilterResult } from "~/lib/deps";
+import { NodeFilter, NodeFilterResult, nodeServiceClient } from "~/lib/deps";
 import { Event, fromEvent, toLocalizedEvent, I18nEvent } from "~/lib/model/types/event";
+import processFetchException from "~/lib/process_fetch_exception";
 
 const EVENTS_FOLDER_FID = "events";
 const EVENTS_FOLDER_NAME = "Eventos";
 const TARGET_ASPECT = "event";
+
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 const listEventsHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt) as Record<string, string | undefined>;
 	const count = query.latest ? Number.parseInt(query.latest ?? "4") : Number.MAX_SAFE_INTEGER;
 
 	const lang = query.lang as PortalLocale | undefined;
-	const nodes = await search(query.q as string);
+	const nodes = await search(evt, query.q as string);
 
 	return nodes
 		.map((n) => toLocalizedEvent(n, "{}", lang))
@@ -45,37 +46,23 @@ function newerFirst(l1: Event | I18nEvent, l2: Event | I18nEvent): number {
 	return 1;
 }
 
-async function search(q?: string) {
-	const alertsCriteria: NodeFilter = ["aspects", "contains", TARGET_ASPECT];
+async function search(evt: H3Event, q?: string) {
+	const criteria: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
 
-	if (!q) {
-		return or([alertsCriteria]);
+	if (q) {
+		criteria.push(["fulltext", "match", q]);
 	}
 
-	const titlePtCriteria: NodeFilter[] = [alertsCriteria, ["properties.event:title.pt", "match", q]];
+	const nodeResultOrErr = await client
+		.query(criteria, Number.MAX_SAFE_INTEGER)
+		.catch(processFetchException<NodeFilterResult>(evt));
 
-	const titleEnCriteria: NodeFilter[] = [alertsCriteria, ["properties.event:title.en", "match", q]];
-
-	return or(titlePtCriteria, titleEnCriteria);
-}
-
-async function or(...filters: NodeFilter[][]) {
-	const client = useAntboxClient().nodeClient;
-	const req = filters.map((f) => client.query(f, Number.MAX_SAFE_INTEGER));
-
-	const eventsOrErr = await Promise.all(req);
-
-	const nodes = eventsOrErr
-		.filter((e) => e.isRight())
-		.map((e) => (e.value as NodeFilterResult).nodes)
-		.flat();
-
-	const result: Record<string, Node> = {};
-	for (const node of nodes) {
-		result[node.uuid] = node;
+	if (nodeResultOrErr.isLeft()) {
+		console.error(nodeResultOrErr.value);
+		return [];
 	}
 
-	return Object.values(result);
+	return nodeResultOrErr.value.nodes;
 }
 
 const router = createRouter();

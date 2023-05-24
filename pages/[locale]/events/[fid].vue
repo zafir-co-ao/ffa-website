@@ -6,7 +6,7 @@ import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_l
 
 import error404 from "../../err/404.vue";
 
-const { nodeClient } = useAntboxClient();
+const nodeClient = useAntboxClient();
 
 const route = useRoute();
 
@@ -61,7 +61,9 @@ const ldJson = JSON.stringify({
 			/>
 
 			<div class="body2 text-center">
-				<span class="azulescuro"> <i class="bi bi-calendar"></i>&nbsp;&nbsp;{{ formatedEventDate }} </span>
+				<span class="azulescuro">
+					<i class="bi bi-calendar"></i>&nbsp;&nbsp;{{ formatedEventDate }}
+				</span>
 				<span class="azulescuro" v-if="event.eventPlace?.length ?? 0 > 0">
 					| <i class="bi bi-geo-alt"></i>&nbsp;&nbsp;{{ event.eventPlace }}
 				</span>
@@ -69,7 +71,10 @@ const ldJson = JSON.stringify({
 
 			<app-article-title :title="event.title" />
 
-			<app-article-social-share-buttons :linkedin-share="linkedinShare!" :whatsapp-share="whatsappShare!" />
+			<app-article-social-share-buttons
+				:linkedin-share="linkedinShare!"
+				:whatsapp-share="whatsappShare!"
+			/>
 
 			<div v-html="event.body" />
 

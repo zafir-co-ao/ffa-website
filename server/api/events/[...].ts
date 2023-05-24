@@ -3,12 +3,11 @@ import { deleteNode } from "~/lib/api/antbox_proxy";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
-import useAntboxClient from "~/composables/use_antbox_client";
-
 import { Event, fromEvent, toLocalizedEvent } from "~/lib/model/types/event";
+import { nodeServiceClient } from "~/lib/deps";
 
 const TARGET_ASPECT = "event";
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 export const getEventHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;
@@ -47,6 +46,8 @@ export const updateEventHandler = defineEventHandler(async (evt) => {
 	if (updateNodeErr.isLeft()) {
 		return processApiError(evt, updateNodeErr.value);
 	}
+
+	return "OK";
 });
 
 const router = createRouter();

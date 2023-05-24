@@ -3,18 +3,21 @@ import { createFile as createFileNode } from "~/lib/api/antbox_proxy";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-import useAntboxClient from "~/composables/use_antbox_client";
+import { NodeFilter, NodeFilterResult, nodeServiceClient } from "~/lib/deps";
 
-import { Node, NodeFilter, NodeFilterResult } from "~/lib/deps";
-
-import { LegalAlert, fromLegalAlert, toLocalizedLegalAlert, I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import {
+	LegalAlert,
+	fromLegalAlert,
+	toLocalizedLegalAlert,
+	I18nLegalAlert,
+} from "~/lib/model/types/legal_alert";
 import processFetchException from "~/lib/process_fetch_exception";
 
 const LEGAL_ALERTS_FOLDER_FID = "legal-alerts";
 const LEGAL_ALERTS_FOLDER_NAME = "Alertas Jurídicos";
 const TARGET_ASPECT = "legal-alert";
 
-const client = useAntboxClient().nodeClient;
+const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 const listLegalAlertsHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt) as Record<string, string | undefined>;
@@ -56,32 +59,22 @@ function newerFirst(l1: LegalAlert | I18nLegalAlert, l2: LegalAlert | I18nLegalA
 }
 
 async function search(evt: H3Event, q?: string) {
-	const alertsCriteria: NodeFilter = ["aspects", "contains", TARGET_ASPECT];
+	const criteria: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
 
-	if (!q) {
-		return or(evt, [alertsCriteria]);
+	if (q) {
+		criteria.push(["fulltext", "match", q]);
 	}
 
-	const titlePtCriteria: NodeFilter[] = [alertsCriteria, ["properties.legal-alert:title.pt", "match", q]];
+	const nodeResultOrErr = await client
+		.query(criteria, Number.MAX_SAFE_INTEGER)
+		.catch(processFetchException<NodeFilterResult>(evt));
 
-	const titleEnCriteria: NodeFilter[] = [alertsCriteria, ["properties.legal-alert:title.en", "match", q]];
-
-	return or(evt, titlePtCriteria, titleEnCriteria);
-}
-
-async function or(evt: H3Event, ...filters: NodeFilter[][]) {
-	const req = filters.map((f) => client.query(f, Number.MAX_SAFE_INTEGER).catch(processFetchException(evt)));
-	const alertsOrErr = await Promise.all(req);
-
-	const nodes = alertsOrErr
-		.filter((e) => e.isRight())
-		.map((e) => (e.value as NodeFilterResult).nodes)
-		.flat();
-	const result: Record<string, Node> = {};
-	for (const node of nodes) {
-		result[node.uuid] = node;
+	if (nodeResultOrErr.isLeft()) {
+		console.error(nodeResultOrErr.value);
+		return [];
 	}
-	return Object.values(result);
+
+	return nodeResultOrErr.value.nodes;
 }
 
 const router = createRouter();

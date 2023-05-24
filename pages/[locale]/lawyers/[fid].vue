@@ -7,7 +7,7 @@ import lawyerAreas from "~/lib/intl/lawyer_areas";
 import { I18nLawyer } from "~/lib/model/types/lawyer";
 import { getI18nLawyer } from "~/lib/server_api_clients/lawyers_client";
 
-const { nodeClient } = useAntboxClient();
+const nodeClient = useAntboxClient();
 
 const fid = useRoute().params.fid as string;
 const { $locale: lang } = useI18n();
@@ -15,7 +15,9 @@ const { $locale: lang } = useI18n();
 const lawyer = ref<I18nLawyer>();
 
 const portraitUrl = computed(() =>
-	lawyer.value?.uuid ? nodeClient.getNodeUrl(lawyer.value?.portraitUuid!) : "/images/anonymous-headshot.png"
+	lawyer.value?.uuid
+		? nodeClient.getNodeUrl(lawyer.value?.portraitUuid!)
+		: "/images/anonymous-headshot.png"
 );
 
 const lawyerLanguages = computed(() => {
@@ -23,7 +25,9 @@ const lawyerLanguages = computed(() => {
 });
 
 const areasOfExpertise = computed(() =>
-	lawyer.value?.areas?.map((a) => lawyerAreas[a]?.[lang.value] ?? `%${a}%`).sort((a, b) => a.localeCompare(b))
+	lawyer.value?.areas
+		?.map((a) => lawyerAreas[a]?.[lang.value] ?? `%${a}%`)
+		.sort((a, b) => a.localeCompare(b))
 );
 
 onMounted(() => {
@@ -101,7 +105,9 @@ const ldJson = JSON.stringify({
 							<span>{{ scopedMessages.people[lang] }}</span>
 						</router-link>
 					</span>
-					<span class="breadcrumb-item active" aria-current="page">{{ lawyer.name }}</span>
+					<span class="breadcrumb-item active" aria-current="page">{{
+						lawyer.name
+					}}</span>
 				</div>
 			</nav>
 
@@ -129,7 +135,9 @@ const ldJson = JSON.stringify({
 							<a :href="'mailto:' + lawyer?.email">{{ lawyer?.email }}</a>
 						</p>
 						<p class="mt-3">
-							<span id="labelcontacto" class="azul">{{ scopedMessages.contacts[lang] }}</span>
+							<span id="labelcontacto" class="azul">{{
+								scopedMessages.contacts[lang]
+							}}</span>
 							<br />
 							<label>{{ scopedMessages.officeContacts[lang] }}</label
 							>&nbsp;
@@ -146,7 +154,9 @@ const ldJson = JSON.stringify({
 							<div v-html="lawyer.career"></div>
 						</div>
 						<div class="mt-3">
-							<span id="labelarea" class="azul">{{ scopedMessages.areas[lang] }}</span>
+							<span id="labelarea" class="azul">{{
+								scopedMessages.areas[lang]
+							}}</span>
 							<br />
 							<ul>
 								<li v-for="area in areasOfExpertise">{{ area }}</li>

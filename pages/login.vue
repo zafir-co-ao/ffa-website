@@ -9,9 +9,9 @@ const auth = useAuth();
 const router = useRouter();
 const route = useRoute();
 
-const username = ref<string>();
-const code = ref<string>();
-const errors = ref<string[]>();
+const username = ref<string>("");
+const code = ref<string>("");
+const errors = ref<string[]>([]);
 
 const hasErrors = computed(() => errors.value?.length > 0);
 
@@ -25,11 +25,11 @@ async function login() {
 
 	const response = await sendLogin(username.value, code.value);
 
-	if (response.error) {
+	if (response.error && response.errorCode) {
 		return handleError(response.errorCode);
 	}
 
-	auth.login(username.value, response.token);
+	auth.login(username.value, response.token!);
 
 	redirect();
 }
@@ -112,7 +112,7 @@ function redirect() {
 				<label for="floatingInput">{{ strings.password[lang] }}</label>
 			</div>
 
-			<app-button class="w-100" :dark="false" :label="strings.login[lang]" @click="login" />
+			<app-button class="w-100" :dark="false" :label="strings.login[lang]!" @click="login" />
 
 			<div v-if="hasErrors" class="alert alert-danger mt-4" role="alert">
 				<div v-for="error in errors">* {{ error }}</div>

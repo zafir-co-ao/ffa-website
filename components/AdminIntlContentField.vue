@@ -23,12 +23,12 @@ function emitModelValue(value: Partial<I18nMessagesEntry>) {
 			<textarea
 				class="w-50 me-3"
 				:value="modelValue?.pt ?? ''"
-				@input="emitModelValue({ pt: $event.target['value'] })"
+				@input="emitModelValue({ pt: ($event as any).target.value })"
 			/>
 			<textarea
 				class="w-50"
 				:value="modelValue?.en ?? ''"
-				@input="emitModelValue({ en: $event.target['value'] })"
+				@input="emitModelValue({ en: ($event as any).target.value })"
 			/>
 		</div>
 	</div>

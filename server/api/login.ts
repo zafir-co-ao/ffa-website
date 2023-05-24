@@ -1,4 +1,4 @@
-import { H3Event, H3Error, readBody, sendError, setResponseStatus } from "h3";
+import { H3Event, readBody } from "h3";
 
 import * as jose from "jose";
 

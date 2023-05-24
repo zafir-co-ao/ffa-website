@@ -1,7 +1,6 @@
 import { I18nMessagesEntry } from "~/lib/intl/strings";
 import { Node, nodeServiceClient } from "~/lib/deps";
 import { PortalLocale } from "./portal_locale";
-import useAntboxClient from "~/composables/use_antbox_client";
 
 // Aspect: section-header
 // Aspect Constraints: [image/png, image/jpg]
@@ -18,7 +17,7 @@ export interface SectionHeader {
 	imageUrl: string;
 }
 
-export interface LocalizedSectionHeader {
+export interface I18nSectionHeader {
 	uuid: string;
 	fid: string;
 	nodeTitle: string;
@@ -35,7 +34,10 @@ export function makeSectionHeader(): SectionHeader {
 	return { clipBottom: true, clipTop: false } as SectionHeader;
 }
 
-export function toLocalizedSectionHeader(node: Node, lang?: PortalLocale): SectionHeader | LocalizedSectionHeader {
+export function toLocalizedSectionHeader(
+	node: Node,
+	lang?: PortalLocale
+): SectionHeader | I18nSectionHeader {
 	const sectionHeader = toSectionHeader(node);
 
 	if (!lang) {
@@ -50,7 +52,9 @@ export function toLocalizedSectionHeader(node: Node, lang?: PortalLocale): Secti
 }
 
 export function toSectionHeader(node: Node): SectionHeader {
-	const imageUrl = useAntboxClient().nodeClient.getNodeUrl(node.uuid);
+	const imageUrl = nodeServiceClient(
+		process.client ? useAntboxUrl().value : process.env.NUXT_ANTBOX_URL!
+	).getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,

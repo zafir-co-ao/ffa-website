@@ -17,7 +17,7 @@
 		"sass-loader": "^12.4.0"
 	},
 	"dependencies": {
-		"@zafir.co.ao/lightray": "file:../lightray/zafir.co.ao-lightray-0.12.2.tgz",
+		"@zafir.co.ao/lightray": "^0.13.3",
 		"jose": "^4.8.3"
 	}
 }

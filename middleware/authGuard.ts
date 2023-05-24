@@ -1,15 +1,9 @@
 import useAuth from "~/composables/use_auth";
 
-function isBackoffice(path: string = ""): boolean {
-	return path.startsWith("/a");
-}
-
 export default defineNuxtRouteMiddleware((to) => {
-	if (!isBackoffice(to.path)) {
-		return;
-	}
-
 	const { username } = useAuth();
+
+	console.log("username", username);
 
 	if (!username) {
 		return navigateTo({

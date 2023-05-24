@@ -13,7 +13,7 @@ const seniores = ref<I18nLawyer[]>([]);
 const associados = ref<I18nLawyer[]>([]);
 const estagiarios = ref<I18nLawyer[]>([]);
 
-const { nodeClient } = useAntboxClient();
+const nodeClient = useAntboxClient();
 
 onMounted(() => {
 	getLawyersByCategory(lang.value, "Socio").then((l) => (socios.value = l));
@@ -80,7 +80,7 @@ onMounted(() => {
 			<div class="row mt-5 mb-5">
 				<div class="col-sm-12">
 					<h2 class="h3 fw-bold azul">
-						{{ categories.AssociadosCoordenadores[lang] }}
+						{{ categories.AssociadosSeniors[lang] }}
 					</h2>
 				</div>
 			</div>
@@ -148,11 +148,13 @@ onMounted(() => {
 					<a class="btnmenuabout" href="#partners">{{ categories.Socios[lang] }}</a>
 				</div>
 				<div class="col-auto">
-					<a class="btnmenuabout" href="#of-counsels">{{ categories.Consultores[lang] }}</a>
+					<a class="btnmenuabout" href="#of-counsels">{{
+						categories.Consultores[lang]
+					}}</a>
 				</div>
 				<div class="col-auto">
 					<a class="btnmenuabout" href="#managing-associates">{{
-						categories.AssociadosCoordenadores[lang]
+						categories.AssociadosSeniors[lang]
 					}}</a>
 				</div>
 				<div class="col-auto">

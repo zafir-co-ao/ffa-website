@@ -8,11 +8,17 @@ import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
 import { I18nMediaArticle } from "~/lib/model/types/media_article";
 import { searchI18nEvents, i18nEventGetter } from "~/lib/server_api_clients/events_client";
 import { searchI18nLawyers, i18nLawyerGetter } from "~/lib/server_api_clients/lawyers_client";
-import { i18nLegalAlertGetter, searchI18nLegalAlerts } from "~/lib/server_api_clients/legal_alerts_client";
-import { i18nMediaArticleGetter, searchI18nMediaArticles } from "~/lib/server_api_clients/media_articles_client";
+import {
+	i18nLegalAlertGetter,
+	searchI18nLegalAlerts,
+} from "~/lib/server_api_clients/legal_alerts_client";
+import {
+	i18nMediaArticleGetter,
+	searchI18nMediaArticles,
+} from "~/lib/server_api_clients/media_articles_client";
 
 const { $locale: lang } = useI18n();
-const { nodeClient } = useAntboxClient();
+const nodeClient = useAntboxClient();
 
 const events = ref<I18nEvent[]>();
 const alerts = ref<I18nLegalAlert[]>();
@@ -35,7 +41,13 @@ function updateSearch() {
 
 <template>
 	<div class="search-container container">
-		<app-search-input class="mb-5" type="text" :lang="lang" v-model="searchString" @input="updateSearch" />
+		<app-search-input
+			class="mb-5"
+			type="text"
+			:lang="lang"
+			v-model="searchString"
+			@input="updateSearch"
+		/>
 
 		<div class="pt-5" v-if="lawyers && lawyers.length > 0">
 			<h2 class="h2 azul text-center">{{ strings.people[lang] }}</h2>
@@ -83,7 +95,10 @@ function updateSearch() {
 			<div class="container-fluid">
 				<div class="row g-5">
 					<div class="col-12 col-sm-6 col-lg-4" v-for="article in events">
-						<app-event :getter="i18nEventGetter(article.uuid, lang, false)" :lang="lang" />
+						<app-event
+							:getter="i18nEventGetter(article.uuid, lang, false)"
+							:lang="lang"
+						/>
 					</div>
 				</div>
 			</div>

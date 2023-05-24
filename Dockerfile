@@ -1,10 +1,9 @@
-FROM node:16.13.2-alpine3.15
+FROM node:18.16.0-alpine3.17
 
 WORKDIR /website
 
 COPY package.json  .
 COPY package-lock.json  .
-COPY deps deps
 
 RUN npm ci
 
