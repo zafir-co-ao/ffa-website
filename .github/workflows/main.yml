@@ -15,10 +15,12 @@ jobs:
 
             - name: Build the Docker image
               run: docker build --file Dockerfile -t ffa-website:latest -t ffa-website:$(date +%s) .
+              
+            - name: Remove existing containers
+              run: docker rm -f ffa-website
 
             - name: Deploy
-              run: docker rm -f ffa-website; \
-                  docker run -d \
+              run: docker run -d \
                   --name ffa-website \
                   -p 127.0.0.1:8080:8080 \
                   -e NUXT_ANTBOX_URL="https://pvt2.kindalus.me" \
