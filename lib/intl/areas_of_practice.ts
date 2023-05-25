@@ -1,8 +1,8 @@
 import { I18nMessagesEntry } from "./strings";
 
 const areasOfPractice: Record<string, I18nMessagesEntry> = {
-	Ambiente: { pt: "Ambiente", en: "Environmental law" },
 	Aduaneiro: { pt: "Aduaneiro ", en: "Customs" },
+	Ambiente: { pt: "Ambiente", en: "Environmental law" },
 	BancarioFinanceiro: {
 		pt: "Bancário & Financeiro",
 		en: "Banking & Finance",
@@ -12,16 +12,21 @@ const areasOfPractice: Record<string, I18nMessagesEntry> = {
 		pt: "Contencioso & Arbitragem",
 		en: "Litigation & Arbitration",
 	},
-	DireitoConsumidor: { pt: "Direito do Consumidor", en: "Consumer Law" },
 	DireitoPublicoRegulatorio: {
 		pt: "Direito Público & Regulatório",
 		en: "Public Law & Regulatory",
 	},
+	DireitoConsumidor: { pt: "Direito do Consumidor", en: "Consumer Law" },
 	Energia: { pt: "Energia", en: "Energy" },
+	ESG: { pt: "ESG", en: "ESG" },
 	Fiscal: { pt: "Fiscal", en: "Tax" },
 	FusoesAquisicoes: {
 		pt: "Fusões & Aquisições ",
 		en: "Mergers & Acquisitions",
+	},
+	ITProteccaoDados: {
+		pt: "IT & Protecção de dados",
+		en: "IT & Data Protection",
 	},
 	Imobiliario: { pt: "Imobiliário", en: "Real Estate" },
 	InvestimentoEstrangeiro: {
@@ -29,29 +34,26 @@ const areasOfPractice: Record<string, I18nMessagesEntry> = {
 		en: "Foreign Investment",
 	},
 
-	ITProteccaoDados: {
-		pt: "IT & Protecção de dados",
-		en: "IT & Data Protection",
-	},
 	LaboralDireitoMigratorio: {
 		pt: "Laboral & Direito Migratório ",
 		en: "Labour, Employment and Expatriate Law",
 	},
 	Mineiro: { pt: "Mineiro", en: "Mining" },
-	PropriedadeIntelectualPatentes: {
-		pt: "Propriedade Intelectual & Patentes",
-		en: "Intellectual Property & Patents",
-	},
 	PetroleoGas: { pt: "Petróleo & Gás", en: "Oil & Gas" },
 	Privatizacoes: { pt: "Privatizações ", en: "Privatizations" },
-	ProjectosInfrastructuras: {
-		pt: "Projectos & Infraestruturas",
-		en: "Projects & Infrastructures",
-	},
 	ProjectFinanceParceriaPublicoPrivadas: {
 		pt: "Project Finance & Parceria Publico-Privadas",
 		en: "Project Finance & Public-Private Partnerships",
 	},
+	ProjectosInfrastructuras: {
+		pt: "Projectos & Infraestruturas",
+		en: "Projects & Infrastructures",
+	},
+	PropriedadeIntelectualPatentes: {
+		pt: "Propriedade Intelectual & Patentes",
+		en: "Intellectual Property & Patents",
+	},
+
 	Seguros: { pt: "Seguros", en: "Insurance" },
 	SocietarioComercial: {
 		pt: "Societário & Comercial",

@@ -15,6 +15,10 @@ const industries: Record<string, I18nMessagesEntry> = {
 		pt: "Construção & Projectos",
 		en: "Construction & Projects",
 	},
+	DesenvolvimentoDeGasNatural: {
+		pt: "Desenvolvimento de Gás Natural",
+		en: "Natural Gas Development",
+	},
 	DesportoEntretenimento: {
 		pt: "Desporto & Entretenimento",
 		en: "Sports & Entertainment",
@@ -35,8 +39,8 @@ const industries: Record<string, I18nMessagesEntry> = {
 	PetroleoGas: { pt: "Petróleo & Gás", en: "Oil & Gas" },
 	PortosFerrovias: { pt: "Portos & Ferrovias ", en: "Ports & Railways" },
 	Renovaveis: { pt: "Renováveis ", en: "Renewables" },
-	Transportes: { pt: "Transportes ", en: "Transportation" },
 	Telecomunicacoes: { pt: "Telecomunicações", en: "Telecomunications" },
+	Transportes: { pt: "Transportes & Logística", en: "Transportation & Logistics" },
 	Turismo: { pt: "Turismo", en: "Tourism" },
 };
 export default industries;
