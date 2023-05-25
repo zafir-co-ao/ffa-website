@@ -14,7 +14,14 @@ jobs:
             - uses: actions/checkout@v3
 
             - name: Build the Docker image
-              run: docker build . --file Dockerfile -t ffa-website:latest -t ffa-website:$(date +%s)
+              run: docker build --file Dockerfile -t ffa-website:latest -t ffa-website:$(date +%s) .
 
             - name: Deploy
-              run: docker rm -f ffa-website; docker run -d --name ffa-website -p 127.0.0.1:8080:8080 --env NUXT_ANTBOX_URL="https://pvt2.kindalus.me" --restart unless-stopped ffa-website:latest
+              run: docker rm -f ffa-website; \
+                  docker run -d \
+                  --name ffa-website \
+                  -p 127.0.0.1:8080:8080 \
+                  -e NUXT_ANTBOX_URL="https://pvt2.kindalus.me" \
+                  -e NUXT_PUBLIC_ANTBOX_URL="https://pvt2.kindalus.me" \
+                  --restart unless-stopped \
+                  ffa-website:latest

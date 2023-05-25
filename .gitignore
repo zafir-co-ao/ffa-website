@@ -8,3 +8,4 @@ npm-debug*
 .output
 .env
 .vite
+output.tgz
