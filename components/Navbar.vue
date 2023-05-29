@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
-const { $messages, $locale, switchLocalePath, localePath } = useI18n();
+const { $messages, $locale, localePath } = useI18n();
+const route = useRoute();
 
 const navbarRef = ref(null);
 
@@ -12,7 +13,7 @@ function closeNavbar() {
 }
 
 function changeLocale(locale: PortalLocale) {
-	switchLocalePath(locale);
+	window.location.href = route.fullPath.replace(/^\/\w\w/, `/${locale}`);
 }
 
 function setupIntersectionObserver() {
@@ -20,10 +21,14 @@ function setupIntersectionObserver() {
 		function (entries) {
 			// no intersection
 			if (entries[0].intersectionRatio !== 1)
-				document.querySelector(".navbar-container")?.classList.add("navbar-container-stuck");
+				document
+					.querySelector(".navbar-container")
+					?.classList.add("navbar-container-stuck");
 			// fully intersects
 			else if (entries[0].intersectionRatio === 1)
-				document.querySelector(".navbar-container")?.classList.remove("navbar-container-stuck");
+				document
+					.querySelector(".navbar-container")
+					?.classList.remove("navbar-container-stuck");
 		},
 		{
 			threshold: [0, 1],
@@ -39,15 +44,29 @@ function setupIntersectionObserver() {
 		<nav class="navbar navbar-expand-xl navbar-light bgwhite pt-0 pb-0">
 			<div class="container pt-0 pb-0">
 				<nuxt-link class="navbar-brand" :to="localePath('')">
-					<img class="logo" src="/images/FatimaFreitas-02.png" alt="Fátima Freitas Associados" />
+					<img
+						class="logo"
+						src="/images/FatimaFreitas-02.png"
+						alt="Fátima Freitas Associados"
+					/>
 				</nuxt-link>
 
-				<div class="locale-search-container order-lg-1 order-0 ml-auto ml-lg-3 mr-3 mr-lg-0">
-					<a class="btnlingua" :class="{ active: $locale === 'en' }" href="#" @click="changeLocale('en')"
+				<div
+					class="locale-search-container order-lg-1 order-0 ml-auto ml-lg-3 mr-3 mr-lg-0"
+				>
+					<a
+						class="btnlingua"
+						:class="{ active: $locale === 'en' }"
+						href="#"
+						@click="changeLocale('en')"
 						>EN</a
 					>
 					|
-					<a class="btnlingua" :class="{ active: $locale === 'pt' }" href="#" @click="changeLocale('pt')"
+					<a
+						class="btnlingua"
+						:class="{ active: $locale === 'pt' }"
+						href="#"
+						@click="changeLocale('pt')"
 						>PT</a
 					>
 					&nbsp;
@@ -72,30 +91,45 @@ function setupIntersectionObserver() {
 				>
 					<ul class="navbar-nav ml-auto text-center">
 						<li class="nav-item">
-							<nuxt-link class="nav-link" :to="localePath('about-us')" @click="closeNavbar()">{{
-								$messages.components.navbar.text.about_us
-							}}</nuxt-link>
+							<nuxt-link
+								class="nav-link"
+								:to="localePath('about-us')"
+								@click="closeNavbar()"
+								>{{ $messages.components.navbar.text.about_us }}</nuxt-link
+							>
 						</li>
 
 						<li class="nav-item">
-							<nuxt-link class="nav-link" :to="localePath('services')" @click="closeNavbar()"
+							<nuxt-link
+								class="nav-link"
+								:to="localePath('services')"
+								@click="closeNavbar()"
 								>{{ $messages.components.navbar.text.services }}
 							</nuxt-link>
 						</li>
 
 						<li class="nav-item">
-							<nuxt-link class="nav-link" :to="localePath('media')" @click="closeNavbar()"
+							<nuxt-link
+								class="nav-link"
+								:to="localePath('media')"
+								@click="closeNavbar()"
 								>{{ $messages.components.navbar.text.media }}
 							</nuxt-link>
 						</li>
 
 						<li class="nav-item">
-							<nuxt-link class="nav-link" :to="localePath('people')" @click="closeNavbar()"
+							<nuxt-link
+								class="nav-link"
+								:to="localePath('people')"
+								@click="closeNavbar()"
 								>{{ $messages.components.navbar.text.people }}
 							</nuxt-link>
 						</li>
 						<li class="nav-item">
-							<nuxt-link class="nav-link" :to="localePath('careers')" @click="closeNavbar()"
+							<nuxt-link
+								class="nav-link"
+								:to="localePath('careers')"
+								@click="closeNavbar()"
 								>{{ $messages.components.navbar.text.careers }}
 							</nuxt-link>
 						</li>

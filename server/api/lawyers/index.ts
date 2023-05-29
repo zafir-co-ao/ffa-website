@@ -14,7 +14,6 @@ const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
 
 const createLawyerHandler = defineEventHandler(async (evt) => {
 	const parent = await assertFolderExists(LAWYERS_FOLDER_FID, LAWYERS_FOLDER_NAME);
-
 	const node = await mapBody(evt, fromLawyer);
 	node.parent = parent;
 

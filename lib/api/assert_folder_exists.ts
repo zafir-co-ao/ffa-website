@@ -9,9 +9,14 @@ export default async function assertFolderExists(fid: string, title: string): Pr
 		return folderOrErr.value.uuid;
 	}
 
-	if (folderOrErr.value === "NotFoundError") {
-		await client.createFolder({ title, fid });
+	if (folderOrErr.value !== "NotFoundError") {
+		throw new Error(`Error getting folder ${fid}: ${folderOrErr.value}`);
 	}
 
-	return fidToUuid(fid);
+	const nodesOrErr = await client.createFolder({ title, fid });
+	if (nodesOrErr.isLeft()) {
+		throw new Error(`Error creating folder ${fid}: ${nodesOrErr.value}`);
+	}
+
+	return nodesOrErr.value.uuid;
 }

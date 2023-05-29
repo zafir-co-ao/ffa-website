@@ -102,21 +102,39 @@ function redirect() {
 
 			<div class="h2 text-center mb-3 azulescuro">Área Reservada</div>
 
-			<div class="form-floating w-100 mb-2">
-				<input v-model="username" class="form-control" :placeholder="strings.username[lang]" />
-				<label for="floatingInput">{{ strings.username[lang] }}</label>
-			</div>
+			<form action="">
+				<div class="form-floating w-100 mb-2">
+					<input
+						v-model="username"
+						class="form-control"
+						:placeholder="strings.username[lang]"
+						autocomplete="username"
+					/>
+					<label for="floatingInput">{{ strings.username[lang] }}</label>
+				</div>
 
-			<div class="form-floating w-100 mb-2">
-				<input type="password" v-model="code" class="form-control" :placeholder="strings.password[lang]" />
-				<label for="floatingInput">{{ strings.password[lang] }}</label>
-			</div>
+				<div class="form-floating w-100 mb-2">
+					<input
+						type="password"
+						v-model="code"
+						class="form-control"
+						:placeholder="strings.password[lang]"
+						autocomplete="current-password"
+					/>
+					<label for="floatingInput">{{ strings.password[lang] }}</label>
+				</div>
 
-			<app-button class="w-100" :dark="false" :label="strings.login[lang]!" @click="login" />
+				<app-button
+					class="w-100"
+					:dark="false"
+					:label="strings.login[lang]!"
+					@click="login"
+				/>
 
-			<div v-if="hasErrors" class="alert alert-danger mt-4" role="alert">
-				<div v-for="error in errors">* {{ error }}</div>
-			</div>
+				<div v-if="hasErrors" class="alert alert-danger mt-4" role="alert">
+					<div v-for="error in errors">* {{ error }}</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </template>
