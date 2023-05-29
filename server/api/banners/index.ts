@@ -27,12 +27,18 @@ async function readParts(evt: H3Event): Promise<Record<string, Buffer>> {
 	);
 }
 
-const listBannersHandler = defineEventHandler((evt) => {
+const listBannersHandler = defineEventHandler(async (evt) => {
 	const lang = getQuery(evt).lang as PortalLocale | undefined;
 	const to = lang ? (n: Node) => toLocalizedBanner(n, lang) : toBanner;
 	const filters: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
 
-	return searchNodes<Banner, LocalizedBanner>(evt, to, filters);
+	const banners = await searchNodes<Banner, LocalizedBanner>(evt, to, filters);
+
+	if ((banners as any).isError) {
+		return banners;
+	}
+
+	return (banners as Banner[]).sort((a, b) => (a.priority ?? 10) - (b.priority ?? 10));
 });
 
 const createBannerHandler = defineEventHandler(async (evt) => {

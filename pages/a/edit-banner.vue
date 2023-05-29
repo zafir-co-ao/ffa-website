@@ -151,6 +151,8 @@ function handleUploadImage() {
 
 		<app-input type="text" v-model="banner.href" label="URL" />
 
+		<app-input type="number" v-model="banner.priority" label="Prioridade" style="widows: 50%" />
+
 		<hr />
 
 		<div v-if="!banner.uuid" class="row mt-4">

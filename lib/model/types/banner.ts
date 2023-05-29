@@ -24,6 +24,8 @@ export interface LocalizedBanner {
 
 	// Download url do próprio node
 	imageUrl: string;
+
+	priority: number;
 }
 
 export function makeBanner(): Banner {
@@ -56,7 +58,7 @@ export function toBanner(node: Node): Banner {
 		title2: node.properties?.["banner:title2"] as I18nMessagesEntry,
 		subtitle: node.properties?.["banner:subtitle"] as I18nMessagesEntry,
 		href: node.properties?.["banner:href"] as string,
-		priority: node.properties?.["banner:priority"] as number,
+		priority: (node.properties?.["banner:priority"] as number) ?? 10,
 		imageUrl,
 	};
 }

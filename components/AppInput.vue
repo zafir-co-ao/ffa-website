@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 interface AppInputProps {
-	type?: "text" | "email" | "date" | "password";
+	type?: "text" | "email" | "date" | "password" | "number";
 	label?: string;
 	placeholder?: string;
 	disabled?: boolean;
@@ -25,12 +25,9 @@ const emit = defineEmits(["update:modelValue"]);
 				:disabled="disabled"
 				@input="emit('update:modelValue', ($event.target as any).value)"
 			/>
-			<label
-				v-if="label"
-				for="floatingInput"
-				class="form-label azulescuro fw-bolder"
-				>{{ label }}</label
-			>
+			<label v-if="label" for="floatingInput" class="form-label azulescuro fw-bolder">{{
+				label
+			}}</label>
 		</div>
 	</div>
 </template>
