@@ -38,7 +38,7 @@ const listBannersHandler = defineEventHandler(async (evt) => {
 		return banners;
 	}
 
-	return (banners as Banner[]).sort((a, b) => (a.priority ?? 10) - (b.priority ?? 10));
+	return (banners as Banner[]).sort((a, b) => b.priority - a.priority);
 });
 
 const createBannerHandler = defineEventHandler(async (evt) => {

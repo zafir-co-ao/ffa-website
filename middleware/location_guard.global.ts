@@ -10,10 +10,6 @@ export default defineNuxtRouteMiddleware((to) => {
 	return navigateTo(getRedirectRoute(to.path));
 });
 function getRedirectRoute(url: string): string {
-	if (url === "/a") {
-		return "/a/legal-alerts";
-	}
-
 	const headers = useRequestHeaders();
 
 	if (!headers["accept-language"]) {
@@ -29,7 +25,7 @@ function getRedirectRoute(url: string): string {
 }
 
 function isWellFormated(url: string) {
-	return url?.match(SUPPORTED_LOCALES_RE);
+	return url?.startsWith("/a") || url?.match(SUPPORTED_LOCALES_RE);
 }
 
 function isResource(path: string = ""): boolean {

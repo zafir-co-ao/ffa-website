@@ -9,8 +9,7 @@ const email = ref("");
 const comments = ref("");
 
 function attachCurriculum() {
-	const validationErrors = validateForm(getRecaptcha(), name.value, email.value);
-
+	validateForm(getRecaptcha(), name.value, email.value);
 	fileRef.value.click();
 }
 
@@ -36,13 +35,13 @@ function validateName(name: string): boolean {
 	return name?.length > 6;
 }
 
-function validateMobilePhone(mobilePhone: string): boolean {
-	if (!mobilePhone) return false;
+// function validateMobilePhone(mobilePhone: string): boolean {
+// 	if (!mobilePhone) return false;
 
-	const cleanedNumber = mobilePhone.replace(/[^0-9]/g, "");
+// 	const cleanedNumber = mobilePhone.replace(/[^0-9]/g, "");
 
-	return cleanedNumber?.length === 9;
-}
+// 	return cleanedNumber?.length === 9;
+// }
 
 function validateEmail(email: string): boolean {
 	const emailRe =
@@ -69,7 +68,11 @@ function addScripts() {
 
 <script lang="ts" setup>
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
-import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+import {
+	i18nWebContentGetter,
+	webContentGetter,
+	webContentSaver,
+} from "~/lib/server_api_clients/web_content_client";
 
 const { $messages, $locale: lang } = useI18n();
 
@@ -82,7 +85,12 @@ onMounted(addScripts);
 
 		<app-section-header :getter="i18nSectionHeaderGetter('carreiras__separador_1', lang)" />
 
-		<app-web-content :getter="i18nWebContentGetter('carreiras__texto_1', lang)" />
+		<app-web-content
+			:getter="i18nWebContentGetter('carreiras__texto_1', lang)"
+			:edit-getter="webContentGetter('carreiras__texto_1')"
+			:edit-saver="webContentSaver()"
+		/>
+		/>
 
 		<div class="container">
 			<div v-if="applicationSent" class="my-5">
@@ -99,7 +107,9 @@ onMounted(addScripts);
 								class="form-control"
 								:placeholder="$messages.pages.careers.text.name"
 							/>
-							<label for="floatingInput">{{ $messages.pages.careers.text.name }}</label>
+							<label for="floatingInput">{{
+								$messages.pages.careers.text.name
+							}}</label>
 						</div>
 					</div>
 					<div class="col">
@@ -128,7 +138,10 @@ onMounted(addScripts);
 				</div>
 				<div class="row g-2 mb-2">
 					<div class="col">
-						<div class="g-recaptcha" data-sitekey="6LeWvCUcAAAAAL-Jm7O5rvk3CyExhFWzfOLJCF9r" />
+						<div
+							class="g-recaptcha"
+							data-sitekey="6LeWvCUcAAAAAL-Jm7O5rvk3CyExhFWzfOLJCF9r"
+						/>
 					</div>
 				</div>
 				<div class="row g-2 mb-5">

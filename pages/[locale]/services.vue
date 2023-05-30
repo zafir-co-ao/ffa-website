@@ -3,7 +3,11 @@ import areasOfPractice from "~/lib/intl/areas_of_practice";
 import industries from "~/lib/intl/industries";
 import { I18nMessagesEntry, strings } from "~/lib/intl/strings";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
-import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+import {
+	i18nWebContentGetter,
+	webContentGetter,
+	webContentSaver,
+} from "~/lib/server_api_clients/web_content_client";
 
 import offices from "~/lib/stubs/offices";
 </script>
@@ -77,7 +81,11 @@ const ldJson = JSON.stringify({
 		<Title>{{ strings.services[lang] }} - {{ strings.meta_title[lang] }}</Title>
 		<Script type="application/ld+json" :children="ldJson"></Script>
 		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_1', lang)" />
-		<app-web-content :getter="i18nWebContentGetter('servicos__texto_1', lang)" />
+		<app-web-content
+			:getter="i18nWebContentGetter('servicos__texto_1', lang)"
+			:edit-getter="webContentGetter('servicos__texto_1')"
+			:edit-saver="webContentSaver()"
+		/>
 
 		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_2', lang)" />
 
@@ -109,11 +117,15 @@ const ldJson = JSON.stringify({
 		<div class="container mt-5 mb-5">
 			<div class="row justify-content-center">
 				<div class="col-auto">
-					<a class="btnmenuabout active" href="#services">{{ scopedMessages.ourServices[lang] }}</a>
+					<a class="btnmenuabout active" href="#services">{{
+						scopedMessages.ourServices[lang]
+					}}</a>
 				</div>
 
 				<div class="col-auto">
-					<a class="btnmenuabout" href="#industries"> {{ scopedMessages.areasAndIndustries[lang] }}</a>
+					<a class="btnmenuabout" href="#industries">
+						{{ scopedMessages.areasAndIndustries[lang] }}</a
+					>
 				</div>
 			</div>
 		</div>

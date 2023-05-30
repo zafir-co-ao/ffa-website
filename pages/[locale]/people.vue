@@ -3,7 +3,11 @@ import { I18nLawyer } from "~/lib/model/types/lawyer";
 import { categories, strings } from "~/lib/intl/strings";
 import { getLawyersByCategory } from "~/lib/server_api_clients/lawyers_client";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
-import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+import {
+	i18nWebContentGetter,
+	webContentGetter,
+	webContentSaver,
+} from "~/lib/server_api_clients/web_content_client";
 
 const { $locale: lang } = useI18n();
 
@@ -30,7 +34,11 @@ onMounted(() => {
 
 		<app-section-header :getter="i18nSectionHeaderGetter('colaboradores__separador_1', lang)" />
 
-		<app-web-content :getter="i18nWebContentGetter('colaboradores__texto_1', lang)" />
+		<app-web-content
+			:getter="i18nWebContentGetter('colaboradores__texto_1', lang)"
+			:edit-getter="webContentGetter('colaboradores__texto_1')"
+			:edit-saver="webContentSaver()"
+		/>
 
 		<div id="socios" class="container" v-if="socios.length">
 			<div class="row mt-5 mb-5">

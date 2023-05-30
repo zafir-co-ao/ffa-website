@@ -2,7 +2,11 @@
 import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
 import { i18nBannersGetter } from "~/lib/server_api_clients/banners_client";
 import { getLatestLegalAlerts } from "~/lib/server_api_clients/legal_alerts_client";
-import { i18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+import {
+	i18nWebContentGetter,
+	webContentGetter,
+	webContentSaver,
+} from "~/lib/server_api_clients/web_content_client";
 import { i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
 
 import { fidToUuid } from "~/lib/deps";
@@ -39,8 +43,16 @@ const scopedMessages = {
 		<banner-carousel-container :lang="lang" :getter="i18nBannersGetter(lang)" />
 
 		<div class="container mt-5">
-			<app-web-content :getter="i18nWebContentGetter('home__titulo_1', lang)" />
-			<app-web-content :getter="i18nWebContentGetter('home__texto_1', lang)" />
+			<app-web-content
+				:getter="i18nWebContentGetter('home__titulo_1', lang)"
+				:edit-getter="webContentGetter('home__titulo_1')"
+				:edit-saver="webContentSaver()"
+			/>
+			<app-web-content
+				:getter="i18nWebContentGetter('home__texto_1', lang)"
+				:edit-getter="webContentGetter('home__texto_1')"
+				:edit-saver="webContentSaver()"
+			/>
 		</div>
 
 		<div class="container-fluid bgseparadorhome mt-5 position-relative">
@@ -87,7 +99,12 @@ const scopedMessages = {
 					</p>
 					<img class="mb-3 events" :src="mediaImageUrl" alt="events" />
 					<div class="body1 text-black">
-						<app-web-content :getter="i18nWebContentGetter('home_media__text', lang)" />
+						<app-web-content
+							:getter="i18nWebContentGetter('home_media__text', lang)"
+							:edit-getter="webContentGetter('home_media__text')"
+							:edit-saver="webContentSaver()"
+							style="padding-left: 0; padding-right: 0"
+						/>
 					</div>
 					<div class="body2">
 						<nuxt-link :to="`/${lang}/media`">

@@ -37,6 +37,7 @@ export default defineNuxtConfig({
 
 	routeRules: {
 		"/a/*": { ssr: false },
+		"/a": { ssr: false },
 	},
 
 	runtimeConfig: {
