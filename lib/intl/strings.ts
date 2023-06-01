@@ -28,6 +28,10 @@ export const strings: I18nMessages = {
 	load_more: { pt: "Carregar Mais", en: "Load More" },
 	archive: { pt: "Arquivo", en: "Archive" },
 	events: { pt: "Eventos", en: "Events" },
+	see_all_events: {
+		pt: "Ver todos os eventos",
+		en: "See all events",
+	},
 	media_articles: { pt: "Artigos de Imprensa", en: "Media Articles" },
 	see_all_media_articles: {
 		pt: "Ver todos os artigos de imprensa",

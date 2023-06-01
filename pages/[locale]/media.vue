@@ -4,10 +4,16 @@ import { I18nMediaArticle } from "~/lib/model/types/media_article";
 
 import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
 import { I18nEvent } from "~/lib/model/types/event";
-import { getLatestLegalAlerts, i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
+import {
+	getLatestLegalAlerts,
+	i18nLegalAlertGetter,
+} from "~/lib/server_api_clients/legal_alerts_client";
 import { getLatestEvents, i18nEventGetter } from "~/lib/server_api_clients/events_client";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
-import { getLatestMediaArticles, i18nMediaArticleGetter } from "~/lib/server_api_clients/media_articles_client";
+import {
+	getLatestMediaArticles,
+	i18nMediaArticleGetter,
+} from "~/lib/server_api_clients/media_articles_client";
 import { i18nLawyerGetter } from "~/lib/server_api_clients/lawyers_client";
 
 const { $locale: lang } = useI18n();
@@ -72,9 +78,17 @@ onMounted(async () => {
 			<div class="container-fluid">
 				<div class="row g-5">
 					<div class="col-12 col-sm-6 col-lg-4" v-for="event in events">
-						<app-event :getter="i18nEventGetter(event.uuid, lang, false)" :lang="lang" />
+						<app-event
+							:getter="i18nEventGetter(event.uuid, lang, false)"
+							:lang="lang"
+						/>
 					</div>
 				</div>
+			</div>
+			<div class="text-center body2 mt-5">
+				<nuxt-link :to="`/${lang}/events/archive`">{{
+					strings.see_all_events[lang]
+				}}</nuxt-link>
 			</div>
 		</div>
 	</div>

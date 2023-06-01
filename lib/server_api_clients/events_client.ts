@@ -10,7 +10,11 @@ export interface EventGetter {
 	(): Promise<Event | undefined>;
 }
 
-export function i18nEventGetter(uuidOrFid: string, lang: PortalLocale, useFid = true): I18nEventGetter {
+export function i18nEventGetter(
+	uuidOrFid: string,
+	lang: PortalLocale,
+	useFid = true
+): I18nEventGetter {
 	return async () => {
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const res = await fetch(`/api/events/${uuid}?lang=${lang}`);
@@ -22,7 +26,11 @@ export function i18nEventGetter(uuidOrFid: string, lang: PortalLocale, useFid = 
 	};
 }
 
-export function getI18nEvent(uuidOrFid: string, lang: PortalLocale, useFid = true): Promise<I18nEvent | undefined> {
+export function getI18nEvent(
+	uuidOrFid: string,
+	lang: PortalLocale,
+	useFid = true
+): Promise<I18nEvent | undefined> {
 	return i18nEventGetter(uuidOrFid, lang, useFid)();
 }
 
@@ -32,4 +40,14 @@ export function getLatestEvents(lang: PortalLocale, count = 3): Promise<I18nEven
 
 export function searchI18nEvents(query: string, lang: PortalLocale): Promise<I18nEvent[]> {
 	return fetch(`/api/events?lang=${lang}&q=${query}`).then((res) => res.json());
+}
+
+export function searchEventsArchive(
+	lang: PortalLocale,
+	pageSize: number,
+	pageToken: number
+): Promise<I18nEvent[]> {
+	return fetch(`/api/events?lang=${lang}&page-size=${pageSize}&page-token=${pageToken}`).then(
+		(res) => res.json() as Promise<I18nEvent[]>
+	);
 }
