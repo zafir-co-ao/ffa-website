@@ -21,7 +21,8 @@ onMounted(async () => {
 	latestNews.value = (await getLatestLegalAlerts(lang.value)) as I18nLegalAlert[];
 });
 
-const mediaImageUrl = nodeClient.getNodeUrl(fidToUuid("home_media__imagem_1.jpg"));
+// const mediaImageUrl = nodeClient.getNodeUrl(fidToUuid("home_media__imagem_1.jpg"));
+const esgVideoUrl = nodeClient.getNodeUrl(fidToUuid("esg-540p-mp4"));
 
 const scopedMessages = {
 	knowMore: { pt: "Saiba mais", en: "Know more" },
@@ -94,22 +95,38 @@ const scopedMessages = {
 		<div class="container pb-5">
 			<div class="row">
 				<div class="col-lg-5 col-md-5 mt-5">
-					<p class="h2 fw-bold azul mb-3">
+					<p class="h2 fw-bold azul mb-0">
 						{{ scopedMessages.media[lang] }}
 					</p>
-					<img class="mb-3 events" :src="mediaImageUrl" alt="events" />
+					<!-- <img class="mb-3 events" :src="mediaImageUrl" alt="events" /> -->
 					<div class="body1 text-black">
 						<app-web-content
 							:getter="i18nWebContentGetter('home_media__text', lang)"
 							:edit-getter="webContentGetter('home_media__text')"
 							:edit-saver="webContentSaver()"
-							style="padding-left: 0; padding-right: 0"
+							style="
+								padding: 0;
+								margin-top: 0 !important;
+								margin-bottom: 0 !important;
+							"
 						/>
 					</div>
 					<div class="body2">
 						<nuxt-link :to="`/${lang}/media`">
 							{{ strings.know_more[lang] }}
 						</nuxt-link>
+					</div>
+					<p class="h2 fw-bold azul mt-5 mb-1">ESG Impact+</p>
+					<video :src="esgVideoUrl" controls autoplay style="width: 100%" class="my-4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="body2">
+						<a
+							href="https://indd.adobe.com/view/e5859290-e7d5-451d-a835-de62145ab28a"
+							target="_blank"
+						>
+							{{ strings.know_more[lang] }}
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-2 offset-md-2 col-md-5 mt-5">
