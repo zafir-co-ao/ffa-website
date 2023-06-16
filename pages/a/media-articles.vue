@@ -3,7 +3,9 @@ import { I18nMediaArticle } from "~/lib/model/types/media_article";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
-const { data: articles } = await useFetch<I18nMediaArticle[]>("/api/media-articles?lang=pt");
+const { data: articles } = await useFetch<I18nMediaArticle[]>(
+	"/api/media-articles?lang=pt&latest=1000"
+);
 </script>
 
 <template>

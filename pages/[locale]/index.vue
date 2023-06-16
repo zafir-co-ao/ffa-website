@@ -95,11 +95,9 @@ const scopedMessages = {
 		<div class="container pb-5">
 			<div class="row">
 				<div class="col-lg-5 col-md-5 mt-5">
-					<p class="h2 fw-bold azul mb-0">
-						{{ scopedMessages.media[lang] }}
-					</p>
+					<p class="h2 fw-bold azul mb-3">{{ scopedMessages.media[lang] }}</p>
 					<!-- <img class="mb-3 events" :src="mediaImageUrl" alt="events" /> -->
-					<div class="body1 text-black">
+					<div class="body1 text-black mt-5">
 						<app-web-content
 							:getter="i18nWebContentGetter('home_media__text', lang)"
 							:edit-getter="webContentGetter('home_media__text')"

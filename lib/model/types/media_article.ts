@@ -98,6 +98,8 @@ export function fromMediaArticle(article: MediaArticle): MediaArticleDesc {
 			},
 		} as unknown as Node,
 
-		file: new File([JSON.stringify(article.body)], `${article.title.pt}.json`, { type: "application/json" }),
+		file: new File([JSON.stringify(article.body)], `${article.title.pt}.json`, {
+			type: "application/json",
+		}),
 	};
 }

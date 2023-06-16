@@ -40,7 +40,7 @@ export const createEventHandler = defineEventHandler(async (evt) => {
 });
 
 function newerFirst(l1: Event | I18nEvent, l2: Event | I18nEvent): number {
-	if (l1.publishedOn > l2.publishedOn) {
+	if (l1.eventDateTime > l2.eventDateTime) {
 		return -1;
 	}
 	return 1;
