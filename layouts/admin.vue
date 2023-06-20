@@ -1,3 +1,12 @@
+<script setup>
+const auth = useAuth();
+
+function logout() {
+	auth.logout();
+	window.location.href = "/";
+}
+</script>
+
 <template>
 	<main>
 		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
@@ -21,6 +30,7 @@
 				<admin-nav-item title="Separadores" url="/a/section-headers" />
 				<hr />
 				<admin-nav-item title="Discovery" url="/a/discovery" />
+				<admin-nav-item title="Sair" url="#" @click="logout" />
 			</admin-nav>
 			<hr />
 			<!--

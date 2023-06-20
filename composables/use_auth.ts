@@ -4,6 +4,15 @@ const TOKEN_PARAM = "ffa:token";
 export default function () {
 	const username = useState("username", getUsernameFromLocalStorage);
 	const token = useState("token", getTokenFromLocalStorage);
+	const initalizedInClient = useState("initializedInClient", () =>
+		process.client ? true : false
+	);
+
+	if (!initalizedInClient.value && process.client) {
+		username.value = getUsernameFromLocalStorage();
+		token.value = getTokenFromLocalStorage();
+		initalizedInClient.value = true;
+	}
 
 	return {
 		username: username.value,

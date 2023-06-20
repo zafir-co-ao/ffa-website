@@ -11,12 +11,26 @@ const props = defineProps<{
 const content = ref<string>("");
 const editorRef = ref();
 
+content.value = await props.getter();
+
+const canEdit = computed(() => {
+	const auth = useAuth();
+
+	return (
+		auth.username !== null &&
+		auth.username !== undefined &&
+		props.editSaver !== undefined &&
+		props.editSaver !== null
+	);
+});
+
 onMounted(async () => {
-	content.value = await props.getter();
+	// content.value = await props.getter();
 });
 
 async function editWebContent() {
 	const content = await props.editGetter();
+
 	editorRef.value?.open(content, async (content: WebContent) => {
 		await props.editSaver(content);
 	});
@@ -26,8 +40,9 @@ async function editWebContent() {
 <template>
 	<div class="app-web-content container mt-5 mb-5 position-relative">
 		<app-icon-button
+			v-if="canEdit"
 			iconClass="bi bi-pencil"
-			class="edit-button d-none"
+			class="edit-button"
 			@click="editWebContent"
 		/>
 
@@ -44,5 +59,18 @@ async function editWebContent() {
 	position: absolute;
 	top: -1.75em;
 	right: 0;
+
+	box-sizing: border-box;
+	width: 2em;
+	height: 2em;
+
+	display: flex;
+	justify-content: center;
+
+	border-radius: 50%;
+}
+
+.edit-button:hover {
+	background-color: aliceblue;
 }
 </style>

@@ -64,9 +64,18 @@ function addScripts() {
 		document.head.appendChild(script);
 	}
 }
+
+function handleWebContentSave(content: WebContent) {
+	const saveWebContent = webContentSaver();
+	return saveWebContent(content).then(() => {
+		// Reload the page
+		window.location.reload();
+	});
+}
 </script>
 
 <script lang="ts" setup>
+import { WebContent } from "~/lib/deps";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 import {
 	i18nWebContentGetter,
@@ -88,8 +97,7 @@ onMounted(addScripts);
 		<app-web-content
 			:getter="i18nWebContentGetter('carreiras__texto_1', lang)"
 			:edit-getter="webContentGetter('carreiras__texto_1')"
-			:edit-saver="webContentSaver()"
-		/>
+			:edit-saver="handleWebContentSave"
 		/>
 
 		<div class="container">

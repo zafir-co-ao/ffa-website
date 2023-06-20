@@ -8,6 +8,7 @@ import {
 	webContentGetter,
 	webContentSaver,
 } from "~/lib/server_api_clients/web_content_client";
+import { WebContent } from "~/lib/deps";
 
 const { $locale: lang } = useI18n();
 
@@ -18,6 +19,14 @@ const associados = ref<I18nLawyer[]>([]);
 const estagiarios = ref<I18nLawyer[]>([]);
 
 const nodeClient = useAntboxClient();
+
+function handleWebContentSave(content: WebContent) {
+	const saveWebContent = webContentSaver();
+	return saveWebContent(content).then(() => {
+		// Reload the page
+		window.location.reload();
+	});
+}
 
 onMounted(() => {
 	getLawyersByCategory(lang.value, "Socio").then((l) => (socios.value = l));
@@ -37,7 +46,7 @@ onMounted(() => {
 		<app-web-content
 			:getter="i18nWebContentGetter('colaboradores__texto_1', lang)"
 			:edit-getter="webContentGetter('colaboradores__texto_1')"
-			:edit-saver="webContentSaver()"
+			:edit-saver="handleWebContentSave"
 		/>
 
 		<div id="socios" class="container" v-if="socios.length">

@@ -4,12 +4,12 @@ import { PortalLocale } from "~/lib/model/types/portal_locale";
 const { $messages, $locale, localePath } = useI18n();
 const route = useRoute();
 
-const navbarRef = ref(null);
+const navbarRef = ref<HTMLDivElement>();
 
 onMounted(() => setupIntersectionObserver());
 
 function closeNavbar() {
-	new (window as any).bootstrap.Collapse(navbarRef.value);
+	navbarRef.value?.classList.remove("show");
 }
 
 function changeLocale(locale: PortalLocale) {

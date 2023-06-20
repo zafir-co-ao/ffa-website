@@ -9,7 +9,7 @@ import {
 } from "~/lib/server_api_clients/web_content_client";
 import { i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
 
-import { fidToUuid } from "~/lib/deps";
+import { WebContent, fidToUuid } from "~/lib/deps";
 import { strings } from "~/lib/intl/strings";
 
 const nodeClient = useAntboxClient();
@@ -37,6 +37,14 @@ const scopedMessages = {
 	},
 	legalAlerts: { pt: "Alertas Jurídicos", en: "Legal Alerts" },
 };
+
+function handleWebContentSave(content: WebContent) {
+	const saveWebContent = webContentSaver();
+	return saveWebContent(content).then(() => {
+		// Reload the page
+		window.location.reload();
+	});
+}
 </script>
 
 <template>
@@ -47,12 +55,12 @@ const scopedMessages = {
 			<app-web-content
 				:getter="i18nWebContentGetter('home__titulo_1', lang)"
 				:edit-getter="webContentGetter('home__titulo_1')"
-				:edit-saver="webContentSaver()"
+				:edit-saver="handleWebContentSave"
 			/>
 			<app-web-content
 				:getter="i18nWebContentGetter('home__texto_1', lang)"
 				:edit-getter="webContentGetter('home__texto_1')"
-				:edit-saver="webContentSaver()"
+				:edit-saver="handleWebContentSave"
 			/>
 		</div>
 
@@ -101,7 +109,7 @@ const scopedMessages = {
 						<app-web-content
 							:getter="i18nWebContentGetter('home_media__text', lang)"
 							:edit-getter="webContentGetter('home_media__text')"
-							:edit-saver="webContentSaver()"
+							:edit-saver="handleWebContentSave"
 							style="
 								padding: 0;
 								margin-top: 0 !important;

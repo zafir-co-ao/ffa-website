@@ -1,4 +1,5 @@
 <script lang="ts">
+import { WebContent } from "~/lib/deps";
 import areasOfPractice from "~/lib/intl/areas_of_practice";
 import industries from "~/lib/intl/industries";
 import { I18nMessagesEntry, strings } from "~/lib/intl/strings";
@@ -74,6 +75,14 @@ const ldJson = JSON.stringify({
 	knowsLanguage: ["pt", "en", "es", "fr", "ru"],
 	openingHours: "Mo-Fr 8:30-18:30",
 });
+
+function handleWebContentSave(content: WebContent) {
+	const saveWebContent = webContentSaver();
+	return saveWebContent(content).then(() => {
+		// Reload the page
+		window.location.reload();
+	});
+}
 </script>
 
 <template>
@@ -84,7 +93,7 @@ const ldJson = JSON.stringify({
 		<app-web-content
 			:getter="i18nWebContentGetter('servicos__texto_1', lang)"
 			:edit-getter="webContentGetter('servicos__texto_1')"
-			:edit-saver="webContentSaver()"
+			:edit-saver="handleWebContentSave"
 		/>
 
 		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_2', lang)" />

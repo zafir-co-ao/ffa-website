@@ -45,14 +45,12 @@ export function webContentSaver(): WebContentSaver {
 
 		const file = new File([rawValue], wc.title, { type: "application/json" });
 
-		client
+		return client
 			.updateFile(wc.uuid, file)
 			.then((voidOrErr) => {
 				if (voidOrErr.isLeft()) {
 					return console.error(voidOrErr.value);
 				}
-
-				console.log("WebContent saved");
 			})
 			.catch((err) => console.error(err));
 	};
