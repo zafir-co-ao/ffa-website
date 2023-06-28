@@ -123,7 +123,14 @@ function handleWebContentSave(content: WebContent) {
 						</nuxt-link>
 					</div>
 					<p class="h2 fw-bold azul mt-5 mb-1">ESG Impact+</p>
-					<video :src="esgVideoUrl" controls autoplay style="width: 100%" class="my-4">
+					<video
+						:src="esgVideoUrl"
+						controls
+						autoplay
+						muted
+						style="width: 100%"
+						class="my-4"
+					>
 						Your browser does not support the video tag.
 					</video>
 					<div class="body2">

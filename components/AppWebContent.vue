@@ -8,9 +8,9 @@ const props = defineProps<{
 	editSaver: (content: WebContent) => Promise<void>;
 }>();
 
-const content = ref<string>("");
 const editorRef = ref();
 
+const content = ref<string>("");
 content.value = await props.getter();
 
 const canEdit = computed(() => {
@@ -22,10 +22,6 @@ const canEdit = computed(() => {
 		props.editSaver !== undefined &&
 		props.editSaver !== null
 	);
-});
-
-onMounted(async () => {
-	// content.value = await props.getter();
 });
 
 async function editWebContent() {
