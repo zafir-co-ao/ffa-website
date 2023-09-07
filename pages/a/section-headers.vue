@@ -15,7 +15,7 @@ const { data: sectionHeaders } = await useFetch<I18nSectionHeader[]>(
 		<list-group>
 			<list-group-item
 				v-for="header in sectionHeaders"
-				:title="header.title"
+				:title="header.nodeTitle"
 				:details="header.subtitle ?? ''"
 				:routeTo="`/a/edit-section-header?uuid=${header.uuid}`"
 			/>
