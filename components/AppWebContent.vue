@@ -35,18 +35,19 @@ async function editWebContent() {
 
 <template>
 	<div class="app-web-content container mt-5 mb-5 position-relative">
-		<app-icon-button
-			v-if="canEdit"
-			iconClass="bi bi-pencil"
-			class="edit-button"
-			@click="editWebContent"
-		/>
+		<client-only>
+			<web-content-editor-dialog ref="editorRef" />
+			<app-icon-button
+				v-if="canEdit"
+				iconClass="bi bi-pencil"
+				class="edit-button"
+				@click="editWebContent"
+			/>
+		</client-only>
 
 		<div class="row">
 			<div class="col" v-html="content" />
 		</div>
-
-		<web-content-editor-dialog ref="editorRef" />
 	</div>
 </template>
 

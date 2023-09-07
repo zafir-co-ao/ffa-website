@@ -12,7 +12,7 @@
 	"devDependencies": {
 		"@types/node": "^18",
 		"@types/serve-static": "^1.15.1",
-		"nuxt": "^3.4.3",
+		"nuxt": "^3.7.1",
 		"sass": "^1.49.7",
 		"sass-loader": "^12.4.0"
 	},
