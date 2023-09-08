@@ -32,8 +32,8 @@ const scopedMessages = {
 		en: "International Standards, Local Knowledge",
 	},
 	aboutUsTeaserContent: {
-		pt: "Servimos os nossos clientes onde eles mais precisam",
-		en: "We serve out clients where they need us",
+		pt: "Servimos os nossos Clientes onde eles mais precisam",
+		en: "We serve our Clients where they need us most",
 	},
 	legalAlerts: { pt: "Alertas Jurídicos", en: "Legal Alerts" },
 };
