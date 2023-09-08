@@ -53,7 +53,7 @@ onMounted(() => {
 	height: 472px !important;
 
 	overflow: hidden;
-	background-position: center top;
+	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 

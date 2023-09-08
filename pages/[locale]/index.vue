@@ -21,7 +21,6 @@ onMounted(async () => {
 	latestNews.value = (await getLatestLegalAlerts(lang.value)) as I18nLegalAlert[];
 });
 
-// const mediaImageUrl = nodeClient.getNodeUrl(fidToUuid("home_media__imagem_1.jpg"));
 const esgVideoUrl = nodeClient.getNodeUrl(fidToUuid("esg-540p-mp4"));
 
 const scopedMessages = {
