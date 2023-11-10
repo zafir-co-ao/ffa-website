@@ -41,10 +41,8 @@ export default defineNuxtConfig({
 	},
 
 	runtimeConfig: {
-		antboxUrl: process.env.NUXT_ANTBOX_URL,
-
 		public: {
-			antboxUrl: process.env.NUXT_ANTBOX_URL,
+			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
 		},
 	},
 });

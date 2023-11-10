@@ -48,9 +48,9 @@ export function toLocalizedBanner(node: Node, lang?: PortalLocale): Banner | Loc
 }
 
 export function toBanner(node: Node): Banner {
-	const imageUrl = nodeServiceClient(
-		process.client ? useAntboxUrl().value : process.env.NUXT_ANTBOX_URL!
-	).getNodeUrl(node.uuid);
+	const imageUrl = nodeServiceClient({
+		url: process.client ? useAntboxUrl().value : process.env.NUXT_PUBLIC_ANTBOX_URL!,
+	}).getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,

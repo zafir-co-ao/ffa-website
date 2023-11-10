@@ -1,4 +1,4 @@
-import { WebContent, fidToUuid } from "@zafir.co.ao/lightray";
+import { WebContent, fidToUuid } from "~/lib/deps";
 import { PortalLocale } from "~/lib/model/types/portal_locale";
 
 export interface I18nWebContentGetter {

@@ -24,7 +24,6 @@ jobs:
                   docker run -d \
                       --name ffa-website \
                       -p 127.0.0.1:8080:8080 \
-                      -e NUXT_ANTBOX_URL="https://pvt2.kindalus.me" \
                       -e NUXT_PUBLIC_ANTBOX_URL="https://pvt2.kindalus.me" \
                       --restart unless-stopped \
                       ffa-website:latest

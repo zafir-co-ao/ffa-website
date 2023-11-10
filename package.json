@@ -17,7 +17,8 @@
 		"sass-loader": "^12.4.0"
 	},
 	"dependencies": {
-		"@zafir.co.ao/lightray": "^0.13.5",
+		"@zafir.co.ao/lightray": "^1.0.0-alpha.2",
+		"antbox-sdk": "^1.0.7",
 		"jose": "^4.8.3"
 	}
 }

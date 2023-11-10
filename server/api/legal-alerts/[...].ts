@@ -10,7 +10,7 @@ import processFetchException from "~/lib/process_fetch_exception";
 
 const TARGET_ASPECT = "legal-alert";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 export const getLegalAlertHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;

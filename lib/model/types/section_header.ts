@@ -52,9 +52,9 @@ export function toLocalizedSectionHeader(
 }
 
 export function toSectionHeader(node: Node): SectionHeader {
-	const imageUrl = nodeServiceClient(
-		process.client ? useAntboxUrl().value : process.env.NUXT_ANTBOX_URL!
-	).getNodeUrl(node.uuid);
+	const imageUrl = nodeServiceClient({
+		url: process.client ? useAntboxUrl().value : process.env.NUXT_PUBLIC_ANTBOX_URL!,
+	}).getNodeUrl(node.uuid);
 
 	return {
 		uuid: node.uuid,

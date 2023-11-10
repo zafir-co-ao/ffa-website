@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { WebContent } from "@zafir.co.ao/lightray";
+import { WebContent } from "~/lib/deps";
 import { I18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
 
 const props = defineProps<{
@@ -36,7 +36,7 @@ async function editWebContent() {
 <template>
 	<div class="app-web-content container mt-5 mb-5 position-relative">
 		<client-only>
-			<web-content-editor-dialog ref="editorRef" />
+			<lr-web-content-editor-dialog ref="editorRef" />
 			<app-icon-button
 				v-if="canEdit"
 				iconClass="bi bi-pencil"

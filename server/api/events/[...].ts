@@ -7,7 +7,7 @@ import { Event, fromEvent, toLocalizedEvent } from "~/lib/model/types/event";
 import { nodeServiceClient } from "~/lib/deps";
 
 const TARGET_ASPECT = "event";
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 export const getEventHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;

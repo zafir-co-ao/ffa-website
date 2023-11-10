@@ -17,7 +17,7 @@ const LEGAL_ALERTS_FOLDER_FID = "legal-alerts";
 const LEGAL_ALERTS_FOLDER_NAME = "Alertas Jurídicos";
 const TARGET_ASPECT = "legal-alert";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 const listLegalAlertsHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt) as Record<string, string | undefined>;

@@ -42,7 +42,7 @@ const listBannersHandler = defineEventHandler(async (evt) => {
 });
 
 const createBannerHandler = defineEventHandler(async (evt) => {
-	const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+	const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 	const parent = await assertFolderExists(BANNERS_FOLDER_FID, BANNERS_FOLDER_NAME);
 	const parts = await readParts(evt);
 

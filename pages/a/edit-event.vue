@@ -133,7 +133,7 @@ async function reloadEvent(): Promise<void> {
 			@save="handleSave"
 		/>
 
-		<web-content-editor-dialog ref="editorRef" />
+		<lr-web-content-editor-dialog ref="editorRef" />
 	</div>
 </template>
 

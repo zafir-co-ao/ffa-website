@@ -12,7 +12,7 @@ import { nodeServiceClient } from "~/lib/deps";
 
 const TARGET_ASPECT = "media-article";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 const getMediaArticleHandler = defineEventHandler(async (evt) => {
 	const uuid = evt.context.params?.uuid;

@@ -4,7 +4,7 @@ import { getNode } from "~/lib/api/antbox_proxy";
 import { nodeServiceClient } from "~/lib/deps";
 import { toLocalizedSectionHeader, fromSectionHeader } from "~/lib/model/types/section_header";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 async function readParts(evt: H3Event): Promise<Record<string, Buffer>> {
 	const req = await readMultipartFormData(evt);

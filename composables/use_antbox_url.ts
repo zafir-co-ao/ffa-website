@@ -1,6 +1,3 @@
 export default function () {
-	return useState(
-		"antboxUrl",
-		() => useRuntimeConfig().antboxUrl ?? useRuntimeConfig().public.antboxUrl
-	);
+	return useState("antboxUrl", () => useRuntimeConfig().public.antboxUrl);
 }

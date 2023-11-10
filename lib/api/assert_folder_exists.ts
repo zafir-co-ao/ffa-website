@@ -1,6 +1,6 @@
 import { fidToUuid, nodeServiceClient } from "~/lib/deps";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 export default async function assertFolderExists(fid: string, title: string): Promise<string> {
 	const folderOrErr = await client.get(fidToUuid(fid));

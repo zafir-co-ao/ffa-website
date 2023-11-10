@@ -1,7 +1,7 @@
 import { I18nMessagesEntry } from "~/lib/intl/strings";
 import { Node } from "~/lib/deps";
 import { PortalLocale } from "./portal_locale";
-import { FOLDER_MIMETYPE } from "@zafir.co.ao/lightray";
+import { FOLDER_MIMETYPE } from "~/lib/deps";
 
 export interface Lawyer {
 	uuid: string;

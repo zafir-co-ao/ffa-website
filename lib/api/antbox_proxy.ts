@@ -6,7 +6,7 @@ import processApiError from "../process_api_error";
 import { mapBody } from "./map_body";
 import { PortalLocale } from "../model/types/portal_locale";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 export async function createFile(evt: H3Event, file: File, node: Node) {
 	const nodeOrErr = await client.createFile(file, node);
@@ -30,6 +30,8 @@ export async function updateFile(evt: H3Event, uuid: string, file: File) {
 
 export async function exportNode(evt: H3Event, uuid: string) {
 	const voidOrErr = await client.export(uuid);
+
+	console.log(voidOrErr);
 
 	if (voidOrErr.isLeft()) {
 		return processApiError(evt, voidOrErr);

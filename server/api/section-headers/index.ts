@@ -1,4 +1,4 @@
-import { createRouter, defineEventHandler, useBase, H3Event } from "h3";
+import { createRouter, defineEventHandler, useBase } from "h3";
 import { Node, NodeFilter } from "~/lib/deps";
 
 import { searchNodes } from "~/lib/api/antbox_proxy";

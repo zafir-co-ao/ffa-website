@@ -11,7 +11,7 @@ const EVENTS_FOLDER_FID = "events";
 const EVENTS_FOLDER_NAME = "Eventos";
 const TARGET_ASPECT = "event";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 const listEventsHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt) as Record<string, string | undefined>;

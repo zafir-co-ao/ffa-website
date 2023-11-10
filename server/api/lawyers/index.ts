@@ -10,7 +10,7 @@ import { PortalLocale } from "~/lib/model/types/portal_locale";
 const LAWYERS_FOLDER_FID = "lawyers";
 const LAWYERS_FOLDER_NAME = "Advogados";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 const createLawyerHandler = defineEventHandler(async (evt) => {
 	const parent = await assertFolderExists(LAWYERS_FOLDER_FID, LAWYERS_FOLDER_NAME);

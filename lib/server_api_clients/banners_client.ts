@@ -1,4 +1,4 @@
-import { Banner, LocalizedBanner } from "../model/types/banner";
+import { LocalizedBanner } from "../model/types/banner";
 import { PortalLocale } from "../model/types/portal_locale";
 
 export interface I18nBannersGetter {

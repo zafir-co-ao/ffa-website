@@ -1,9 +1,7 @@
-import { Either, left } from "@zafir.co.ao/lightray";
+import { Either, left } from "~/lib/deps";
 import { setResponseStatus, H3Event } from "h3";
 
-export default function processFetchException<T>(
-	evt: H3Event
-): (err: Error) => Either<Error, T> {
+export default function processFetchException<T>(evt: H3Event): (err: Error) => Either<Error, T> {
 	return (err: Error) => {
 		setResponseStatus(evt, 500);
 

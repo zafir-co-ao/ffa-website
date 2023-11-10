@@ -16,7 +16,7 @@ const MEDIA_ARTICLES_FOLDER_FID = "media-articles";
 const MEDIA_ARTICLES_NAME = "Artigos de Imprensa";
 const TARGET_ASPECT = "media-article";
 
-const client = nodeServiceClient(process.env.NUXT_ANTBOX_URL!);
+const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
 const listMediaArticlesHandler = defineEventHandler(async (evt: H3Event) => {
 	const query = getQuery(evt) as Record<string, string | undefined>;
