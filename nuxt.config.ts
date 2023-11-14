@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 		client: true,
 	},
 
-	css: ["~~/assets/sass/fatimafreitas.scss", "@zafir.co.ao/lightray/style.css"],
+	css: ["~~/assets/sass/fatimafreitas.scss"],
 	app: {
 		head: {
 			script: [],
@@ -33,11 +33,6 @@ export default defineNuxtConfig({
 				},
 			],
 		},
-	},
-
-	routeRules: {
-		"/a/*": { ssr: false },
-		"/a": { ssr: false },
 	},
 
 	runtimeConfig: {

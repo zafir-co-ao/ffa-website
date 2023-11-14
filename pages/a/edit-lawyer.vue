@@ -6,7 +6,7 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import { forceReload, forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
-import { Toast } from "~/lib/clientDeps";
+import { LrToast } from "~/lib/clientDeps";
 import { WebContent } from "~/lib/deps";
 
 const API_BASE_URL = "/api/lawyers";
@@ -33,11 +33,11 @@ const thumbnailUrl = ref("/images/anonymous-headshot.png");
 const uploadPortraitRef = ref<HTMLInputElement>();
 const uploadThumbRef = ref<HTMLInputElement>();
 
-const toast = ref<Toast>();
+const toast = ref<LrToast>();
 const lawyer = ref<Lawyer>(makeLawyer());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<Toast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
 const editorRef = ref();
 
 const modelReloader = makeModelReloader(

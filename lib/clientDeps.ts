@@ -1,3 +1,3 @@
-export { useToast } from "@zafir.co.ao/lightray/dist/plugin";
+export { useToast } from "@zafir.co.ao/lightray";
 
-export type { Toast } from "@zafir.co.ao/lightray/dist/plugin";
+export type { LrToast } from "@zafir.co.ao/lightray";

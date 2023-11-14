@@ -90,27 +90,6 @@
 		height: 45px;
 	}
 
-	.fotopartner {
-		width: 130px;
-		height: 130px;
-		border-radius: 65px;
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: cover;
-
-		object-position: center center;
-		object-fit: cover;
-	}
-
-	.fotopartnergrande {
-		width: 260px;
-		height: 260px;
-		border-radius: 130px;
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-
 	.titulo {
 		font-size: 1.5rem;
 		line-height: 20px;
@@ -133,15 +112,6 @@
 	@media (min-width: 576px) {
 		.logo {
 			height: 60px;
-		}
-
-		.fotopartner {
-			width: 150px;
-			height: 150px;
-			border-radius: 75px;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: cover;
 		}
 
 		.titulo {
@@ -170,15 +140,6 @@
 			height: 60px;
 		}
 
-		.fotopartner {
-			width: 160px;
-			height: 160px;
-			border-radius: 80px;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-
 		.titulo {
 			font-size: 2.5rem;
 			line-height: 32px;
@@ -200,15 +161,6 @@
 	@media (min-width: 992px) {
 		.logo {
 			height: 60px;
-		}
-
-		.fotopartner {
-			width: 160px;
-			height: 160px;
-			border-radius: 80px;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: cover;
 		}
 
 		.titulo {
@@ -234,15 +186,6 @@
 			height: 60px;
 		}
 
-		.fotopartner {
-			width: 160px;
-			height: 160px;
-			border-radius: 80px;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-
 		.titulo {
 			font-size: 2.5rem;
 			line-height: 32px;
@@ -259,6 +202,4 @@
 			padding-bottom: 4%;
 		}
 	}
-
-	/* Acerto dos gradientes para internet explorer */
 }

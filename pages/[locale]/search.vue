@@ -51,7 +51,7 @@ function updateSearch() {
 
 		<div class="pt-5" v-if="lawyers && lawyers.length > 0">
 			<h2 class="h2 azul text-center">{{ strings.people[lang] }}</h2>
-			<div class="row mt-5 mb-5">
+			<div class="row mt-5 mb-5 d-flex justify-content-center">
 				<nuxt-link
 					v-for="lawyer in lawyers"
 					:to="`/${lang}/lawyers/${lawyer.fid}`"
@@ -65,7 +65,7 @@ function updateSearch() {
 			</div>
 		</div>
 
-		<div class="pt-5" v-if="alerts && alerts?.length > 0">
+		<div class="pt-5" v-if="alerts && alerts.length > 0">
 			<h2 class="h2 azul text-center">
 				{{ strings.legal_alerts[lang] }}
 			</h2>
@@ -76,7 +76,7 @@ function updateSearch() {
 			/>
 		</div>
 
-		<div class="pt-5" v-if="articles && articles?.length > 0">
+		<div class="pt-5" v-if="articles && articles.length > 0">
 			<h2 class="h2 azul text-center">
 				{{ strings.press[lang] }}
 			</h2>
@@ -88,12 +88,12 @@ function updateSearch() {
 			/>
 		</div>
 
-		<div class="container-fluid p-5 text-center" v-if="events && events?.length > 0">
+		<div class="container-fluid p-5 text-center" v-if="events && events.length > 0">
 			<h2 class="h2 azul">
 				{{ strings.events[lang] }}
 			</h2>
 			<div class="container-fluid">
-				<div class="row g-5">
+				<div class="row g-5 d-flex justify-content-center">
 					<div class="col-12 col-sm-6 col-lg-4" v-for="article in events">
 						<app-event
 							:getter="i18nEventGetter(article.uuid, lang, false)"

@@ -8,35 +8,36 @@ const props = defineProps<{
 	editSaver: (content: WebContent) => Promise<void>;
 }>();
 
-const editorRef = ref();
+// const editorRef = ref();
 
 const content = ref<string>("");
 content.value = await props.getter();
 
-const canEdit = computed(() => {
-	const auth = useAuth();
+// const canEdit = computed(() => {
+// 	const auth = useAuth();
 
-	return (
-		auth.username !== null &&
-		auth.username !== undefined &&
-		props.editSaver !== undefined &&
-		props.editSaver !== null
-	);
-});
+// 	return (
+// 		auth.username !== null &&
+// 		auth.username !== undefined &&
+// 		props.editSaver !== undefined &&
+// 		props.editSaver !== null
+// 	);
+// });
 
-async function editWebContent() {
-	const content = await props.editGetter();
+// async function editWebContent() {
+// 	const content = await props.editGetter();
 
-	editorRef.value?.open(content, async (content: WebContent) => {
-		await props.editSaver(content);
-	});
-}
+// 	editorRef.value?.open(content, async (content: WebContent) => {
+// 		await props.editSaver(content);
+// 	});
+// }
 </script>
 
 <template>
 	<div class="app-web-content container mt-5 mb-5 position-relative">
+		<!--
 		<client-only>
-			<lr-web-content-editor-dialog ref="editorRef" />
+			<lr-web-content-editor-dialog ref="editorRef" /> 
 			<app-icon-button
 				v-if="canEdit"
 				iconClass="bi bi-pencil"
@@ -44,6 +45,7 @@ async function editWebContent() {
 				@click="editWebContent"
 			/>
 		</client-only>
+		-->
 
 		<div class="row">
 			<div class="col" v-html="content" />

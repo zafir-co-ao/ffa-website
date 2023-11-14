@@ -4,7 +4,7 @@ import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 import { LegalAlert, makeLegalAlert } from "~/lib/model/types/legal_alert";
-import { Toast } from "~/lib/clientDeps";
+import { LrToast } from "~/lib/clientDeps";
 
 import { WebContent } from "~/lib/deps";
 
@@ -25,11 +25,11 @@ function mapI18nToOptions(strings: I18nMessages): { value: string; label: string
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
 const editorRef = ref();
-const toast = ref<Toast>();
+const toast = ref<LrToast>();
 const alert = ref<Partial<LegalAlert>>(makeLegalAlert());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<Toast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,

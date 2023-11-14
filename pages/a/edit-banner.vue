@@ -2,7 +2,7 @@
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import { Toast } from "~/lib/clientDeps";
+import { LrToast } from "~/lib/clientDeps";
 import { Banner, makeBanner } from "~/lib/model/types/banner";
 import { left, right } from "~/lib/deps";
 
@@ -15,12 +15,12 @@ import AdminIntlContentField from "~~/components/AdminIntlContentField.vue";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
-const toast = ref<Toast>();
+const toast = ref<LrToast>();
 const banner = ref<Partial<Banner>>(makeBanner());
 const uploadImageRef = ref<HTMLInputElement>();
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<Toast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,

@@ -97,11 +97,15 @@ function changeMap(officeId: string) {
 	z-index: 2;
 	position: absolute;
 	display: block;
-	bottom: 4px;
+	bottom: 0px;
 	left: 0px;
 	width: 100%;
 	height: 60px;
-	background: linear-gradient(to right bottom, rgba(255, 255, 255, 0) 49.5%, rgb(38, 50, 56) 50.5%);
+	background: linear-gradient(
+		to right bottom,
+		rgba(255, 255, 255, 0) 49.5%,
+		rgb(38, 50, 56) 50.5%
+	);
 }
 
 @media (min-width: 576px) {

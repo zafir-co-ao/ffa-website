@@ -5,7 +5,7 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
 import { makeMediaArticle, MediaArticle } from "~/lib/model/types/media_article";
-import { Toast } from "~/lib/clientDeps";
+import { LrToast } from "~/lib/clientDeps";
 import { Lawyer } from "~/lib/model/types/lawyer";
 import { WebContent } from "~/lib/deps";
 
@@ -19,11 +19,11 @@ definePageMeta({ layout: "admin", middleware: "auth-guard" });
 const lawyerRef = ref<HTMLSelectElement>();
 const editorRef = ref();
 
-const toast = ref<Toast>();
+const toast = ref<LrToast>();
 const article = ref<Partial<MediaArticle>>(makeMediaArticle());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<Toast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,

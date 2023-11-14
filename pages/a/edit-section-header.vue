@@ -2,7 +2,7 @@
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import { Toast } from "~/lib/clientDeps";
+import { LrToast } from "~/lib/clientDeps";
 import { left, right } from "~/lib/deps";
 
 const API_BASE_URL = "/api/section-headers";
@@ -17,12 +17,12 @@ import {
 } from "~/lib/model/types/section_header";
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
-const toast = ref<Toast>();
+const toast = ref<LrToast>();
 const header = ref<SectionHeader>(makeSectionHeader());
 const uploadImageRef = ref<HTMLInputElement>();
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<Toast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,

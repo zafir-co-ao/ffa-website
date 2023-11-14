@@ -23,6 +23,7 @@ export function i18nWebContentGetter(
 	return async () => {
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const contentOrErr = await client.get(uuid, lang);
+
 		return contentOrErr as string;
 	};
 }
@@ -33,6 +34,7 @@ export function webContentGetter(uuidOrFid: string, useFid: boolean = true): Web
 	return async () => {
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const contentOrErr = await client.get(uuid);
+
 		return contentOrErr as WebContent;
 	};
 }

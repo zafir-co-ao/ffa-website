@@ -14,6 +14,7 @@ export function i18nSectionHeaderGetter(
 	return async () => {
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const res = await fetch(`/api/section-headers/${uuid}?lang=${lang}`);
+
 		if (res.status !== 200) {
 			return;
 		}
