@@ -1,8 +1,8 @@
-import { LocalizedBanner } from "../model/types/banner";
-import { PortalLocale } from "../model/types/portal_locale";
+import type { I18nBanner } from "../model/types/banner";
+import type { PortalLocale } from "../model/types/portal_locale";
 
 export interface I18nBannersGetter {
-	(): Promise<LocalizedBanner[]>;
+	(): Promise<I18nBanner[]>;
 }
 
 export function i18nBannersGetter(lang: PortalLocale): I18nBannersGetter {
@@ -12,6 +12,6 @@ export function i18nBannersGetter(lang: PortalLocale): I18nBannersGetter {
 			return [];
 		}
 
-		return res.json() as Promise<LocalizedBanner[]>;
+		return res.json() as Promise<I18nBanner[]>;
 	};
 }

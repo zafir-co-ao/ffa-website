@@ -1,6 +1,6 @@
 <script lang="ts">
 import { strings } from "~/lib/intl/strings";
-import { I18nEvent } from "~/lib/model/types/event";
+import { type I18nEvent } from "~/lib/model/types/event";
 import { i18nEventGetter, searchEventsArchive } from "~/lib/server_api_clients/events_client";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>

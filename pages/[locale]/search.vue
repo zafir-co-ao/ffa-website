@@ -2,10 +2,10 @@
 
 <script lang="ts" setup>
 import { strings } from "~~/lib/intl/strings";
-import { I18nEvent } from "~~/lib/model/types/event";
-import { I18nLawyer } from "~~/lib/model/types/lawyer";
-import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
-import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import type { I18nEvent } from "~~/lib/model/types/event";
+import type { I18nLawyer } from "~~/lib/model/types/lawyer";
+import type { I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import type { I18nMediaArticle } from "~/lib/model/types/media_article";
 import { searchI18nEvents, i18nEventGetter } from "~/lib/server_api_clients/events_client";
 import { searchI18nLawyers, i18nLawyerGetter } from "~/lib/server_api_clients/lawyers_client";
 import {

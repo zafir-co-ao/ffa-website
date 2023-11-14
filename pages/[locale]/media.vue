@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { strings } from "~/lib/intl/strings";
-import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import type { I18nMediaArticle } from "~/lib/model/types/media_article";
 
-import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
-import { I18nEvent } from "~/lib/model/types/event";
+import type { I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import type { I18nEvent } from "~/lib/model/types/event";
 import {
 	getLatestLegalAlerts,
 	i18nLegalAlertGetter,

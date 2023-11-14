@@ -1,10 +1,13 @@
 <script lang="ts">
-import { Ref } from "vue";
-import { LocalizedBanner } from "~/lib/model/types/banner";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
-import { I18nBannersGetter } from "~/lib/server_api_clients/banners_client";
+import type { I18nBanner } from "~/lib/model/types/banner";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { I18nBannersGetter } from "~/lib/server_api_clients/banners_client";
 
-function initializeComponent(currentIndex: Ref<number>, banners: LocalizedBanner[], intervalId: Ref<number>) {
+function initializeComponent(
+	currentIndex: Ref<number>,
+	banners: I18nBanner[],
+	intervalId: Ref<number>
+) {
 	if (banners.length == 0) return;
 	currentIndex.value = 0;
 	animateBanners(currentIndex, banners.length, intervalId);
@@ -18,7 +21,11 @@ function animateBanners(indexRef: Ref<number>, bannersCount: number, intervalIdR
 	}, ANIMATION_INTERVAL);
 }
 
-function restartBannersAnimation(indexRef: Ref<number>, bannersCount: number, intervalIdRef: Ref<unknown>) {
+function restartBannersAnimation(
+	indexRef: Ref<number>,
+	bannersCount: number,
+	intervalIdRef: Ref<unknown>
+) {
 	clearInterval(intervalIdRef.value as number);
 	animateBanners(indexRef, bannersCount, intervalIdRef);
 }
@@ -31,7 +38,7 @@ const props = defineProps<{ getter: I18nBannersGetter; lang: PortalLocale }>();
 
 const currentIndex = ref(0);
 const intervalIdRef = ref(-1);
-const banners = ref<LocalizedBanner[]>([]);
+const banners = ref<I18nBanner[]>([]);
 
 const hasBanners = computed(() => (banners.value?.length ?? 0) > 0);
 

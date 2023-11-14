@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { PortalLocale } from "~/lib/model/types/portal_locale";
 import { strings } from "~/lib/intl/strings";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 interface KnowMoreButtonProps {
 	dark?: boolean;
-	lang: PortalLanguage;
+	lang: PortalLocale;
 }
 
 withDefaults(defineProps<KnowMoreButtonProps>(), {
@@ -13,5 +13,5 @@ withDefaults(defineProps<KnowMoreButtonProps>(), {
 </script>
 
 <template>
-	<app-button :dark="dark" :label="strings.know_more[lang]"></app-button>
+	<app-button :dark="dark" :label="strings.know_more[lang]!"></app-button>
 </template>

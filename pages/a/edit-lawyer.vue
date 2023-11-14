@@ -1,13 +1,13 @@
 <script lang="ts">
-import { categories, I18nMessages, languages, strings } from "~~/lib/intl/strings";
-import { Lawyer, makeLawyer } from "~~/lib/model/types/lawyer";
+import { categories, type I18nMessages, languages, strings } from "~~/lib/intl/strings";
+import { type Lawyer, makeLawyer } from "~~/lib/model/types/lawyer";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import { forceReload, forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
-import { LrToast } from "~/lib/clientDeps";
-import { WebContent } from "~/lib/deps";
+import type { LrToast } from "~/lib/clientDeps";
+import type { WebContent } from "~/lib/deps";
 
 const API_BASE_URL = "/api/lawyers";
 const BACK_PAGE = "/a/lawyers";

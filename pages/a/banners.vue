@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { LocalizedBanner } from "~~/lib/model/types/banner";
+import { type I18nBanner } from "~~/lib/model/types/banner";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
-const { data: banners } = await useFetch<LocalizedBanner[]>("/api/banners?lang=pt");
+const { data: banners } = await useFetch<I18nBanner[]>("/api/banners?lang=pt");
 
-function cleanTitle(banner: LocalizedBanner): string {
+function cleanTitle(banner: I18nBanner): string {
 	const stage = banner.title1.concat(" ", banner.title2 ?? "").trim();
 	return stage.length > 0 ? stage : "SEM TÍTULO";
 }

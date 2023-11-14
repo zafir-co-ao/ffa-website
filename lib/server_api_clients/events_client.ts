@@ -1,6 +1,6 @@
 import { fidToUuid } from "../deps";
-import { I18nEvent } from "../model/types/event";
-import { PortalLocale } from "../model/types/portal_locale";
+import type { I18nEvent } from "../model/types/event";
+import type { PortalLocale } from "../model/types/portal_locale";
 
 export interface I18nEventGetter {
 	(): Promise<I18nEvent | undefined>;

@@ -2,7 +2,7 @@ import { H3Event, createRouter, defineEventHandler, useBase } from "h3";
 
 import { deleteNode, getNode } from "~/lib/api/antbox_proxy";
 import { nodeServiceClient } from "~/lib/deps";
-import { toLocalizedBanner, fromBanner } from "~/lib/model/types/banner";
+import { toI18nBanner, fromBanner } from "~/lib/model/types/banner";
 
 const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 
@@ -38,7 +38,7 @@ const updateBannerHandler = defineEventHandler(async (evt) => {
 
 const router = createRouter();
 
-router.get("/:uuid", defineEventHandler(getNode(toLocalizedBanner)));
+router.get("/:uuid", defineEventHandler(getNode(toI18nBanner)));
 router.put("/:uuid", updateBannerHandler);
 router.delete("/:uuid", defineEventHandler(deleteNode));
 

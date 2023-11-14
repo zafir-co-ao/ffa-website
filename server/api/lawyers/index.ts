@@ -1,11 +1,16 @@
 import { H3Event, getQuery } from "h3";
 
-import { NodeFilter, nodeServiceClient } from "~/lib/deps";
-import { I18nLawyer, fromLawyer, toLocalizedLawyer, Lawyer } from "~/lib/model/types/lawyer";
+import { type NodeFilter, nodeServiceClient } from "~/lib/deps";
+import {
+	type I18nLawyer,
+	fromLawyer,
+	toLocalizedLawyer,
+	type Lawyer,
+} from "~/lib/model/types/lawyer";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 import { mapBody } from "~/lib/api/map_body";
 import processApiError from "~/lib/process_api_error";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 const LAWYERS_FOLDER_FID = "lawyers";
 const LAWYERS_FOLDER_NAME = "Advogados";

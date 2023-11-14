@@ -1,4 +1,4 @@
-import { I18nMessagesEntry } from "./strings";
+import type { I18nMessagesEntry } from "./strings";
 
 const areasOfPractice: Record<string, I18nMessagesEntry> = {
 	Aduaneiro: { pt: "Aduaneiro ", en: "Customs" },

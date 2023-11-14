@@ -1,6 +1,4 @@
-import { log } from "console";
-import { baseURL } from "nuxt/dist/core/runtime/nitro/paths";
-import { Either, left, right } from "~/lib/deps";
+import { type Either, left, right } from "~/lib/deps";
 
 export interface BaseData {
 	uuid: string;

@@ -1,6 +1,6 @@
-import { Node, nodeServiceClient } from "../../deps";
-import { I18nMessagesEntry } from "../../intl/strings";
-import { PortalLocale } from "./portal_locale";
+import { type Node, nodeServiceClient } from "../../deps";
+import type { I18nMessagesEntry } from "../../intl/strings";
+import type { PortalLocale } from "./portal_locale";
 
 // Aspect: banner
 export interface Banner {
@@ -15,7 +15,7 @@ export interface Banner {
 	priority: number;
 }
 
-export interface LocalizedBanner {
+export interface I18nBanner {
 	uuid: string;
 	title1: string;
 	title2?: string;
@@ -32,7 +32,7 @@ export function makeBanner(): Banner {
 	return {} as Banner;
 }
 
-export function toLocalizedBanner(node: Node, lang?: PortalLocale): Banner | LocalizedBanner {
+export function toI18nBanner(node: Node, lang?: PortalLocale): Banner | I18nBanner {
 	const banner = toBanner(node);
 
 	if (!lang) {

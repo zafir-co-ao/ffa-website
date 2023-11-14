@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { type PortalLocale } from "~/lib/model/types/portal_locale";
 
 interface AppInputProps {
-	lang?: PortalLanguage;
+	lang?: PortalLocale;
 	modelValue: any;
 }
 

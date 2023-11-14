@@ -1,6 +1,6 @@
 <script lang="ts">
 import { strings } from "~/lib/intl/strings";
-import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import { type I18nMediaArticle } from "~/lib/model/types/media_article";
 import { i18nLawyerGetter } from "~/lib/server_api_clients/lawyers_client";
 import { i18nMediaArticleGetter } from "~/lib/server_api_clients/media_articles_client";
 import { searchMediaArticlesArchive } from "~/lib/server_api_clients/media_articles_client";

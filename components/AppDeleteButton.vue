@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { type PortalLocale } from "~/lib/model/types/portal_locale";
 
-withDefaults(defineProps<{ lang?: PortalLanguage }>(), {
+withDefaults(defineProps<{ lang?: PortalLocale }>(), {
 	lang: "pt",
 });
 

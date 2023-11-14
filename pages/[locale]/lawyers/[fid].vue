@@ -4,7 +4,7 @@ import { strings } from "~/lib/intl/strings";
 import getLawyerPrintTemplate from "./GetLawyerPrintTemplate";
 import { languages } from "~/lib/intl/strings";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
-import { I18nLawyer } from "~/lib/model/types/lawyer";
+import { type I18nLawyer } from "~/lib/model/types/lawyer";
 import { getI18nLawyer } from "~/lib/server_api_clients/lawyers_client";
 
 const nodeClient = useAntboxClient();
@@ -29,10 +29,6 @@ const areasOfExpertise = computed(() =>
 		?.map((a) => lawyerAreas[a]?.[lang.value] ?? `%${a}%`)
 		.sort((a, b) => a.localeCompare(b))
 );
-
-onMounted(() => {
-	getI18nLawyer(fid, lang.value).then((l) => (lawyer.value = l));
-});
 
 function printCurriculum() {
 	const content = document.getElementById("curriculopartner")?.innerHTML;
@@ -74,29 +70,43 @@ const scopedMessages = {
 	back: { pt: "Voltar", en: "Back" },
 };
 
-const ldJson = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "Person",
-	name: lawyer.value?.name,
-	url: `https://fatimafreitas.com/${lang.value}/lawyers/${lawyer.value?.fid}`,
-	image: portraitUrl.value,
-	affiliation: {
-		"@type": "Organization",
-		name: strings.meta_og_site_name[lang.value],
-	},
-	email: lawyer.value?.email,
-	jobTitle: lawyer.value?.position,
-	knowsLanguage: lawyer.value?.languages,
-	telephone: lawyer.value?.officeTelephones,
+function ldJson() {
+	return JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: lawyer.value?.name,
+		url: `https://fatimafreitas.com/${lang.value}/lawyers/${lawyer.value?.fid}`,
+		image: portraitUrl.value,
+		affiliation: {
+			"@type": "Organization",
+			name: strings.meta_og_site_name[lang.value],
+		},
+		email: lawyer.value?.email,
+		jobTitle: lawyer.value?.position,
+		knowsLanguage: lawyer.value?.languages,
+		telephone: lawyer.value?.officeTelephones,
+	});
+}
+
+onMounted(async () => {
+	lawyer.value = await getI18nLawyer(fid, lang.value);
+
+	useHeadSafe({
+		script: [
+			{
+				type: "application/ld+json",
+				textContent: ldJson(),
+			},
+		],
+
+		title: `${lawyer.value?.name} - ${strings.meta_title[lang.value]}`,
+	});
 });
 </script>
 
 <template>
 	<div class="container">
 		<div v-if="lawyer">
-			<Script type="application/ld+json" :children="ldJson" />
-
-			<Title>{{ lawyer.name }} - {{ strings.meta_title[lang] }}</Title>
 			<nav class="pt-3" aria-label="breadcrumb">
 				<div class="breadcrumb fs-085">
 					<span class="breadcrumb-item"><a href="/">Home</a></span>

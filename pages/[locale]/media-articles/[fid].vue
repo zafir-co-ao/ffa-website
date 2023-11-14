@@ -3,7 +3,7 @@ import { strings } from "~/lib/intl/strings";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
 import error404 from "../../err/404.vue";
-import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import { type I18nMediaArticle } from "~/lib/model/types/media_article";
 import { getI18nMediaArticle } from "~/lib/server_api_clients/media_articles_client";
 
 const route = useRoute();
@@ -43,7 +43,10 @@ onMounted(async () => {
 
 			<app-article-title :title="article.title" />
 
-			<app-article-social-share-buttons :linkedin-share="linkedinShare!" :whatsapp-share="whatsappShare!" />
+			<app-article-social-share-buttons
+				:linkedin-share="linkedinShare!"
+				:whatsapp-share="whatsappShare!"
+			/>
 
 			<div v-html="article.body" />
 

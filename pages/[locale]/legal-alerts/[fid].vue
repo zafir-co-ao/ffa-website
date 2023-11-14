@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { I18nMessagesEntry, strings } from "~/lib/intl/strings";
+import { type I18nMessagesEntry, strings } from "~/lib/intl/strings";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
 import error404 from "../../err/404.vue";
-import { I18nLegalAlert, LegalAlertsCategory } from "~/lib/model/types/legal_alert";
+import { type I18nLegalAlert, type LegalAlertsCategory } from "~/lib/model/types/legal_alert";
 import { getI18nLegalAlert } from "~/lib/server_api_clients/legal_alerts_client";
 
 const route = useRoute();
@@ -19,12 +19,6 @@ const linkedinShare = ref<string>();
 
 const alert = ref<I18nLegalAlert>();
 
-onMounted(async () => {
-	alert.value = await getI18nLegalAlert(fid, lang.value);
-	whatsappShare.value = makeWhatsappShareUrl();
-	linkedinShare.value = makeLinkedinShareUrl();
-});
-
 const scopedStrings: Record<LegalAlertsCategory, I18nMessagesEntry> = {
 	Alert: { pt: "Alerta", en: "Alert" },
 	Bulletin: { pt: "Notícias", en: "News" },
@@ -32,30 +26,46 @@ const scopedStrings: Record<LegalAlertsCategory, I18nMessagesEntry> = {
 
 const categoryLabel = computed(() => scopedStrings[alert.value!.category][lang.value!]);
 
-const ldJson = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "Article",
-	headline: alert.value?.title,
+function ldJson() {
+	return JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Article",
+		headline: alert.value?.title,
 
-	datePublished: alert.value?.publishedOn,
-	author: {
-		"@type": "Organization",
-		name: strings.meta_og_site_name[lang.value],
-		url: "https://fatimafreitas.com",
-	},
-	publisher: {
-		"@type": "Organization",
-		name: strings.meta_og_site_name[lang.value],
-	},
+		datePublished: alert.value?.publishedOn,
+		author: {
+			"@type": "Organization",
+			name: strings.meta_og_site_name[lang.value],
+			url: "https://fatimafreitas.com",
+		},
+		publisher: {
+			"@type": "Organization",
+			name: strings.meta_og_site_name[lang.value],
+		},
+	});
+}
+
+onMounted(async () => {
+	alert.value = await getI18nLegalAlert(fid, lang.value);
+	whatsappShare.value = makeWhatsappShareUrl();
+	linkedinShare.value = makeLinkedinShareUrl();
+
+	useHeadSafe({
+		script: [
+			{
+				type: "application/ld+json",
+				textContent: ldJson(),
+			},
+		],
+
+		title: `${alert.value?.title} - ${strings.meta_title[lang.value]}`,
+	});
 });
 </script>
 
 <template>
 	<div class="container">
 		<div v-if="alert">
-			<Title>{{ alert.title }} - {{ strings.meta_title[lang] }}</Title>
-			<Script type="application/ld+json" :children="ldJson"></Script>
-
 			<app-article-breadcrumbs
 				:lang="lang"
 				:back-page-url="BACK_PAGE"
@@ -68,7 +78,10 @@ const ldJson = JSON.stringify({
 
 			<app-article-title :title="alert.title" />
 
-			<app-article-social-share-buttons :linkedin-share="linkedinShare!" :whatsapp-share="whatsappShare!" />
+			<app-article-social-share-buttons
+				:linkedin-share="linkedinShare!"
+				:whatsapp-share="whatsappShare!"
+			/>
 
 			<div v-html="alert.body" />
 

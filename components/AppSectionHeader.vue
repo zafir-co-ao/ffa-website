@@ -1,6 +1,7 @@
 <script lang="ts">
-import { I18nSectionHeader } from "~/lib/model/types/section_header";
-import { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
+/* __placeholder__ */
+import type { I18nSectionHeader } from "~/lib/model/types/section_header";
+import type { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>
 
 <script lang="ts" setup>

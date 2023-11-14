@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import { type I18nLegalAlert } from "~/lib/model/types/legal_alert";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 

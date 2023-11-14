@@ -75,7 +75,7 @@ function handleWebContentSave(content: WebContent) {
 </script>
 
 <script lang="ts" setup>
-import { WebContent } from "~/lib/deps";
+import { type WebContent } from "~/lib/deps";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 import {
 	i18nWebContentGetter,

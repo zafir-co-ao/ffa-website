@@ -1,14 +1,15 @@
 <script lang="ts">
-import { WebContent } from "~~/lib/deps";
+/* __placeholder__ */
+import type { WebContent } from "~~/lib/deps";
 
 import { strings } from "~~/lib/intl/strings";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
-import { Event, makeEvent } from "~~/lib/model/types/event";
+import { type Event, makeEvent } from "~~/lib/model/types/event";
 
-import { LrToast } from "~/lib/clientDeps";
+import type { LrToast } from "~/lib/clientDeps";
 
 const API_BASE_URL = "/api/events";
 const BACK_PAGE = "/a/events";

@@ -1,6 +1,6 @@
 import { fidToUuid } from "~/lib/deps";
-import { PortalLocale } from "../model/types/portal_locale";
-import { I18nSectionHeader } from "../model/types/section_header";
+import type { PortalLocale } from "../model/types/portal_locale";
+import type { I18nSectionHeader } from "../model/types/section_header";
 
 export interface I18nSectionHeaderGetter {
 	(): Promise<I18nSectionHeader | undefined>;

@@ -1,6 +1,6 @@
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { Node } from "~/lib/deps";
-import { PortalLocale } from "./portal_locale";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import type { Node } from "~/lib/deps";
+import type { PortalLocale } from "./portal_locale";
 import { FOLDER_MIMETYPE } from "~/lib/deps";
 
 export interface Lawyer {

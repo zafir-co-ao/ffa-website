@@ -1,10 +1,16 @@
 <script lang="ts">
-import { I18nEventGetter } from "~/lib/server_api_clients/events_client";
+/* __placeholder__ */
+import type { I18nEventGetter } from "~/lib/server_api_clients/events_client";
 import { strings } from "~/lib/intl/strings";
-import { I18nEvent } from "~/lib/model/types/event";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { I18nEvent } from "~/lib/model/types/event";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
-function getVCalendarContentFromEvent(eventFid: string, eventTitle: string, eventPlace: string, eventDateTime: string) {
+function getVCalendarContentFromEvent(
+	eventFid: string,
+	eventTitle: string,
+	eventPlace: string,
+	eventDateTime: string
+) {
 	return [
 		toVCalendarLine("BEGIN:VCALENDAR"),
 		toVCalendarLine("VERSION:2.0"),
@@ -37,7 +43,12 @@ function toVCalendarDateTime(value: string | number | Date) {
 }
 
 function addToCalendar(eventFid: string, eventTitle: any, eventPlace: any, eventDateTime: any) {
-	const calendarContent = getVCalendarContentFromEvent(eventFid, eventTitle, eventPlace, eventDateTime);
+	const calendarContent = getVCalendarContentFromEvent(
+		eventFid,
+		eventTitle,
+		eventPlace,
+		eventDateTime
+	);
 	const file = new File([calendarContent], eventFid.concat(".ics"), {
 		type: "text/calendar",
 	});
@@ -64,7 +75,12 @@ const formatedEventDate = computed(() => event.value?.eventDateTime.substring(0,
 const tooltipTitle = computed(() => strings.add_to_calendar[props.lang]);
 
 const handleAddToCalendar = () =>
-	addToCalendar(event.value!.fid, event.value!.title, event.value!.eventPlace, event.value!.eventDateTime);
+	addToCalendar(
+		event.value!.fid,
+		event.value!.title,
+		event.value!.eventPlace,
+		event.value!.eventDateTime
+	);
 
 onMounted(async () => {
 	event.value = await props.getter();

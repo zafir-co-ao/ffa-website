@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { I18nMediaArticle } from "~/lib/model/types/media_article";
+import { type I18nMediaArticle } from "~/lib/model/types/media_article";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 

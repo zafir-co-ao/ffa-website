@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
+/* __placeholder__ */
+import type { I18nLegalAlert } from "~/lib/model/types/legal_alert";
 import { i18nBannersGetter } from "~/lib/server_api_clients/banners_client";
 import { getLatestLegalAlerts } from "~/lib/server_api_clients/legal_alerts_client";
 import {
@@ -9,7 +10,7 @@ import {
 } from "~/lib/server_api_clients/web_content_client";
 import { i18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
 
-import { WebContent, fidToUuid } from "~/lib/deps";
+import { type WebContent, fidToUuid } from "~/lib/deps";
 import { strings } from "~/lib/intl/strings";
 
 const nodeClient = useAntboxClient();

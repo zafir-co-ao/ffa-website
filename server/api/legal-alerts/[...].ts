@@ -1,11 +1,15 @@
 import { readBody } from "h3";
 import { deleteNode } from "~/lib/api/antbox_proxy";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
-import { Node, nodeServiceClient } from "~/lib/deps";
+import { type Node, nodeServiceClient } from "~/lib/deps";
 
-import { LegalAlert, fromLegalAlert, toLocalizedLegalAlert } from "~/lib/model/types/legal_alert";
+import {
+	type LegalAlert,
+	fromLegalAlert,
+	toLocalizedLegalAlert,
+} from "~/lib/model/types/legal_alert";
 import processFetchException from "~/lib/process_fetch_exception";
 
 const TARGET_ASPECT = "legal-alert";

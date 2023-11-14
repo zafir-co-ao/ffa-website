@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { I18nLawyer } from "~~/lib/model/types/lawyer";
+import { type I18nLawyer } from "~~/lib/model/types/lawyer";
 
 const nodeClient = useAntboxClient();
 

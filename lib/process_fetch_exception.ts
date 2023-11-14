@@ -1,4 +1,4 @@
-import { Either, left } from "~/lib/deps";
+import { type Either, left } from "~/lib/deps";
 import { setResponseStatus, H3Event } from "h3";
 
 export default function processFetchException<T>(evt: H3Event): (err: Error) => Either<Error, T> {

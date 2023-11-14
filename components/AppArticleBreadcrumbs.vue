@@ -1,10 +1,10 @@
-<script lang="ts">
-import { PortalLocale } from "~/lib/model/types/portal_locale";
-</script>
+<script lang="ts"></script>
 
 <script lang="ts" setup>
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
+
 interface Props {
-	lang: PortalLanguage;
+	lang: PortalLocale;
 	backPageUrl: string;
 	backPageTile: string;
 	thirdLevelTitle: string;

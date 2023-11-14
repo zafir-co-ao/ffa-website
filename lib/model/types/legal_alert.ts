@@ -1,6 +1,6 @@
-import { Node } from "~/lib/deps";
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { PortalLocale } from "./portal_locale";
+import type { Node } from "~/lib/deps";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import type { PortalLocale } from "./portal_locale";
 
 export type LegalAlertsCategory = "Bulletin" | "Alert";
 export const LegalAlertsCategories: Record<string, string> = {
@@ -56,7 +56,11 @@ export function toLegalAlert(node: Node, bodyText: string): LegalAlert {
 	return legalAlert;
 }
 
-export function toLocalizedLegalAlert(node: Node, bodyText: string, lang?: PortalLocale): LegalAlert | I18nLegalAlert {
+export function toLocalizedLegalAlert(
+	node: Node,
+	bodyText: string,
+	lang?: PortalLocale
+): LegalAlert | I18nLegalAlert {
 	const legalAlert = toLegalAlert(node, bodyText);
 
 	if (!lang) {

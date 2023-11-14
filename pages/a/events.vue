@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { I18nEvent } from "~/lib/model/types/event";
+import { type I18nEvent } from "~/lib/model/types/event";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 

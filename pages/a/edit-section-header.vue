@@ -2,7 +2,7 @@
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import { LrToast } from "~/lib/clientDeps";
+import type { LrToast } from "~/lib/clientDeps";
 import { left, right } from "~/lib/deps";
 
 const API_BASE_URL = "/api/section-headers";
@@ -11,8 +11,8 @@ const BACK_PAGE = "/a/section-headers";
 
 <script lang="ts" setup>
 import {
-	I18nSectionHeader,
-	SectionHeader,
+	type I18nSectionHeader,
+	type SectionHeader,
 	makeSectionHeader,
 } from "~/lib/model/types/section_header";
 definePageMeta({ layout: "admin", middleware: "auth-guard" });

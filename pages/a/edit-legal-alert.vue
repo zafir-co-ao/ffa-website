@@ -1,12 +1,12 @@
 <script lang="ts">
-import { legalAlertCategories, I18nMessages, strings } from "~~/lib/intl/strings";
+import { legalAlertCategories, type I18nMessages, strings } from "~~/lib/intl/strings";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import { LegalAlert, makeLegalAlert } from "~/lib/model/types/legal_alert";
-import { LrToast } from "~/lib/clientDeps";
+import { type LegalAlert, makeLegalAlert } from "~/lib/model/types/legal_alert";
+import type { LrToast } from "~/lib/clientDeps";
 
-import { WebContent } from "~/lib/deps";
+import type { WebContent } from "~/lib/deps";
 
 const API_BASE_URL = "/api/legal-alerts";
 const BACK_PAGE = "/a/legal-alerts";

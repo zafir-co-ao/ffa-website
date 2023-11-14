@@ -1,7 +1,10 @@
 <script lang="ts">
 import { strings } from "~/lib/intl/strings";
-import { I18nLegalAlert } from "~/lib/model/types/legal_alert";
-import { i18nLegalAlertGetter, searchLegalAlertsArchive } from "~/lib/server_api_clients/legal_alerts_client";
+import { type I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import {
+	i18nLegalAlertGetter,
+	searchLegalAlertsArchive,
+} from "~/lib/server_api_clients/legal_alerts_client";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 </script>
 
@@ -43,7 +46,10 @@ onMounted(loadMore);
 
 			<div class="row gx-5">
 				<div v-for="alert in alerts" class="bg-azul-1 mb-3 pb-4">
-					<app-legal-alert :getter="i18nLegalAlertGetter(alert.uuid, lang, false)" :lang="lang" />
+					<app-legal-alert
+						:getter="i18nLegalAlertGetter(alert.uuid, lang, false)"
+						:lang="lang"
+					/>
 				</div>
 			</div>
 

@@ -1,15 +1,15 @@
-import { Ref } from "vue";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { Ref } from "vue";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 import pt from "~/lib/i18n/locales/pt.json";
 import en from "~/lib/i18n/locales/en.json";
 
-import { RouteLocationNormalizedLoaded } from "vue-router";
+import { type RouteLocationNormalizedLoaded } from "vue-router";
 
 export default function () {
 	const route = useRoute();
 
-	const locale = useState("locale", () => getCurrentLocale(route));
+	const locale = useState<PortalLocale>("locale", () => getCurrentLocale(route));
 
 	return {
 		$locale: locale,

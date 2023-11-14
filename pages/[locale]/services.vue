@@ -1,8 +1,9 @@
 <script lang="ts">
-import { WebContent } from "~/lib/deps";
+/* __placeholder__ */
+import type { WebContent } from "~/lib/deps";
 import areasOfPractice from "~/lib/intl/areas_of_practice";
 import industries from "~/lib/intl/industries";
-import { I18nMessagesEntry, strings } from "~/lib/intl/strings";
+import { type I18nMessagesEntry, strings } from "~/lib/intl/strings";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 import {
 	i18nWebContentGetter,
@@ -35,46 +36,48 @@ const scopedMessages = {
 	industries: { pt: "Indústrias", en: "Industries" },
 };
 
-const ldJson = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "LegalService",
-	name: strings.meta_og_site_name[lang.value],
-	url: "https://fatimafreitas.com/",
-	address: offices[0].address.replaceAll(/<br \/>/g, ", "),
-	telephone: offices[0].phoneNumbers,
-	email: offices[0].email,
-	location: [
-		{
-			"@type": "Place",
-			name: offices[0].name,
-			address: offices[0].address.replaceAll(/<br \/>/g, ", "),
-			latitude: offices[0].latitude,
-			longitude: offices[0].longitude,
-			telephone: offices[0].phoneNumbers,
-		},
-		{
-			"@type": "Place",
-			name: offices[1].name,
-			address: offices[1].address.replaceAll(/<br \/>/g, ", "),
-			latitude: offices[1].latitude,
-			longitude: offices[1].longitude,
-			telephone: offices[1].phoneNumbers,
-		},
-		{
-			"@type": "Place",
-			name: offices[2].name,
-			address: offices[2].address.replaceAll(/<br \/>/g, ", "),
-			latitude: offices[2].latitude,
-			longitude: offices[2].longitude,
-			telephone: offices[2].phoneNumbers,
-		},
-	],
+function ldJson() {
+	return JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "LegalService",
+		name: strings.meta_og_site_name[lang.value],
+		url: "https://fatimafreitas.com/",
+		address: offices[0].address.replaceAll(/<br \/>/g, ", "),
+		telephone: offices[0].phoneNumbers,
+		email: offices[0].email,
+		location: [
+			{
+				"@type": "Place",
+				name: offices[0].name,
+				address: offices[0].address.replaceAll(/<br \/>/g, ", "),
+				latitude: offices[0].latitude,
+				longitude: offices[0].longitude,
+				telephone: offices[0].phoneNumbers,
+			},
+			{
+				"@type": "Place",
+				name: offices[1].name,
+				address: offices[1].address.replaceAll(/<br \/>/g, ", "),
+				latitude: offices[1].latitude,
+				longitude: offices[1].longitude,
+				telephone: offices[1].phoneNumbers,
+			},
+			{
+				"@type": "Place",
+				name: offices[2].name,
+				address: offices[2].address.replaceAll(/<br \/>/g, ", "),
+				latitude: offices[2].latitude,
+				longitude: offices[2].longitude,
+				telephone: offices[2].phoneNumbers,
+			},
+		],
 
-	logo: "https://fatimafreitas.com/images/ffa-logo.jpg",
+		logo: "https://fatimafreitas.com/images/ffa-logo.jpg",
 
-	knowsLanguage: ["pt", "en", "es", "fr", "ru"],
-	openingHours: "Mo-Fr 8:30-18:30",
-});
+		knowsLanguage: ["pt", "en", "es", "fr", "ru"],
+		openingHours: "Mo-Fr 8:30-18:30",
+	});
+}
 
 function handleWebContentSave(content: WebContent) {
 	const saveWebContent = webContentSaver();
@@ -83,12 +86,23 @@ function handleWebContentSave(content: WebContent) {
 		window.location.reload();
 	});
 }
+
+onMounted(() => {
+	useHeadSafe({
+		script: [
+			{
+				type: "application/ld+json",
+				textContent: ldJson(),
+			},
+		],
+
+		title: `${strings.services[lang.value]} - ${strings.meta_title[lang.value]}`,
+	});
+});
 </script>
 
 <template>
 	<div>
-		<Title>{{ strings.services[lang] }} - {{ strings.meta_title[lang] }}</Title>
-		<Script type="application/ld+json" :children="ldJson"></Script>
 		<app-section-header :getter="i18nSectionHeaderGetter('servicos__separador_1', lang)" />
 		<app-web-content
 			:getter="i18nWebContentGetter('servicos__texto_1', lang)"

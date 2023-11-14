@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { type PortalLocale } from "~/lib/model/types/portal_locale";
 
 const { $messages, $locale, localePath } = useI18n();
 const route = useRoute();

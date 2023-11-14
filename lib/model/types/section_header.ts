@@ -1,6 +1,6 @@
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { Node, nodeServiceClient } from "~/lib/deps";
-import { PortalLocale } from "./portal_locale";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import { type Node, nodeServiceClient } from "~/lib/deps";
+import type { PortalLocale } from "./portal_locale";
 
 // Aspect: section-header
 // Aspect Constraints: [image/png, image/jpg]

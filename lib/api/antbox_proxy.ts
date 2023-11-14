@@ -1,10 +1,10 @@
 import { H3Event } from "h3";
 
-import { Node, NodeFilter, nodeServiceClient } from "~/lib/deps";
+import { type Node, type NodeFilter, nodeServiceClient } from "~/lib/deps";
 
 import processApiError from "../process_api_error";
 import { mapBody } from "./map_body";
-import { PortalLocale } from "../model/types/portal_locale";
+import type { PortalLocale } from "../model/types/portal_locale";
 
 const client = nodeServiceClient({ url: process.env.NUXT_PUBLIC_ANTBOX_URL! });
 

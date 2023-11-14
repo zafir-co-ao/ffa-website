@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { strings } from "~/lib/intl/strings";
-import { I18nEvent } from "~/lib/model/types/event";
+import { type I18nEvent } from "~/lib/model/types/event";
 import { getI18nEvent } from "~/lib/server_api_clients/events_client";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
@@ -25,35 +25,45 @@ const formatedEventDate = computed(() => event.value?.eventDateTime.substring(0,
 
 const bannerUrl = computed(() => nodeClient.getNodeUrl(event.value?.bannerUuid!));
 
+function ldJson() {
+	return JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Event",
+		name: event.value?.title,
+		startDate: event.value?.eventDateTime,
+		location: event.value?.eventPlace ?? "ND",
+		description: event.value?.body ?? event.value?.title,
+		organizer: {
+			"@type": "Organization",
+			name: strings.meta_og_site_name[lang.value],
+			url: "https://fatimafreitas.com",
+		},
+	});
+}
+
 onMounted(async () => {
 	event.value = await getI18nEvent(fid, lang.value);
 	whatsappShare.value = makeWhatsappShareUrl();
 	linkedinShare.value = makeLinkedinShareUrl();
-});
 
-const ldJson = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "Event",
-	name: event.value?.title,
-	startDate: event.value?.eventDateTime,
-	location: event.value?.eventPlace ?? "ND",
-	description: event.value?.body ?? event.value?.title,
-	organizer: {
-		"@type": "Organization",
-		name: strings.meta_og_site_name[lang.value],
-		url: "https://fatimafreitas.com",
-	},
+	useHeadSafe({
+		script: [
+			{
+				type: "application/ld+json",
+				textContent: ldJson(),
+			},
+		],
+
+		title: `${event.value?.title} - ${strings.meta_title[lang.value]}`,
+	});
 });
 </script>
 
 <template>
 	<div class="container">
 		<div v-if="event">
-			<Title>{{ event.title }} - {{ strings.meta_title[lang] }}</Title>
-			<Script type="application/ld+json" :children="ldJson"></Script>
-
 			<app-article-breadcrumbs
-				:lang="$locale"
+				:lang="lang"
 				:back-page-url="BACK_PAGE"
 				:back-page-tile="strings.media[lang]!"
 				:third-level-title="strings.events[lang]!"

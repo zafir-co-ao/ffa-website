@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { strings } from "~/lib/intl/strings";
-import { LocalizedLegalAlert } from "~/lib/model/types/legal_alert";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { type I18nLegalAlert } from "~/lib/model/types/legal_alert";
+import { type PortalLocale } from "~/lib/model/types/portal_locale";
 
 const props = defineProps<{
-	getter: () => Promise<LocalizedLegalAlert | undefined>;
+	getter: () => Promise<I18nLegalAlert | undefined>;
 	lang: PortalLocale;
 }>();
 
-const alert = ref<LocalizedLegalAlert>();
+const alert = ref<I18nLegalAlert>();
 
 const articlePath = computed(() => `/${props.lang}/legal-alerts/${alert.value?.fid}`);
 

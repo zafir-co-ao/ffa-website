@@ -2,8 +2,8 @@
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import { LrToast } from "~/lib/clientDeps";
-import { Banner, makeBanner } from "~/lib/model/types/banner";
+import type { LrToast } from "~/lib/clientDeps";
+import { type Banner, makeBanner } from "~/lib/model/types/banner";
 import { left, right } from "~/lib/deps";
 
 const API_BASE_URL = "/api/banners";

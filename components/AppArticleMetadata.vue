@@ -1,8 +1,8 @@
 <script lang="ts"></script>
 
 <script lang="ts" setup>
-const props = defineProps<{ metadata: string[] }>();
-const emit = defineEmits([]);
+defineProps<{ metadata: string[] }>();
+defineEmits([]);
 </script>
 
 <template>

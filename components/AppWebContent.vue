@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { WebContent } from "~/lib/deps";
-import { I18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
+/* __placeholder__ */
+import type { WebContent } from "~/lib/deps";
+import type { I18nWebContentGetter } from "~/lib/server_api_clients/web_content_client";
 
 const props = defineProps<{
 	getter: I18nWebContentGetter;

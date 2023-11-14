@@ -1,6 +1,6 @@
-import { Ref } from "vue";
-import { ApiController } from "./apiController";
-import { ApiResponseHandler } from "./apiResponseHandler";
+import type { Ref } from "vue";
+import type { ApiController } from "./apiController";
+import type { ApiResponseHandler } from "./apiResponseHandler";
 
 export default function makeModelReloader<T>(
 	apiHandler: ApiResponseHandler,

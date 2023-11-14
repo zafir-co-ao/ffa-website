@@ -6,7 +6,7 @@ import {
 	webContentSaver,
 } from "~/lib/server_api_clients/web_content_client";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
-import { WebContent } from "~/lib/deps";
+import type { WebContent } from "~/lib/deps";
 
 const { $locale: lang } = useI18n();
 

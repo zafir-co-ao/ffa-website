@@ -1,8 +1,8 @@
 <script lang="ts"></script>
 
 <script lang="ts" setup>
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import { type PortalLocale } from "~/lib/model/types/portal_locale";
 
 interface MultichoiceOptionProps<T> {
 	lang?: PortalLocale;

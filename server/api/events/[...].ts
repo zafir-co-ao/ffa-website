@@ -1,9 +1,9 @@
 import { readBody } from "h3";
 import { deleteNode } from "~/lib/api/antbox_proxy";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
-import { Event, fromEvent, toLocalizedEvent } from "~/lib/model/types/event";
+import { type Event, fromEvent, toLocalizedEvent } from "~/lib/model/types/event";
 import { nodeServiceClient } from "~/lib/deps";
 
 const TARGET_ASPECT = "event";

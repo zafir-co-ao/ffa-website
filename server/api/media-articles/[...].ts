@@ -1,10 +1,10 @@
 import { readBody } from "h3";
 import { deleteNode } from "~/lib/api/antbox_proxy";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 import processApiError from "~/lib/process_api_error";
 
 import {
-	MediaArticle,
+	type MediaArticle,
 	fromMediaArticle,
 	toLocalizedMediaArticle,
 } from "~/lib/model/types/media_article";

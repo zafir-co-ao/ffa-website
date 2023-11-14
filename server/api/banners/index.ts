@@ -1,15 +1,15 @@
 import { createRouter, defineEventHandler, useBase, H3Event } from "h3";
-import { Node, NodeFilter, nodeServiceClient } from "~/lib/deps";
+import { type Node, type NodeFilter, nodeServiceClient } from "~/lib/deps";
 
 import { searchNodes } from "~/lib/api/antbox_proxy";
 import {
-	Banner,
-	toLocalizedBanner,
+	type Banner,
+	toI18nBanner,
 	toBanner,
-	LocalizedBanner,
+	type I18nBanner,
 	fromBanner,
 } from "~/lib/model/types/banner";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
 
 const BANNERS_FOLDER_FID = "banners";
@@ -29,10 +29,10 @@ async function readParts(evt: H3Event): Promise<Record<string, Buffer>> {
 
 const listBannersHandler = defineEventHandler(async (evt) => {
 	const lang = getQuery(evt).lang as PortalLocale | undefined;
-	const to = lang ? (n: Node) => toLocalizedBanner(n, lang) : toBanner;
+	const to = lang ? (n: Node) => toI18nBanner(n, lang) : toBanner;
 	const filters: NodeFilter[] = [["aspects", "contains", TARGET_ASPECT]];
 
-	const banners = await searchNodes<Banner, LocalizedBanner>(evt, to, filters);
+	const banners = await searchNodes<Banner, I18nBanner>(evt, to, filters);
 
 	if ((banners as any).isError) {
 		return banners;

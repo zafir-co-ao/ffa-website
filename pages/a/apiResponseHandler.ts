@@ -1,6 +1,6 @@
-import { LrToast } from "@zafir.co.ao/lightray/dist/plugin";
-import { Ref } from "vue";
-import { Either } from "~/lib/deps";
+import type { LrToast } from "@zafir.co.ao/lightray";
+import type { Ref } from "vue";
+import type { Either } from "~/lib/deps";
 
 export interface ApiResponseHandler {
 	handle<L, R>(request: Promise<Either<L, R>>, success?: string): Promise<R | undefined>;

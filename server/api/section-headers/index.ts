@@ -1,14 +1,14 @@
 import { createRouter, defineEventHandler, useBase } from "h3";
-import { Node, NodeFilter } from "~/lib/deps";
+import { type Node, type NodeFilter } from "~/lib/deps";
 
 import { searchNodes } from "~/lib/api/antbox_proxy";
 import {
-	SectionHeader,
+	type SectionHeader,
 	toLocalizedSectionHeader,
 	toSectionHeader,
-	I18nSectionHeader,
+	type I18nSectionHeader,
 } from "~/lib/model/types/section_header";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 const TARGET_ASPECT = "section-header";
 

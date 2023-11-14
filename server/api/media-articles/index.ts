@@ -1,14 +1,14 @@
 import { H3Event, readBody } from "h3";
 import { createFile as createFileNode } from "~/lib/api/antbox_proxy";
 import assertFolderExists from "~/lib/api/assert_folder_exists";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
-import { NodeFilter, NodeFilterResult, nodeServiceClient } from "~/lib/deps";
+import { type NodeFilter, type NodeFilterResult, nodeServiceClient } from "~/lib/deps";
 import {
-	MediaArticle,
+	type MediaArticle,
 	fromMediaArticle,
 	toLocalizedMediaArticle,
-	I18nMediaArticle,
+	type I18nMediaArticle,
 } from "~/lib/model/types/media_article";
 import processFetchException from "~/lib/process_fetch_exception";
 

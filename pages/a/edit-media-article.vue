@@ -4,10 +4,10 @@ import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
-import { makeMediaArticle, MediaArticle } from "~/lib/model/types/media_article";
-import { LrToast } from "~/lib/clientDeps";
-import { Lawyer } from "~/lib/model/types/lawyer";
-import { WebContent } from "~/lib/deps";
+import { makeMediaArticle, type MediaArticle } from "~/lib/model/types/media_article";
+import type { LrToast } from "~/lib/clientDeps";
+import type { Lawyer } from "~/lib/model/types/lawyer";
+import type { WebContent } from "~/lib/deps";
 
 const API_BASE_URL = "/api/media-articles";
 const BACK_PAGE = "/a/media-articles";

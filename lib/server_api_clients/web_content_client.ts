@@ -1,5 +1,5 @@
-import { WebContent, fidToUuid } from "~/lib/deps";
-import { PortalLocale } from "~/lib/model/types/portal_locale";
+import { type WebContent, fidToUuid } from "~/lib/deps";
+import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 export interface I18nWebContentGetter {
 	(): Promise<string>;

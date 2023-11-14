@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { I18nSectionHeader } from "~/lib/model/types/section_header";
+import { type I18nSectionHeader } from "~/lib/model/types/section_header";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 

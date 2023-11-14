@@ -1,6 +1,6 @@
-import { Node } from "~/lib/deps";
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { PortalLocale } from "./portal_locale";
+import type { Node } from "~/lib/deps";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import type { PortalLocale } from "./portal_locale";
 
 // Aspect: event
 export interface Event {
@@ -59,7 +59,11 @@ export function toEvent(node: Node, bodyText: string): Event {
 	return event;
 }
 
-export function toLocalizedEvent(node: Node, bodyText: string, lang?: PortalLocale): Event | I18nEvent {
+export function toLocalizedEvent(
+	node: Node,
+	bodyText: string,
+	lang?: PortalLocale
+): Event | I18nEvent {
 	const event = toEvent(node, bodyText);
 
 	if (!lang) {

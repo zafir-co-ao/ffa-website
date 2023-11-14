@@ -1,6 +1,6 @@
-import { Node } from "~/lib/deps";
-import { I18nMessagesEntry } from "~/lib/intl/strings";
-import { PortalLocale } from "./portal_locale";
+import type { Node } from "~/lib/deps";
+import type { I18nMessagesEntry } from "~/lib/intl/strings";
+import type { PortalLocale } from "./portal_locale";
 
 export interface MediaArticle {
 	uuid: string;
