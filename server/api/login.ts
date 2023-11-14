@@ -3,8 +3,8 @@ import { H3Event, readBody } from "h3";
 import * as jose from "jose";
 
 const VALID_CREDENTIALS: Record<string, string> = {
-	"vanessa.silva@fatimafreitas.com": "0932",
-	"luisa.moreira@fatimafreitas.com": "7819",
+	// "vanessa.silva@fatimafreitas.com": "0932",
+	// "luisa.moreira@fatimafreitas.com": "7819",
 	"webdev@qwerty.academy": "0180",
 };
 

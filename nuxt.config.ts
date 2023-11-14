@@ -40,4 +40,12 @@ export default defineNuxtConfig({
 			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
 		},
 	},
+
+	nitro: {
+		preset: "firebase",
+		firebase: {
+			gen: 2,
+			nodeVersion: "18",
+		},
+	},
 });

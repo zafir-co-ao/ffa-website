@@ -18,9 +18,8 @@
 			"program": "${workspaceFolder}/node_modules/nuxi/bin/nuxi.mjs",
 			"args": ["dev"],
 			"env": {
-				"NUXT_PUBLIC_ANTBOX_URL": "http://klinux:7180",
-				"NUXT_PORT": "8080",
-				"PORT": "8080"
+				"NUXT_PUBLIC_ANTBOX_URL": "https://pvt2.kindalus.me",
+				"NUXT_PORT": "8080"
 			}
 		}
 	],
