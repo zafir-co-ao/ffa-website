@@ -9,4 +9,5 @@ npm-debug*
 .env
 .vite
 output.tgz
+bun.lockb
 
