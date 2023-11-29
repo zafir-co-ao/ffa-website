@@ -75,7 +75,7 @@ function ldJson() {
 		"@context": "https://schema.org",
 		"@type": "Person",
 		name: lawyer.value?.name,
-		url: `https://fatimafreitas.com/${lang.value}/lawyers/${lawyer.value?.fid}`,
+		url: `https://www.fatimafreitas.com/${lang.value}/lawyers/${lawyer.value?.fid}`,
 		image: portraitUrl.value,
 		affiliation: {
 			"@type": "Organization",

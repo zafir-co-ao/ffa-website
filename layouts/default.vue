@@ -9,8 +9,8 @@ useSeoMeta({
 
 	// keywords: ,
 	ogTitle: strings.meta_title[lang.value],
-	ogUrl: "https://fatimafreitas.com",
-	ogImage: "https://fatimafreitas.com/images/ffa-icon.jpg",
+	ogUrl: "https://www.fatimafreitas.com",
+	ogImage: "https://www.fatimafreitas.com/images/ffa-icon.jpg",
 	ogSiteName: strings.meta_og_site_name[lang.value],
 	ogType: "website",
 	ogLocale: lang.value,

@@ -36,7 +36,7 @@ function ldJson() {
 		organizer: {
 			"@type": "Organization",
 			name: strings.meta_og_site_name[lang.value],
-			url: "https://fatimafreitas.com",
+			url: "https://www.fatimafreitas.com",
 		},
 	});
 }

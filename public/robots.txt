@@ -3,4 +3,4 @@ Disallow: /a
 Disallow: /images
 Disallow: /__nuxt
 
-Sitemap: https://fatimafreitas.com/sitemap.xml
+Sitemap: https://www.fatimafreitas.com/sitemap.xml

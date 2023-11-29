@@ -41,7 +41,7 @@ function ldJson() {
 		"@context": "https://schema.org",
 		"@type": "LegalService",
 		name: strings.meta_og_site_name[lang.value],
-		url: "https://fatimafreitas.com/",
+		url: "https://www.fatimafreitas.com/",
 		address: offices[0].address.replaceAll(/<br \/>/g, ", "),
 		telephone: offices[0].phoneNumbers,
 		email: offices[0].email,
@@ -72,7 +72,7 @@ function ldJson() {
 			},
 		],
 
-		logo: "https://fatimafreitas.com/images/ffa-logo.jpg",
+		logo: "https://www.fatimafreitas.com/images/ffa-logo.jpg",
 
 		knowsLanguage: ["pt", "en", "es", "fr", "ru"],
 		openingHours: "Mo-Fr 8:30-18:30",
