@@ -40,6 +40,12 @@ export default defineNuxtConfig({
 					href: "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap&subset=latin-ext",
 				},
 			],
+			meta: [
+				{
+					name: "google-site-verification",
+					content: "FzmuBkAwgSF4FRuXXVGfZk7SSHesRgRfb6ZLt6HnpgM",
+				},
+			],
 		},
 	},
 
