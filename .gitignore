@@ -6,7 +6,8 @@ npm-debug*
 .nitro
 .cache
 .output
-.env
+/.env
 .vite
 output.tgz
-
+bun.lockb
+/firebase.json
