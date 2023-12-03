@@ -16,6 +16,18 @@ export default defineNuxtConfig({
 					crossorigin: "anonymous",
 					tagPosition: "bodyClose",
 				},
+				{
+					src: "https://www.googletagmanager.com/gtag/js?id=G-3XMWQYWMNL",
+					async: true,
+				},
+				{
+					innerHTML: `
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-3XMWQYWMNL');
+					`,
+				},
 			],
 			link: [
 				{
