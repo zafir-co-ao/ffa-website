@@ -91,11 +91,11 @@ function ldJson() {
 onMounted(async () => {
 	lawyer.value = await getI18nLawyer(fid, lang.value);
 
-	useHeadSafe({
+	useHead({
 		script: [
 			{
 				type: "application/ld+json",
-				textContent: ldJson(),
+				innerHTML: ldJson(),
 			},
 		],
 

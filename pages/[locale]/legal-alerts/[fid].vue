@@ -50,11 +50,11 @@ onMounted(async () => {
 	whatsappShare.value = makeWhatsappShareUrl();
 	linkedinShare.value = makeLinkedinShareUrl();
 
-	useHeadSafe({
+	useHead({
 		script: [
 			{
 				type: "application/ld+json",
-				textContent: ldJson(),
+				innerHTML: ldJson(),
 			},
 		],
 
