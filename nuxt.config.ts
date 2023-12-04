@@ -8,7 +8,27 @@ export default defineNuxtConfig({
 	css: ["~~/assets/sass/fatimafreitas.scss"],
 	app: {
 		head: {
-			script: [],
+			script: [
+				{
+					src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js",
+					integrity:
+						"sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p",
+					crossorigin: "anonymous",
+					tagPosition: "bodyClose",
+				},
+				{
+					src: "https://www.googletagmanager.com/gtag/js?id=G-3XMWQYWMNL",
+					async: true,
+				},
+				{
+					innerHTML: `
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-3XMWQYWMNL');
+					`,
+				},
+			],
 			link: [
 				{
 					rel: "icon",
@@ -30,6 +50,12 @@ export default defineNuxtConfig({
 				{
 					rel: "stylesheet",
 					href: "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap&subset=latin-ext",
+				},
+			],
+			meta: [
+				{
+					name: "google-site-verification",
+					content: "FzmuBkAwgSF4FRuXXVGfZk7SSHesRgRfb6ZLt6HnpgM",
 				},
 			],
 		},

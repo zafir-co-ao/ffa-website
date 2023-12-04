@@ -87,17 +87,15 @@ function handleWebContentSave(content: WebContent) {
 	});
 }
 
-onMounted(() => {
-	useHeadSafe({
-		script: [
-			{
-				type: "application/ld+json",
-				textContent: ldJson(),
-			},
-		],
+useHead({
+	script: [
+		{
+			type: "application/ld+json",
+			innerHTML: ldJson(),
+		},
+	],
 
-		title: `${strings.services[lang.value]} - ${strings.meta_title[lang.value]}`,
-	});
+	title: `${strings.services[lang.value]} - ${strings.meta_title[lang.value]}`,
 });
 </script>
 
