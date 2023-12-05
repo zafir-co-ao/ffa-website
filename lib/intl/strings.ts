@@ -112,11 +112,11 @@ export const strings: I18nMessages = {
 
 	meta_description: {
 		pt: "A Fátima Freitas & Associados, Sociedade de Advogados é um dos mais antigos e maiores escritórios de advogados estabelecidos em Angola. A nossa equipa conta actualmente com 35 advogados, sendo 7  sócios, e uma ímpar projecção nacional e internacional.",
-		en: "Fátima Freitas Advogados is one of the longest-established and most pre-eminent law offices in Angola.Today we are a firm of 35 lawyers, including 7 partners, with the widest national and international reach of any Angolan law office.",
+		en: "Fátima Freitas & Associados is one of the longest-established and most pre-eminent law offices in Angola.Today we are a firm of 35 lawyers, including 7 partners, with the widest national and international reach of any Angolan law office.",
 	},
 	meta_keywords: {
-		pt: "advogados, escritório de advogados, angola, luanda, benguela, lobito, cabinda, áfrica",
-		en: "lawyers, attorneys, legal advice, law firm, angola, luanda, benguela, lobito, cabinda, africa",
+		pt: "advogados, escritório de advogados, ffa, angola, luanda, benguela, lobito, cabinda, áfrica",
+		en: "lawyers, attorneys, legal advice, ffa, law firm, angola, luanda, benguela, lobito, cabinda, africa",
 	},
 	meta_title: {
 		pt: "FFA - Escritórios de Advogados em Angola",
