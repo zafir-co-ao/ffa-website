@@ -64,6 +64,11 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
+			recaptchaSiteKey: "6LcedyYpAAAAAKz5CGTqE4fdue0Sa7H8o1Ak0o-F",
+		},
+
+		private: {
+			recaptchaSecretKey: "6LcedyYpAAAAAA2rEcYsFQAY-g81ot6xDFlUelxx",
 		},
 	},
 
