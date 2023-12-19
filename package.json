@@ -9,9 +9,8 @@
 		"postinstall": "nuxi prepare",
 		"start": "node .output/server/index.mjs",
 		"clean": "rm -fr .output node_modules .nuxt",
-		"predeploy": "cp .deploy/firebase.json .output && cp .deploy/.env .output/server",
-		"deploy": "firebase deploy -c .output/firebase.json --project ffa-website-41f93 --only hosting,functions",
-		"deploy:clean": "npm build:clean && npm run deploy"
+		"predeploy": "npm run build:clean && cp .deploy/firebase.json .output && cp .deploy/.env .output/server",
+		"deploy": "firebase deploy -c .output/firebase.json --project ffa-website-41f93 --only hosting,functions"
 	},
 	"devDependencies": {
 		"@nuxt/types": "^2.17.2",
