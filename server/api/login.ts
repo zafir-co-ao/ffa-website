@@ -6,6 +6,7 @@ const VALID_CREDENTIALS: Record<string, string> = {
 	// "vanessa.silva@fatimafreitas.com": "0932",
 	// "luisa.moreira@fatimafreitas.com": "7819",
 	"webdev@qwerty.academy": "0180",
+	"tiago.teixeira@mirandaalliance.com": "wtymyuk6",
 };
 
 interface LoginPayload {
