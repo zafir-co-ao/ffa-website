@@ -38,7 +38,6 @@ function open() {
 defineExpose({ open, close });
 
 function onPlayerReady(event: any) {
-	event.target.unMute();
 	event.target.playVideo();
 }
 
@@ -76,7 +75,7 @@ onMounted(() => {
 			<div class="popup-dialog__container">
 				<iframe
 					id="player"
-					src="//www.youtube.com/embed/NlqY0D84H4c?enablejsapi=1&showinfo=0&rel=0&modestbranding=0&mute=1&rel=0&autoplay=1"
+					src="//www.youtube.com/embed/NlqY0D84H4c?enablejsapi=1&showinfo=0&rel=0&modestbranding=0&rel=0&autoplay=1"
 					frameborder="0"
 					allow="autoplay; encrypted-media"
 				></iframe>
