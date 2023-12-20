@@ -5,9 +5,10 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
 import { makeMediaArticle, type MediaArticle } from "~/lib/model/types/media_article";
-import type { LrToast } from "~/lib/clientDeps";
+
 import type { Lawyer } from "~/lib/model/types/lawyer";
 import type { WebContent } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/media-articles";
 const BACK_PAGE = "/a/media-articles";
@@ -19,11 +20,11 @@ definePageMeta({ layout: "admin", middleware: "auth-guard" });
 const lawyerRef = ref<HTMLSelectElement>();
 const editorRef = ref();
 
-const toast = ref<LrToast>();
+const toast = ref<Toaster>();
 const article = ref<Partial<MediaArticle>>(makeMediaArticle());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,
@@ -35,8 +36,8 @@ const modelReloader = makeModelReloader(
 const { data: lawyers } = await useFetch<Lawyer[]>("/api/lawyers?lang=pt");
 
 onMounted(async () => {
-	const { useToast } = await import("~/lib/clientDeps");
-	toast.value = useToast(".edit-legal-alert");
+	// const { useToast } = await import("~/lib/clientDeps");
+	// toast.value = useToast(".edit-legal-alert");
 	await reloadMediaArticle();
 });
 

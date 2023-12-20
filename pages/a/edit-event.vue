@@ -8,8 +8,7 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
 import { type Event, makeEvent } from "~~/lib/model/types/event";
-
-import type { LrToast } from "~/lib/clientDeps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/events";
 const BACK_PAGE = "/a/events";
@@ -20,11 +19,11 @@ definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
 const editorRef = ref();
 
-const toast = ref<LrToast>();
+const toast = ref<Toaster>();
 const event = ref<Partial<Event>>(makeEvent());
 
 const apiCtrl = makeApiController<Event>(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
 const modelReloader = makeModelReloader<Event>(
 	apiHandler,
 	apiCtrl,
@@ -34,8 +33,8 @@ const modelReloader = makeModelReloader<Event>(
 );
 
 onMounted(async () => {
-	const { useToast } = await import("~/lib/clientDeps");
-	toast.value = useToast(".edit-event");
+	// const { useToast } = await import("~/lib/clientDeps");
+	// toast.value = useToast(".edit-event");
 	await reloadEvent();
 });
 

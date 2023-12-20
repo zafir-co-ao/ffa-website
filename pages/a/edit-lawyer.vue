@@ -6,8 +6,9 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import { forceReload, forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
-import type { LrToast } from "~/lib/clientDeps";
+
 import type { WebContent } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/lawyers";
 const BACK_PAGE = "/a/lawyers";
@@ -33,11 +34,11 @@ const thumbnailUrl = ref("/images/anonymous-headshot.png");
 const uploadPortraitRef = ref<HTMLInputElement>();
 const uploadThumbRef = ref<HTMLInputElement>();
 
-const toast = ref<LrToast>();
+const toast = ref<Toaster>();
 const lawyer = ref<Lawyer>(makeLawyer());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
 const editorRef = ref();
 
 const modelReloader = makeModelReloader(
@@ -59,8 +60,8 @@ const availableCategories = mapI18nToOptions({
 });
 
 onMounted(async () => {
-	const { useToast } = await import("~/lib/clientDeps");
-	toast.value = useToast(".edit-lawyer");
+	// const { useToast } = await import("~/lib/clientDeps");
+	// toast.value = useToast(".edit-lawyer");
 	await reloadLawyer();
 });
 

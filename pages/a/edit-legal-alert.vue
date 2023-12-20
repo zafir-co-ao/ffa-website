@@ -4,9 +4,9 @@ import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 import { type LegalAlert, makeLegalAlert } from "~/lib/model/types/legal_alert";
-import type { LrToast } from "~/lib/clientDeps";
 
 import type { WebContent } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/legal-alerts";
 const BACK_PAGE = "/a/legal-alerts";
@@ -25,11 +25,11 @@ function mapI18nToOptions(strings: I18nMessages): { value: string; label: string
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
 const editorRef = ref();
-const toast = ref<LrToast>();
+const toast = ref<Toaster>();
 const alert = ref<Partial<LegalAlert>>(makeLegalAlert());
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,
@@ -44,8 +44,8 @@ const availableCategories = mapI18nToOptions({
 });
 
 onMounted(async () => {
-	const { useToast } = await import("~/lib/clientDeps");
-	toast.value = useToast(".edit-legal-alert");
+	// const { useToast } = await import("~/lib/clientDeps");
+	// toast.value = useToast(".edit-legal-alert");
 	await reloadLegalAlert();
 });
 

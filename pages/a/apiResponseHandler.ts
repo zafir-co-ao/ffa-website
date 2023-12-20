@@ -1,4 +1,4 @@
-import type { LrToast } from "@zafir.co.ao/lightray";
+import type { Toaster } from "@zafir.co.ao/lightray";
 import type { Ref } from "vue";
 import type { Either } from "~/lib/deps";
 
@@ -6,7 +6,7 @@ export interface ApiResponseHandler {
 	handle<L, R>(request: Promise<Either<L, R>>, success?: string): Promise<R | undefined>;
 }
 
-export default function makeApiResponseHandler(toast: Ref<LrToast>): ApiResponseHandler {
+export default function makeApiResponseHandler(toast: Ref<Toaster>): ApiResponseHandler {
 	return {
 		async handle<L, R>(
 			request: Promise<Either<L, R>>,

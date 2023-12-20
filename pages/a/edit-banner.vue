@@ -2,9 +2,10 @@
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
-import type { LrToast } from "~/lib/clientDeps";
+
 import { type Banner, makeBanner } from "~/lib/model/types/banner";
 import { left, right } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/banners";
 const BACK_PAGE = "/a/banners";
@@ -15,12 +16,12 @@ import AdminIntlContentField from "~~/components/AdminIntlContentField.vue";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
-const toast = ref<LrToast>();
+const toast = ref<Toaster>();
 const banner = ref<Partial<Banner>>(makeBanner());
 const uploadImageRef = ref<HTMLInputElement>();
 
 const apiCtrl = makeApiController(API_BASE_URL);
-const apiHandler = makeApiResponseHandler(toast as Ref<LrToast>);
+const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
 const modelReloader = makeModelReloader(
 	apiHandler,
 	apiCtrl,
@@ -32,8 +33,8 @@ const modelReloader = makeModelReloader(
 await modelReloader.reload();
 
 onMounted(async () => {
-	const { useToast } = await import("~/lib/clientDeps");
-	toast.value = useToast("#pageTop");
+	// const \{ useToast \} = await import\("~/lib/clientDeps"\);
+	// toast\.value = useToast\("#pageTop"\);
 });
 
 function handleSave() {
