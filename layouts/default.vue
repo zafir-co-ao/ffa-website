@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import type PopupDialogVue from "~/components/PopupDialog.vue";
 import { strings } from "~/lib/intl/strings";
+
+const dialogRef = ref<typeof PopupDialogVue>();
 
 const { $locale: lang } = useI18n();
 
@@ -20,6 +23,15 @@ useSeoMeta({
 useHead({
 	meta: [{ name: "keywords", content: strings.meta_keywords[lang.value] }],
 });
+
+onMounted(() => {
+	if (localStorage.getItem("ffa-hasSeenPopup") === "true") {
+		return;
+	}
+
+	dialogRef.value?.open();
+	localStorage.setItem("ffa-hasSeenPopup", "true");
+});
 </script>
 
 <template>
@@ -32,5 +44,6 @@ useHead({
 
 		<get-in-touch />
 		<portal-footer />
+		<popup-dialog ref="dialogRef" />
 	</div>
 </template>

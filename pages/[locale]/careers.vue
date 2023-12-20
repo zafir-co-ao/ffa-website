@@ -181,7 +181,7 @@ useHead({
 
 		<div class="container">
 			<div class="row g-2 mt-5 mb-2">
-				<div class="col">
+				<div class="col-12 col-sm-6">
 					<div class="form-floating">
 						<input
 							v-model="name"
@@ -191,7 +191,7 @@ useHead({
 						<label for="floatingInput">{{ $messages.pages.careers.text.name }}</label>
 					</div>
 				</div>
-				<div class="col">
+				<div class="col-12 col-sm-6">
 					<div class="form-floating">
 						<input
 							v-model="email"
