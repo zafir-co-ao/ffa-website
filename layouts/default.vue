@@ -30,7 +30,7 @@ onMounted(() => {
 	}
 
 	dialogRef.value?.open();
-	// localStorage.setItem("ffa-has-seen-popup", "true");
+	localStorage.setItem("ffa-has-seen-popup", "true");
 });
 </script>
 
