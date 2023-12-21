@@ -19,7 +19,8 @@
 			"args": ["dev"],
 			"env": {
 				"NUXT_PUBLIC_ANTBOX_URL": "http://klinux:7180",
-				"NUXT_PORT": "8080"
+				"NUXT_PORT": "8080",
+				"NUXT_HOST": "0.0.0.0"
 			}
 		}
 	],

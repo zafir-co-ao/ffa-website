@@ -15,7 +15,7 @@ export default defineEventHandler(async (evt) => {
 	if (scoreOrErr.isLeft()) {
 		console.error(scoreOrErr.value);
 
-		setResponseStatus(evt, 500);
+		setResponseStatus(evt, 400);
 		return { errors: scoreOrErr.value };
 	}
 

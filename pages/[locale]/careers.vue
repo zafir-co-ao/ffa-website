@@ -59,20 +59,18 @@ async function submitApplication() {
 
 	const { data, status, error } = await sendRecaptchaToken(tokenOrErr.value);
 
-	if (error) {
+	if (error.value || status.value === "error") {
 		hasErrors.value = true;
 		messages.value = ["Ocorreu um erro ao validar o reCAPTCHA. Tente novamente mais tarde"];
 		console.error(error.value);
 		return;
 	}
 
-	if (status.value != "success" || data.value?.errors) {
+	if (status.value !== "success" || data.value?.errors) {
 		hasErrors.value = true;
 		messages.value = translateRecaptchaErrors(data.value?.errors ?? []);
 		return;
 	}
-
-	console.log(data.value);
 
 	return uploadApplicationAndResetForm();
 }

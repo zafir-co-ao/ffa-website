@@ -27,8 +27,9 @@ const player = ref<YT.Player>();
 const dialogRef = ref<HTMLDialogElement>();
 
 function close() {
-	dialogRef.value?.close();
+	player.value?.mute();
 	player.value?.stopVideo();
+	dialogRef.value?.close();
 }
 
 function open() {
@@ -42,7 +43,6 @@ function onPlayerReady(event: any) {
 }
 
 function onPlayerStateChange(event: any) {
-	console.log(event.data);
 	if (event.data === YT.PlayerState.ENDED) {
 		close();
 	}
@@ -96,13 +96,14 @@ onMounted(() => {
 
 .popup-dialog__wrapper {
 	position: relative;
-	padding: 3.5rem;
+	/* padding: 3.5rem; */
+	padding: 4rem 0;
 }
 
 .popup-dialog__button {
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
 
 	display: flex;
 	align-items: center;
@@ -112,20 +113,52 @@ onMounted(() => {
 	height: 3rem;
 
 	border-radius: 50%;
-	background-color: rgba(255, 255, 255, 0.15);
+	/* #0071bc */
+	background-color: rgba(255, 255, 255, 0.5);
+}
 
+.popup-dialog__button:hover {
+	background-color: rgba(255, 255, 255, 1);
 	cursor: pointer;
 }
 
 .popup-dialog__button span {
-	color: aliceblue;
+	color: #0071bc;
 	font-size: 2.5rem;
 	font-weight: 300;
 	transform: rotate(45deg);
 }
 
 #player {
-	width: 560px;
-	height: 315px;
+	width: 320px;
+	height: 180px;
+}
+
+@media (min-width: 640px) {
+	#player {
+		width: 540px;
+		height: 304px;
+	}
+}
+
+@media (min-width: 768px) {
+	#player {
+		width: 640px;
+		height: 360px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.popup-dialog__wrapper {
+		padding: 4rem;
+	}
+	.popup-dialog__button {
+		position: absolute;
+	}
+
+	#player {
+		width: 720px;
+		height: 400px;
+	}
 }
 </style>

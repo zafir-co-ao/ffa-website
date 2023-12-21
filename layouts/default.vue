@@ -25,12 +25,12 @@ useHead({
 });
 
 onMounted(() => {
-	if (localStorage.getItem("ffa-hasSeenPopup") === "true") {
+	if (localStorage.getItem("ffa-has-seen-popup") === "true") {
 		return;
 	}
 
 	dialogRef.value?.open();
-	localStorage.setItem("ffa-hasSeenPopup", "true");
+	// localStorage.setItem("ffa-has-seen-popup", "true");
 });
 </script>
 
