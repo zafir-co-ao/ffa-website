@@ -19,6 +19,7 @@
 		"firebase-functions": "^4.5.0",
 		"firebase-functions-test": "^3.1.0",
 		"nuxt": "^3.8.1",
+		"nuxt-security": "^1.0.0",
 		"sass": "^1.49.7",
 		"sass-loader": "^12.4.0"
 	},

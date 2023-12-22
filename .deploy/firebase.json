@@ -1,7 +1,6 @@
 {
 	"functions": {
 		"source": "./server",
-		"codebase": "nuxt",
 		"runtime": "nodejs18"
 	},
 	"hosting": {

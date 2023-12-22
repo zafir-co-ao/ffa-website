@@ -1,4 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
 	sourcemap: {
 		server: true,
@@ -61,6 +61,12 @@ export default defineNuxtConfig({
 		},
 	},
 
+	modules: ["nuxt-security"],
+
+	security: {
+		csrf: true,
+	},
+
 	runtimeConfig: {
 		public: {
 			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
@@ -73,10 +79,13 @@ export default defineNuxtConfig({
 	},
 
 	nitro: {
+		preset: "vercel",
+		/*
 		preset: "firebase",
 		firebase: {
 			gen: 2,
 			nodeVersion: "18",
 		},
+		*/
 	},
 });
