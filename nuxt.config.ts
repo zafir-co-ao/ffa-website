@@ -69,7 +69,7 @@ export default defineNuxtConfig({
 	security: {
 		corsHandler: {
 			origin: (origin: string) =>
-				origin.match(/(localhost|fatimafreitas.com|ffa-website-inky.vercel.app)/),
+				/(localhost|fatimafreitas.com|ffa-website-inky.vercel.app)/.test(origin),
 		},
 		csrf: true,
 		nonce: true, // Enables HTML nonce support in SSR mode
@@ -80,6 +80,7 @@ export default defineNuxtConfig({
 					"'self'", // Fallback value, will be ignored by browsers level 3
 					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
 					"https://www.google.com",
+					"https://www.googletagmanager.com/",
 				],
 				"style-src": [
 					"'self'", // Enables loading of stylesheets hosted on self origin
