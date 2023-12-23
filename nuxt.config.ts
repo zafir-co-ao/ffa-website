@@ -69,13 +69,8 @@ export default defineNuxtConfig({
 	security: {
 		csrf: true,
 		nonce: true, // Enables HTML nonce support in SSR mode
-		ssg: {
-			hashScripts: true, // Enables CSP hash support for scripts in SSG mode
-			hashStyles: true, // Disables CSP hash support for styles in SSG mode (recommended)
-		},
-		corsHandler: {
-			origin: "null",
-		},
+
+		corsHandler: false,
 		headers: {
 			contentSecurityPolicy: {
 				"script-src": [
@@ -118,6 +113,7 @@ export default defineNuxtConfig({
 				"manifest-src": ["'none'"],
 			},
 			crossOriginEmbedderPolicy: false,
+			sri: true,
 		},
 	},
 
