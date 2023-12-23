@@ -68,38 +68,35 @@ export default defineNuxtConfig({
 	modules: ["nuxt-security"],
 	security: {
 		csrf: true,
+		nonce: true, // Enables HTML nonce support in SSR mode
+		ssg: {
+			hashScripts: true, // Enables CSP hash support for scripts in SSG mode
+			hashStyles: true, // Disables CSP hash support for styles in SSG mode (recommended)
+		},
 		headers: {
 			contentSecurityPolicy: {
 				"script-src": [
 					"'self'", // Fallback value, will be ignored by browsers level 3
-					// "https://domain.com/external-script.js", // Fallback value, will be ignored by browsers level 3
-					"'unsafe-inline'", // Fallback value, will be ignored by browsers level 2 & 3
 					"'strict-dynamic'", // Strict CSP via 'strict-dynamic', supported by browsers level 3
 					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
 				],
 				"style-src": [
 					"'self'", // Enables loading of stylesheets hosted on self origin
-					//"https://domain.com/file.css", // Use fully-qualified filenames rather than the https: generic
-					//"https://trusted-domain.com", // Avoid using domain stubs unless you can fully trust them
-					"https:", // Allows loading of stylesheets from any origin
-					"'unsafe-inline'", // Recommended default for most Nuxt apps, but make sure 'img-src' is properly set up
-					//"'nonce-{{nonce}}'" // Disables CSP nonce support, otherwise would cancel 'unsafe-inline'
-					// You can re-enable if your application does not modify inline styles dynamically
+					"'strict-dynamic'", // Strict CSP via 'strict-dynamic', supported by browsers level 3
+					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"https://fonts.googleapis.com",
+					"https://cdn.jsdelivr.net",
 				],
 				"img-src": [
 					"'self'", // Enables loading of images hosted on self origin
-					"https:", // Allows loading of images from any origin
-					//"https://domain.com/img.png", // Use fully-qualified filenames rather than the https: generic
-					//"https://trusted-domain.com", // Avoid using domain stubs unless you can fully trust them
 					"blob:", // If you use Blob to construct images dynamically from javascript
-					// Qualifying img-src properly mitigates strongly against 'unsafe-inline' in style-src
 					"data:", // If you use base64 encoded images
+					"https://cms.fatimafreitas.com",
 				],
 				"font-src": [
 					"'self'", // Enables loading of fonts hosted on self origin
-					// "https://domain.com/font.woff", // Use fully-qualified filenames rather than the https: generic
-					// "https://trusted-domain.com", // Avoid using domain stubs unless you can fully trust them
-					"https:", // Allows loading of fonts from any origin
+					"https://cdn.jsdelivr.net",
+					"https://fonts.gstatic.com",
 				],
 				"worker-src": [
 					"'self'", // Enables loading service worker from self origin,
@@ -107,8 +104,6 @@ export default defineNuxtConfig({
 				],
 				"connect-src": [
 					"'self'", // Enables fetching from self origin
-					// "https://api.domain.com/service", // Use largest prefix possible on API routes
-					// "wss://api.domain.com/messages", // Add Websocket qualifiers if used
 					"https:",
 				],
 				"object-src": ["'none'"],
@@ -128,9 +123,5 @@ export default defineNuxtConfig({
 		private: {
 			recaptchaSecretKey: "6LcedyYpAAAAAA2rEcYsFQAY-g81ot6xDFlUelxx",
 		},
-	},
-
-	nitro: {
-		preset: "vercel",
 	},
 });
