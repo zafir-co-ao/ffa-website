@@ -73,16 +73,18 @@ export default defineNuxtConfig({
 			hashScripts: true, // Enables CSP hash support for scripts in SSG mode
 			hashStyles: true, // Disables CSP hash support for styles in SSG mode (recommended)
 		},
+		corsHandler: {
+			origin: (origin) => true,
+		},
 		headers: {
 			contentSecurityPolicy: {
 				"script-src": [
 					"'self'", // Fallback value, will be ignored by browsers level 3
-					"'strict-dynamic'", // Strict CSP via 'strict-dynamic', supported by browsers level 3
 					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"https://www.google.com",
 				],
 				"style-src": [
 					"'self'", // Enables loading of stylesheets hosted on self origin
-					"'strict-dynamic'", // Strict CSP via 'strict-dynamic', supported by browsers level 3
 					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
 					"https://fonts.googleapis.com",
 					"https://cdn.jsdelivr.net",
@@ -92,6 +94,7 @@ export default defineNuxtConfig({
 					"blob:", // If you use Blob to construct images dynamically from javascript
 					"data:", // If you use base64 encoded images
 					"https://cms.fatimafreitas.com",
+					"https://i.ytimg.com",
 				],
 				"font-src": [
 					"'self'", // Enables loading of fonts hosted on self origin
@@ -102,13 +105,17 @@ export default defineNuxtConfig({
 					"'self'", // Enables loading service worker from self origin,
 					"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
 				],
-				"connect-src": [
-					"'self'", // Enables fetching from self origin
-					"https:",
-				],
+
 				"object-src": ["'none'"],
 				"base-uri": ["'none'"],
-				// Do not use default-src
+				"connect-src": [
+					"'self'",
+					"https://cms.fatimafreitas.com",
+					"https://www.google-analytics.com",
+				],
+				"frame-src": ["https://www.google.com", "https://www.youtube.com"],
+				"media-src": ["'self'", "https://cms.fatimafreitas.com"],
+				"manifest-src": ["'none'"],
 			},
 			crossOriginEmbedderPolicy: false,
 		},
