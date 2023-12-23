@@ -74,7 +74,7 @@ export default defineNuxtConfig({
 			hashStyles: true, // Disables CSP hash support for styles in SSG mode (recommended)
 		},
 		corsHandler: {
-			origin: (origin) => true,
+			origin: "null",
 		},
 		headers: {
 			contentSecurityPolicy: {
