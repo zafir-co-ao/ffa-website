@@ -5,6 +5,7 @@ definePageMeta({ layout: "none" });
 
 const { $locale: lang } = useI18n();
 const auth = useAuth();
+const { csrf } = useCsrf();
 
 const router = useRouter();
 const route = useRoute();
@@ -102,7 +103,7 @@ function redirect() {
 
 			<div class="h2 text-center mb-3 azulescuro">Área Reservada</div>
 
-			<form action="">
+			<form action="#">
 				<div class="form-floating w-100 mb-2">
 					<input
 						v-model="username"
@@ -134,6 +135,7 @@ function redirect() {
 				<div v-if="hasErrors" class="alert alert-danger mt-4" role="alert">
 					<div v-for="error in errors">* {{ error }}</div>
 				</div>
+				<input type="hidden" name="csrf_token" :value="csrf" />
 			</form>
 		</div>
 	</div>
