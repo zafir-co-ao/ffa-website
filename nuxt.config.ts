@@ -67,10 +67,10 @@ export default defineNuxtConfig({
 
 	modules: ["nuxt-security"],
 	security: {
+		corsHandler: false,
 		csrf: true,
 		nonce: true, // Enables HTML nonce support in SSR mode
-
-		corsHandler: false,
+		sri: true,
 		headers: {
 			contentSecurityPolicy: {
 				"script-src": [
@@ -113,7 +113,6 @@ export default defineNuxtConfig({
 				"manifest-src": ["'none'"],
 			},
 			crossOriginEmbedderPolicy: false,
-			sri: true,
 		},
 	},
 
