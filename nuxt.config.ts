@@ -67,7 +67,10 @@ export default defineNuxtConfig({
 
 	modules: ["nuxt-security"],
 	security: {
-		corsHandler: false,
+		corsHandler: {
+			origin: (origin: string) =>
+				origin.match(/(localhost|fatimafreitas.com|ffa-website-inky.vercel.app)/),
+		},
 		csrf: true,
 		nonce: true, // Enables HTML nonce support in SSR mode
 		sri: true,
