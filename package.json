@@ -5,12 +5,7 @@
 		"build": "nuxi build",
 		"build:clean": "npm run clean && npm ci && npm run build",
 		"generate": "nuxi generate",
-		"preview": "nuxi preview",
-		"postinstall": "nuxi prepare",
-		"start": "node .output/server/index.mjs",
-		"clean": "rm -fr .output node_modules .nuxt",
-		"predeploy": "npm run build:clean && cp .deploy/firebase.json .output && cp .deploy/.env .output/server",
-		"deploy": "firebase deploy -c .output/firebase.json --project ffa-website-41f93 --only hosting,functions"
+		"preview": "nuxi preview"
 	},
 	"devDependencies": {
 		"@nuxt/types": "^2.17.2",

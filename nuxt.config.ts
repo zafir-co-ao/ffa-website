@@ -65,7 +65,7 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["nuxt-security"],
+	modules: ["nuxt-security", "@nuxt/devtools"],
 	security: {
 		corsHandler: {
 			origin: (origin: string) =>
@@ -75,48 +75,52 @@ export default defineNuxtConfig({
 		nonce: true, // Enables HTML nonce support in SSR mode
 		sri: true,
 		headers: {
-			contentSecurityPolicy: {
-				"script-src": [
-					"'self'", // Fallback value, will be ignored by browsers level 3
-					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
-					"https://www.google.com",
-					"https://www.googletagmanager.com/",
-				],
-				"style-src": [
-					"'self'", // Enables loading of stylesheets hosted on self origin
-					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
-					"https://fonts.googleapis.com",
-					"https://cdn.jsdelivr.net",
-				],
-				"img-src": [
-					"'self'", // Enables loading of images hosted on self origin
-					"blob:", // If you use Blob to construct images dynamically from javascript
-					"data:", // If you use base64 encoded images
-					"https://cms.fatimafreitas.com",
-					"https://i.ytimg.com",
-				],
-				"font-src": [
-					"'self'", // Enables loading of fonts hosted on self origin
-					"https://cdn.jsdelivr.net",
-					"https://fonts.gstatic.com",
-				],
-				"worker-src": [
-					"'self'", // Enables loading service worker from self origin,
-					"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
-				],
+			crossOriginEmbedderPolicy:
+				process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
+			contentSecurityPolicy:
+				process.env.NODE_ENV === "development"
+					? false
+					: {
+							"script-src": [
+								"'self'", // Fallback value, will be ignored by browsers level 3
+								"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+								"https://www.google.com",
+								"https://www.googletagmanager.com/",
+							],
+							"style-src": [
+								"'self'", // Enables loading of stylesheets hosted on self origin
+								"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+								"https://fonts.googleapis.com",
+								"https://cdn.jsdelivr.net",
+							],
+							"img-src": [
+								"'self'", // Enables loading of images hosted on self origin
+								"blob:", // If you use Blob to construct images dynamically from javascript
+								"data:", // If you use base64 encoded images
+								"https://cms.fatimafreitas.com",
+								"https://i.ytimg.com",
+							],
+							"font-src": [
+								"'self'", // Enables loading of fonts hosted on self origin
+								"https://cdn.jsdelivr.net",
+								"https://fonts.gstatic.com",
+							],
+							"worker-src": [
+								"'self'", // Enables loading service worker from self origin,
+								"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
+							],
 
-				"object-src": ["'none'"],
-				"base-uri": ["'none'"],
-				"connect-src": [
-					"'self'",
-					"https://cms.fatimafreitas.com",
-					"https://www.google-analytics.com",
-				],
-				"frame-src": ["https://www.google.com", "https://www.youtube.com"],
-				"media-src": ["'self'", "https://cms.fatimafreitas.com"],
-				"manifest-src": ["'none'"],
-			},
-			crossOriginEmbedderPolicy: false,
+							"object-src": ["'none'"],
+							"base-uri": ["'none'"],
+							"connect-src": [
+								"'self'",
+								"https://cms.fatimafreitas.com",
+								"https://www.google-analytics.com",
+							],
+							"frame-src": ["https://www.google.com", "https://www.youtube.com"],
+							"media-src": ["'self'", "https://cms.fatimafreitas.com"],
+							"manifest-src": ["'none'"],
+					  },
 		},
 	},
 
