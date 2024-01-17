@@ -76,7 +76,7 @@ export default defineNuxtConfig({
 		sri: true,
 		headers: {
 			crossOriginEmbedderPolicy:
-				process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
+				process.env.NODE_ENV === "development" ? "unsafe-none" : false,
 			contentSecurityPolicy:
 				process.env.NODE_ENV === "development"
 					? false
