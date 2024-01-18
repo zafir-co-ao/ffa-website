@@ -9,6 +9,7 @@ import lawyerAreas from "~/lib/intl/lawyer_areas";
 
 import type { WebContent } from "~/lib/deps";
 import type { Toaster } from "~/types/toaster";
+import LrWebContentEditorDialog from "~/components/LrWebContentEditorDialog.vue";
 
 const API_BASE_URL = "/api/lawyers";
 const BACK_PAGE = "/a/lawyers";
@@ -27,6 +28,7 @@ function mapI18nToOptions(strings: I18nMessages): { value: string; label: string
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
 const nodeClient = useAntboxClient();
+const { csrf } = useCsrf();
 
 const portraitUrl = ref("/images/anonymous-headshot.png");
 const thumbnailUrl = ref("/images/anonymous-headshot.png");
@@ -60,8 +62,6 @@ const availableCategories = mapI18nToOptions({
 });
 
 onMounted(async () => {
-	// const { useToast } = await import("~/lib/clientDeps");
-	// toast.value = useToast(".edit-lawyer");
 	await reloadLawyer();
 });
 
@@ -171,132 +171,135 @@ async function reloadLawyer(): Promise<void> {
 <template>
 	<div id="pageTop" class="edit-lawyer container-fluid">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Advogado</admin-page-title>
+		<form>
+			<div v-if="lawyer.uuid" class="row mb-4 d-flex justify-content-center">
+				<input
+					ref="uploadThumbRef"
+					type="file"
+					accept=".jpg, .png, .jpeg"
+					@change="handleUploadThumb"
+					class="d-none"
+				/>
+				<a class="btn lawyer-photo-container" href="#" @click="uploadThumbRef?.click()">
+					<img class="lawyer-thumb" :src="thumbnailUrl" />
+					<div class="subtitle2 mt-2 azul">Definir Avatar (512x512)</div>
+				</a>
 
-		<div v-if="lawyer.uuid" class="row mb-4 d-flex justify-content-center">
-			<input
-				ref="uploadThumbRef"
-				type="file"
-				accept=".jpg, .png, .jpeg"
-				@change="handleUploadThumb"
-				class="d-none"
-			/>
-			<a class="btn lawyer-photo-container" href="#" @click="uploadThumbRef?.click()">
-				<img class="lawyer-thumb" :src="thumbnailUrl" />
-				<div class="subtitle2 mt-2 azul">Definir Avatar (512x512)</div>
-			</a>
-
-			<input
-				ref="uploadPortraitRef"
-				type="file"
-				accept=".jpg, .png, .jpeg"
-				@change="handleUploadPortrait"
-				class="d-none"
-			/>
-			<a class="btn lawyer-photo-container" href="#" @click="uploadPortraitRef?.click()">
-				<img class="lawyer-portrait" :src="portraitUrl" />
-				<div class="subtitle2 mt-2 azul">Definir Retratro (600x900)</div>
-			</a>
-		</div>
-
-		<div class="row mb-4">
-			<app-input
-				type="text"
-				v-model="lawyer.name"
-				:label="strings.lawyer_name.pt"
-				:placeholder="strings.lawyer_name.pt"
-			/>
-		</div>
-
-		<div class="row mb-4">
-			<div class="col col-md-4">
-				<label class="form-label azulescuro fw-bolder">{{
-					strings.lawyer_category.pt
-				}}</label>
-				<select
-					class="form-select"
-					v-model="lawyer.category"
-					@change="handleUpdateLawyerCategory"
-				>
-					<option v-for="option in availableCategories" :value="option.value">
-						{{ option.label }}
-					</option>
-				</select>
+				<input
+					ref="uploadPortraitRef"
+					type="file"
+					accept=".jpg, .png, .jpeg"
+					@change="handleUploadPortrait"
+					class="d-none"
+				/>
+				<a class="btn lawyer-photo-container" href="#" @click="uploadPortraitRef?.click()">
+					<img class="lawyer-portrait" :src="portraitUrl" />
+					<div class="subtitle2 mt-2 azul">Definir Retratro (600x900)</div>
+				</a>
 			</div>
 
-			<div class="col col-md-8">
-				<admin-intl-content-field
-					:label="`${strings.lawyer_position.pt} (Português / Inglês)`"
-					v-model="lawyer.position"
+			<div class="row mb-4">
+				<app-input
+					type="text"
+					v-model="lawyer.name"
+					:label="strings.lawyer_name.pt"
+					:placeholder="strings.lawyer_name.pt"
 				/>
 			</div>
-		</div>
 
-		<div class="row mb-4">
-			<app-input
-				class="col-lg-4"
-				type="text"
-				v-model="lawyer.email"
-				:label="strings.lawyer_email.pt"
-				:placeholder="strings.lawyer_email.pt"
+			<div class="row mb-4">
+				<div class="col col-md-4">
+					<label class="form-label azulescuro fw-bolder">{{
+						strings.lawyer_category.pt
+					}}</label>
+					<select
+						class="form-select"
+						v-model="lawyer.category"
+						@change="handleUpdateLawyerCategory"
+					>
+						<option v-for="option in availableCategories" :value="option.value">
+							{{ option.label }}
+						</option>
+					</select>
+				</div>
+
+				<div class="col col-md-8">
+					<admin-intl-content-field
+						:label="`${strings.lawyer_position.pt} (Português / Inglês)`"
+						v-model="lawyer.position"
+					/>
+				</div>
+			</div>
+
+			<div class="row mb-4">
+				<app-input
+					class="col-lg-4"
+					type="text"
+					v-model="lawyer.email"
+					:label="strings.lawyer_email.pt"
+					:placeholder="strings.lawyer_email.pt"
+				/>
+
+				<app-input
+					class="col-md-6 col-lg-4"
+					type="text"
+					v-model="lawyer.officeTelephones"
+					:label="strings.lawyer_contacts_office.pt"
+					:placeholder="strings.lawyer_contacts_office.pt"
+				/>
+
+				<app-input
+					class="col-md-6 col-lg-4"
+					type="text"
+					v-model="lawyer.mobilePhone"
+					:label="strings.lawyer_contacts_mobile.pt"
+					:placeholder="strings.lawyer_contacts_mobile.pt"
+				/>
+			</div>
+			<hr class="my-4" />
+			<app-multichoice-input-checkbox
+				class="mb-4"
+				v-model="lawyer.languages"
+				:options="availableLanguages"
+				:label="strings.lawyer_languages"
+			/>
+			<hr class="my-4" />
+			<app-multichoice-input-checkbox
+				class="mb-4"
+				v-model="lawyer.areas"
+				:options="availableAreas"
+				:label="strings.lawyer_areas_of_practice"
 			/>
 
-			<app-input
-				class="col-md-6 col-lg-4"
-				type="text"
-				v-model="lawyer.officeTelephones"
-				:label="strings.lawyer_contacts_office.pt"
-				:placeholder="strings.lawyer_contacts_office.pt"
+			<hr class="my-4" />
+
+			<admin-web-content-field
+				class="mb-4"
+				:label="strings.lawyer_bio.pt"
+				:content="lawyer.bio"
+				@edit="handleEditBio"
 			/>
 
-			<app-input
-				class="col-md-6 col-lg-4"
-				type="text"
-				v-model="lawyer.mobilePhone"
-				:label="strings.lawyer_contacts_mobile.pt"
-				:placeholder="strings.lawyer_contacts_mobile.pt"
+			<admin-web-content-field
+				class="mb-4"
+				:label="strings.lawyer_career.pt"
+				:content="lawyer.career"
+				@edit="handleEditCareer"
 			/>
-		</div>
-		<hr />
-		<app-multichoice-input-checkbox
-			class="mb-4"
-			v-model="lawyer.languages"
-			:options="availableLanguages"
-			:label="strings.lawyer_languages"
-		/>
-		<hr />
-		<app-multichoice-input-checkbox
-			class="mb-4"
-			v-model="lawyer.areas"
-			:options="availableAreas"
-			:label="strings.lawyer_areas_of_practice"
-		/>
 
-		<hr />
+			<hr class="my-4" />
 
-		<admin-web-content-field
-			class="mb-4"
-			:label="strings.lawyer_bio.pt"
-			:content="lawyer.bio"
-			@edit="handleEditBio"
-		/>
+			<admin-actions
+				class="mb-4"
+				:backTo="BACK_PAGE"
+				:deleteDisabled="!lawyer.uuid"
+				:saveDisabled="!lawyer.name"
+				@delete="handleDelete"
+				@save="handleSave"
+			/>
 
-		<admin-web-content-field
-			class="mb-4"
-			:label="strings.lawyer_career.pt"
-			:content="lawyer.career"
-			@edit="handleEditCareer"
-		/>
-
-		<hr />
-
-		<admin-actions
-			class="mb-3"
-			:backTo="BACK_PAGE"
-			:deleteDisabled="!lawyer.uuid"
-			:saveDisabled="!lawyer.name"
-			@delete="handleDelete"
-			@save="handleSave"
-		/>
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<lr-web-content-editor-dialog ref="editorRef" />
 	</div>

@@ -16,6 +16,8 @@ import AdminIntlContentField from "~~/components/AdminIntlContentField.vue";
 
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
+const { csrf } = useCsrf();
+
 const toast = ref<Toaster>();
 const banner = ref<Partial<Banner>>(makeBanner());
 const uploadImageRef = ref<HTMLInputElement>();
@@ -32,10 +34,7 @@ const modelReloader = makeModelReloader(
 
 await modelReloader.reload();
 
-onMounted(async () => {
-	// const \{ useToast \} = await import\("~/lib/clientDeps"\);
-	// toast\.value = useToast\("#pageTop"\);
-});
+onMounted(async () => {});
 
 function handleSave() {
 	const metadata = banner.value!;
@@ -112,75 +111,85 @@ function handleUploadImage() {
 <template>
 	<div id="pageTop">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Banner</admin-page-title>
-		<div v-if="banner?.uuid" class="mb-5">
-			<input ref="uploadImageRef" type="file" accept=".jpg, .png, .jpeg" class="d-none" />
-			<div class="d-flex">
-				<label class="fw-bolder flex-fill"> Pré-Visualizar</label>
-				<app-icon-button iconClass="bi bi-pencil" @click="uploadImageRef?.click()" />
-			</div>
 
-			<app-banner
-				:title1="banner.title1?.pt"
-				:title2="banner.title2?.pt"
-				:subtitle="banner.subtitle?.pt"
-				:imageUrl="banner.imageUrl!"
-				:href="banner.href"
-				lang="pt"
-			/>
-		</div>
+		<form class="d-flex flex-column gap-2">
+			<div v-if="banner?.uuid" class="mb-5">
+				<input ref="uploadImageRef" type="file" accept=".jpg, .png, .jpeg" class="d-none" />
+				<div class="d-flex">
+					<label class="fw-bolder flex-fill"> Pré-Visualizar</label>
+					<app-icon-button iconClass="bi bi-pencil" @click="uploadImageRef?.click()" />
+				</div>
 
-		<admin-intl-content-field
-			class="mb-4"
-			label="Título - Linha 1 (Português / Inglês)"
-			:model-value="banner.title1!"
-			@update:model-value="banner.title1 = $event"
-		/>
-
-		<admin-intl-content-field
-			class="mb-4"
-			label="Título - Linha 2 (Português / Inglês)"
-			:model-value="banner.title2!"
-			@update:model-value="banner.title2 = $event"
-		/>
-
-		<admin-intl-content-field
-			class="mb-4"
-			label="Subtítulo (Português / Inglês)"
-			:model-value="banner.subtitle!"
-			@update:model-value="banner.subtitle = $event"
-		/>
-
-		<app-input type="text" v-model="banner.href" label="URL" />
-
-		<app-input type="number" v-model="banner.priority" label="Prioridade" style="widows: 50%" />
-
-		<hr />
-
-		<div v-if="!banner.uuid" class="row mt-4">
-			<div class="d-flex justify-content-end">
-				<nuxt-link :to="BACK_PAGE">
-					<app-button label="Voltar" />
-				</nuxt-link>
-
-				&nbsp;
-				<app-button
-					:dark="true"
-					:disabled="!banner?.title1?.pt || !banner.title1?.en"
-					label="Anexar Imagem e Salvar"
-					@click="uploadImageRef?.click()"
+				<app-banner
+					:title1="banner.title1?.pt"
+					:title2="banner.title2?.pt"
+					:subtitle="banner.subtitle?.pt"
+					:imageUrl="banner.imageUrl!"
+					:href="banner.href"
+					lang="pt"
 				/>
 			</div>
-		</div>
 
-		<admin-actions
-			v-else
-			class="mb-5"
-			:backTo="BACK_PAGE"
-			:deleteDisabled="!banner?.uuid"
-			:saveDisabled="!banner?.uuid || !banner?.title1?.pt || !banner.title1?.en"
-			@save="handleSave"
-			@delete="handleDelete"
-		/>
+			<admin-intl-content-field
+				class="mb-4"
+				label="Título - Linha 1 (Português / Inglês)"
+				:model-value="banner.title1!"
+				@update:model-value="banner.title1 = $event"
+			/>
+
+			<admin-intl-content-field
+				class="mb-4"
+				label="Título - Linha 2 (Português / Inglês)"
+				:model-value="banner.title2!"
+				@update:model-value="banner.title2 = $event"
+			/>
+
+			<admin-intl-content-field
+				class="mb-4"
+				label="Subtítulo (Português / Inglês)"
+				:model-value="banner.subtitle!"
+				@update:model-value="banner.subtitle = $event"
+			/>
+
+			<app-input type="text" v-model="banner.href" label="URL" />
+
+			<app-input
+				type="number"
+				v-model="banner.priority"
+				label="Prioridade"
+				style="widows: 50%"
+			/>
+
+			<hr class="my-4" />
+
+			<div v-if="!banner.uuid" class="row mt-4">
+				<div class="d-flex justify-content-end">
+					<nuxt-link :to="BACK_PAGE">
+						<app-button label="Voltar" />
+					</nuxt-link>
+
+					&nbsp;
+					<app-button
+						:dark="true"
+						:disabled="!banner?.title1?.pt || !banner.title1?.en"
+						label="Anexar Imagem e Salvar"
+						@click="uploadImageRef?.click()"
+					/>
+				</div>
+			</div>
+
+			<admin-actions
+				v-else
+				class="mb-5"
+				:backTo="BACK_PAGE"
+				:deleteDisabled="!banner?.uuid"
+				:saveDisabled="!banner?.uuid || !banner?.title1?.pt || !banner.title1?.en"
+				@save="handleSave"
+				@delete="handleDelete"
+			/>
+
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<input
 			ref="uploadImageRef"

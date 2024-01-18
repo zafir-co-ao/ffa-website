@@ -78,7 +78,7 @@ export function toLocalizedLegalAlert(
 }
 
 export function fromLegalAlert(alert: LegalAlert): LegarAlertDesc {
-	return {
+	const desc = {
 		node: {
 			uuid: alert.uuid,
 			title: alert.title.pt,
@@ -94,4 +94,6 @@ export function fromLegalAlert(alert: LegalAlert): LegarAlertDesc {
 			type: "application/json",
 		}),
 	};
+
+	return desc;
 }

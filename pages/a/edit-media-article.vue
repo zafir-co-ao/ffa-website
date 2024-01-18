@@ -17,6 +17,8 @@ const BACK_PAGE = "/a/media-articles";
 <script lang="ts" setup>
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
+const { csrf } = useCsrf();
+
 const lawyerRef = ref<HTMLSelectElement>();
 const editorRef = ref();
 
@@ -92,95 +94,103 @@ async function reloadMediaArticle(): Promise<void> {
 	<div id="pageTop" class="edit-legal-alert container-fluid">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Artigo</admin-page-title>
 
-		<admin-intl-content-field
-			class="mb-3"
-			:label="strings.legal_alert_title.pt"
-			:model-value="article.title!"
-			@update:model-value="article.title = $event"
-		/>
-
-		<div class="row mb-4">
-			<app-input
-				class="col-md-6 col-lg-4"
-				type="date"
-				v-model="article.publishedOn"
-				:label="strings.legal_alert_published_on.pt"
-				:placeholder="strings.legal_alert_published_on.pt"
+		<form>
+			<admin-intl-content-field
+				class="mb-3"
+				:label="strings.legal_alert_title.pt"
+				:model-value="article.title!"
+				@update:model-value="article.title = $event"
 			/>
 
-			<app-input
-				class="col-md-6 col-lg-8"
-				type="text"
-				v-model="article.publicationName"
-				:label="strings.media_article_publication_name.pt"
-				:placeholder="strings.media_article_publication_name.pt"
-			/>
-		</div>
+			<div class="row mb-4">
+				<app-input
+					class="col-md-6 col-lg-4"
+					type="date"
+					v-model="article.publishedOn"
+					:label="strings.legal_alert_published_on.pt"
+					:placeholder="strings.legal_alert_published_on.pt"
+				/>
 
-		<div class="row mb-4">
-			<app-input
-				type="text"
-				v-model="article.href"
-				:label="strings.media_article_href.pt"
-				:placeholder="strings.media_article_href.pt"
-			/>
-		</div>
-
-		<hr />
-
-		<div class="row mb-4 d-flex align-items-end">
-			<div class="col col-md-6 col-lg-4">
-				<label class="form-label azulescuro fw-bolder">{{
-					strings.media_article_lawyer.pt
-				}}</label>
-				<select
-					ref="lawyerRef"
-					class="form-select"
-					v-model="article.lawyerUuid"
-					@change="handleUpdateLawyerUuid"
-				>
-					<option :value="undefined">&nbsp;</option>
-					<option v-for="option in lawyers" :value="option.uuid" :label="option.name" />
-				</select>
+				<app-input
+					class="col-md-6 col-lg-8"
+					type="text"
+					v-model="article.publicationName"
+					:label="strings.media_article_publication_name.pt"
+					:placeholder="strings.media_article_publication_name.pt"
+				/>
 			</div>
-			<app-input
-				class="col-md-6 col-lg-8"
-				type="text"
-				v-model="article.lawyerName"
-				:disabled="(article.lawyerUuid?.length ?? -1) > 0"
-				:label="strings.media_article_lawyer_name.pt"
-				:placeholder="strings.media_article_lawyer_name.pt"
+
+			<div class="row mb-4">
+				<app-input
+					type="text"
+					v-model="article.href"
+					:label="strings.media_article_href.pt"
+					:placeholder="strings.media_article_href.pt"
+				/>
+			</div>
+
+			<hr class="my-4" />
+
+			<div class="row mb-4 d-flex align-items-end">
+				<div class="col col-md-6 col-lg-4">
+					<label class="form-label azulescuro fw-bolder">{{
+						strings.media_article_lawyer.pt
+					}}</label>
+					<select
+						ref="lawyerRef"
+						class="form-select"
+						v-model="article.lawyerUuid"
+						@change="handleUpdateLawyerUuid"
+					>
+						<option :value="undefined">&nbsp;</option>
+						<option
+							v-for="option in lawyers"
+							:value="option.uuid"
+							:label="option.name"
+						/>
+					</select>
+				</div>
+				<app-input
+					class="col-md-6 col-lg-8"
+					type="text"
+					v-model="article.lawyerName"
+					:disabled="(article.lawyerUuid?.length ?? -1) > 0"
+					:label="strings.media_article_lawyer_name.pt"
+					:placeholder="strings.media_article_lawyer_name.pt"
+				/>
+			</div>
+			<div class="row mb-4">
+				<app-input
+					type="text"
+					v-model="article.lawyerLinkedIn"
+					:disabled="(article.lawyerUuid?.length ?? -1) > 0"
+					:label="strings.media_article_lawyer_linkedin.pt"
+					:placeholder="strings.media_article_lawyer_linkedin.pt"
+				/>
+			</div>
+
+			<hr class="my-4" />
+
+			<admin-web-content-field
+				class="mb-4"
+				:label="strings.legal_alert_body.pt"
+				:content="article.body!"
+				@edit="handleEditBody"
 			/>
-		</div>
-		<div class="row mb-4">
-			<app-input
-				type="text"
-				v-model="article.lawyerLinkedIn"
-				:disabled="(article.lawyerUuid?.length ?? -1) > 0"
-				:label="strings.media_article_lawyer_linkedin.pt"
-				:placeholder="strings.media_article_lawyer_linkedin.pt"
+
+			<hr class="my-4" />
+
+			<admin-actions
+				class="mb-4"
+				:backTo="BACK_PAGE"
+				:deleteDisabled="!article.uuid"
+				:saveDisabled="!article.title?.pt || !article.publicationName"
+				@delete="handleDelete"
+				@save="handleSave"
 			/>
-		</div>
 
-		<hr />
-
-		<admin-web-content-field
-			class="mb-4"
-			:label="strings.legal_alert_body.pt"
-			:content="article.body!"
-			@edit="handleEditBody"
-		/>
-
-		<hr />
-
-		<admin-actions
-			class="mb-3"
-			:backTo="BACK_PAGE"
-			:deleteDisabled="!article.uuid"
-			:saveDisabled="!article.title?.pt || !article.publicationName"
-			@delete="handleDelete"
-			@save="handleSave"
-		/>
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<lr-web-content-editor-dialog ref="editorRef" />
 	</div>

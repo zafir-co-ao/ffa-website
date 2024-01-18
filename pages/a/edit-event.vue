@@ -17,6 +17,8 @@ const BACK_PAGE = "/a/events";
 <script lang="ts" setup>
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
+const { csrf } = useCsrf();
+
 const editorRef = ref();
 
 const toast = ref<Toaster>();
@@ -79,59 +81,63 @@ async function reloadEvent(): Promise<void> {
 	<div id="pageTop" class="edit-event container-fluid">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Evento</admin-page-title>
 
-		<admin-intl-content-field
-			class="mb-3"
-			:label="strings.legal_alert_title.pt"
-			:model-value="event.title!"
-			@update:model-value="event.title = $event"
-		/>
-
-		<div class="row mb-4">
-			<app-input
-				class="col-md-6 col-lg-4"
-				type="date"
-				v-model="event.eventDateTime"
-				:label="strings.event_event_date_time.pt"
-				:placeholder="strings.event_event_date_time.pt"
+		<form>
+			<admin-intl-content-field
+				class="mb-3"
+				:label="strings.legal_alert_title.pt"
+				:model-value="event.title!"
+				@update:model-value="event.title = $event"
 			/>
 
-			<app-input
-				class="col-md-6 col-lg-8"
-				type="text"
-				v-model="event.eventPlace"
-				:label="strings.event_event_place.pt"
-				:placeholder="strings.event_event_place.pt"
+			<div class="row mb-4">
+				<app-input
+					class="col-md-6 col-lg-4"
+					type="date"
+					v-model="event.eventDateTime"
+					:label="strings.event_event_date_time.pt"
+					:placeholder="strings.event_event_date_time.pt"
+				/>
+
+				<app-input
+					class="col-md-6 col-lg-8"
+					type="text"
+					v-model="event.eventPlace"
+					:label="strings.event_event_place.pt"
+					:placeholder="strings.event_event_place.pt"
+				/>
+			</div>
+
+			<div class="row mb-4">
+				<app-input
+					type="text"
+					v-model="event.registrationUrl"
+					:label="strings.event_registration_url.pt"
+					:placeholder="strings.event_registration_url.pt"
+				/>
+			</div>
+
+			<hr class="my-4" />
+
+			<admin-web-content-field
+				class="mb-4"
+				:label="strings.legal_alert_body.pt"
+				:content="event.body!"
+				@edit="handleEditBody"
 			/>
-		</div>
 
-		<div class="row mb-4">
-			<app-input
-				type="text"
-				v-model="event.registrationUrl"
-				:label="strings.event_registration_url.pt"
-				:placeholder="strings.event_registration_url.pt"
+			<hr class="my-4" />
+
+			<admin-actions
+				class="mb-4"
+				:backTo="BACK_PAGE"
+				:deleteDisabled="!event.uuid"
+				:saveDisabled="!(event.title?.pt && event.eventDateTime)"
+				@delete="handleDelete"
+				@save="handleSave"
 			/>
-		</div>
 
-		<hr />
-
-		<admin-web-content-field
-			class="mb-4"
-			:label="strings.legal_alert_body.pt"
-			:content="event.body!"
-			@edit="handleEditBody"
-		/>
-
-		<hr />
-
-		<admin-actions
-			class="mb-3"
-			:backTo="BACK_PAGE"
-			:deleteDisabled="!event.uuid"
-			:saveDisabled="!(event.title?.pt && event.eventDateTime)"
-			@delete="handleDelete"
-			@save="handleSave"
-		/>
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<lr-web-content-editor-dialog ref="editorRef" />
 	</div>

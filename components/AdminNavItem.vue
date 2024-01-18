@@ -1,11 +1,11 @@
 <script lang="ts"></script>
 <script lang="ts" setup>
-defineProps<{ title: string; url: string }>();
+withDefaults(defineProps<{ title: string; url: string; target?: string }>(), { target: "_self" });
 </script>
 
 <template>
 	<li class="nav-item">
-		<NuxtLink :to="url" class="nav-link" aria-current="page">
+		<NuxtLink :to="url" class="nav-link" aria-current="page" :target="target">
 			{{ title }}
 		</NuxtLink>
 	</li>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import "@zafir.co.ao/lightray/style.css";
 import { LrDiscovery } from "@zafir.co.ao/lightray";
+import "@zafir.co.ao/lightray/style.css";
 
 const url = useAntboxUrl();
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "none", middleware: "auth-guard" });
 </script>
 
 <template>
@@ -14,3 +14,4 @@ definePageMeta({ layout: "admin", middleware: "auth-guard" });
 		</ClientOnly>
 	</div>
 </template>
+<style scoped></style>

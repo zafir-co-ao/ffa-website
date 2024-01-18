@@ -1,6 +1,6 @@
-import type { Toaster } from "@zafir.co.ao/lightray";
 import type { Ref } from "vue";
 import type { Either } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 export interface ApiResponseHandler {
 	handle<L, R>(request: Promise<Either<L, R>>, success?: string): Promise<R | undefined>;

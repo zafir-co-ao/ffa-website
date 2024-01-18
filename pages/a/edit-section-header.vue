@@ -4,6 +4,7 @@ import makeApiResponseHandler from "./apiResponseHandler";
 import makeModelReloader from "./modelReloader";
 
 import { left, right } from "~/lib/deps";
+import type { Toaster } from "~/types/toaster";
 
 const API_BASE_URL = "/api/section-headers";
 const BACK_PAGE = "/a/section-headers";
@@ -16,6 +17,8 @@ import {
 	makeSectionHeader,
 } from "~/lib/model/types/section_header";
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
+
+const { csrf } = useCsrf();
 
 const toast = ref<Toaster>();
 const header = ref<SectionHeader>(makeSectionHeader());
@@ -100,43 +103,47 @@ function handleUploadImage() {
 <template>
 	<div id="pageTop">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Banner</admin-page-title>
-		<div v-if="header?.uuid" class="mb-5">
-			<h4 class="mb-3">{{ header.nodeTitle }}</h4>
-			<input ref="uploadImageRef" type="file" accept=".jpg, .png, .jpeg" class="d-none" />
-			<div class="d-flex">
-				<label class="fw-bolder flex-fill"> Pré-Visualizar (1920×660)</label>
-				<app-icon-button iconClass="bi bi-pencil" @click="uploadImageRef?.click()" />
+		<form>
+			<div v-if="header?.uuid" class="mb-5">
+				<h4 class="mb-3">{{ header.nodeTitle }}</h4>
+				<input ref="uploadImageRef" type="file" accept=".jpg, .png, .jpeg" class="d-none" />
+				<div class="d-flex">
+					<label class="fw-bolder flex-fill"> Pré-Visualizar (1920×660)</label>
+					<app-icon-button iconClass="bi bi-pencil" @click="uploadImageRef?.click()" />
+				</div>
+
+				<app-section-header :getter="() => localizedHeader" />
 			</div>
 
-			<app-section-header :getter="() => localizedHeader" />
-		</div>
+			<admin-intl-content-field
+				class="mb-4"
+				label="Título - Linha 1 (Português / Inglês)"
+				:model-value="header.title!"
+				@update:model-value="header.title = $event"
+			/>
+			<div class="p-3 mb-5 tip">
+				<span class="fw-bold">Dica:</span>
+				Escrever o texto "&lt;br&gt;" para inserir uma quebra de linha
+			</div>
 
-		<admin-intl-content-field
-			class="mb-4"
-			label="Título - Linha 1 (Português / Inglês)"
-			:model-value="header.title!"
-			@update:model-value="header.title = $event"
-		/>
-		<div class="p-3 mb-5 tip">
-			<span class="fw-bold">Dica:</span>
-			Escrever o texto "&lt;br&gt;" para inserir uma quebra de linha
-		</div>
+			<admin-intl-content-field
+				class="mb-4"
+				label="Subtítulo (Português / Inglês)"
+				:model-value="header.subtitle!"
+				@update:model-value="header.subtitle = $event"
+			/>
 
-		<admin-intl-content-field
-			class="mb-4"
-			label="Subtítulo (Português / Inglês)"
-			:model-value="header.subtitle!"
-			@update:model-value="header.subtitle = $event"
-		/>
+			<span class="me-5">
+				<app-input-check-box v-model="header.clipTop" label="Corte Superior" />.
+			</span>
+			<span>
+				<app-input-check-box v-model="header.clipBottom" label="Corte Inferior" />
+			</span>
 
-		<span class="me-5">
-			<app-input-check-box v-model="header.clipTop" label="Corte Superior" />.
-		</span>
-		<span>
-			<app-input-check-box v-model="header.clipBottom" label="Corte Inferior" />
-		</span>
+			<hr class="my-4" />
 
-		<hr />
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<admin-actions
 			class="mb-5"

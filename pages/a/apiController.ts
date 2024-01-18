@@ -54,7 +54,7 @@ export default function makeApiController<T extends BaseData>(
 	};
 }
 
-function createData<T>(url: string, data: T): Promise<Either<string, string>> {
+async function createData<T>(url: string, data: T): Promise<Either<string, string>> {
 	return postRequest(url, data)
 		.then((res) => {
 			if (!res.ok) {
@@ -66,7 +66,7 @@ function createData<T>(url: string, data: T): Promise<Either<string, string>> {
 		.catch((err) => left(err as string));
 }
 
-function updateData<T extends BaseData>(
+async function updateData<T extends BaseData>(
 	apiBaseUrl: string,
 	data: T
 ): Promise<Either<string, void>> {
@@ -84,11 +84,14 @@ function updateData<T extends BaseData>(
 function postRequest<T>(url: string, data?: T) {
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
+	headers.append("csrf-token", useCsrf().csrf);
+
+	const body = JSON.stringify(data);
 
 	return fetch(url, {
-		method: "POST",
+		method: "post",
 		headers,
-		body: JSON.stringify(data),
+		body,
 	});
 }
 
@@ -104,10 +107,13 @@ function deleteRequest(url: string) {
 function putRequest<T>(url: string, data?: T) {
 	const headers = new Headers();
 	headers.append("Content-Type", "application/json");
+	headers.append("csrf-token", useCsrf().csrf);
+
+	const body = JSON.stringify(data);
 
 	return fetch(url, {
-		method: "PUT",
+		method: "put",
 		headers,
-		body: JSON.stringify(data),
+		body,
 	});
 }

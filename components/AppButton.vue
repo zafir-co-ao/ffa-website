@@ -2,19 +2,21 @@
 interface AppButtonProps {
 	dark?: boolean;
 	label: string;
+	condensed?: boolean;
 }
 
 withDefaults(defineProps<AppButtonProps>(), {
 	lang: "pt",
 	dark: false,
+	condensed: false,
 });
 </script>
 
 <template>
 	<button
 		type="button"
-		class="app-btn btn"
-		:class="{ 'btn-claro': !dark, 'btn-escuro': dark }"
+		class="app-btn"
+		:class="{ 'btn-claro': !dark, 'btn-escuro': dark, 'btn-condensed': condensed }"
 	>
 		{{ label }}
 	</button>
@@ -22,15 +24,21 @@ withDefaults(defineProps<AppButtonProps>(), {
 
 <style scoped>
 .app-btn {
-	color: #fff;
 	font-size: 14px;
+	color: #fff;
 	padding-top: 1.5em;
 	padding-bottom: 1.5em;
 	padding-left: 2.5em;
 	padding-right: 2.5em;
 	border-radius: 0px;
-
 	font-family: "Montserrat", sans-serif;
+}
+
+.btn-condensed {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
 }
 
 .btn-escuro {

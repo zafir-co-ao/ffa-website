@@ -45,7 +45,7 @@ function handleError(errorCode: number) {
 	}
 }
 
-function sendLogin(
+async function sendLogin(
 	username: string,
 	code: string
 ): Promise<{
@@ -56,6 +56,7 @@ function sendLogin(
 }> {
 	const headers = new Headers();
 	headers.set("Content-Type", "application/json");
+	headers.set("csrf-token", csrf);
 
 	return fetch("/api/login", {
 		method: "POST",

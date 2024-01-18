@@ -24,6 +24,8 @@ function mapI18nToOptions(strings: I18nMessages): { value: string; label: string
 <script lang="ts" setup>
 definePageMeta({ layout: "admin", middleware: "auth-guard" });
 
+const { csrf } = useCsrf();
+
 const editorRef = ref();
 const toast = ref<Toaster>();
 const alert = ref<Partial<LegalAlert>>(makeLegalAlert());
@@ -90,66 +92,54 @@ async function reloadLegalAlert(): Promise<void> {
 	<div id="pageTop" class="edit-legal-alert container-fluid">
 		<admin-page-title :backTo="BACK_PAGE">Criar / Editar Alerta Jurídico</admin-page-title>
 
-		<admin-intl-content-field
-			class="mb-3"
-			:label="strings.legal_alert_title.pt"
-			:model-value="alert.title!"
-			@update:model-value="alert.title = $event"
-		/>
-
-		<div class="row mb-4 d-flex align-items-end">
-			<app-input
-				class="col-md-6"
-				type="date"
-				v-model="alert.publishedOn"
-				:label="strings.legal_alert_published_on.pt"
-				:placeholder="strings.legal_alert_published_on.pt"
+		<form>
+			<admin-intl-content-field
+				class="mb-3"
+				:label="strings.legal_alert_title.pt"
+				:model-value="alert.title!"
+				@update:model-value="alert.title = $event"
 			/>
 
-			<div class="col col-md-6">
-				<label class="form-label azulescuro fw-bolder">{{
-					strings.lawyer_category.pt
-				}}</label>
-				<select class="form-select" v-model="alert.category">
-					<option v-for="option in availableCategories" :value="option.value">
-						{{ option.label }}
-					</option>
-				</select>
+			<div class="d-flex gap-2">
+				<app-input
+					class="w-50 flex-grow-1"
+					type="date"
+					v-model="alert.publishedOn"
+					:label="strings.legal_alert_published_on.pt"
+					:placeholder="strings.legal_alert_published_on.pt"
+				/>
+
+				<app-select
+					class="w-50 flex-grow-1"
+					:options="availableCategories"
+					v-model="alert.category"
+					:label="strings.lawyer_category.pt"
+				/>
 			</div>
-		</div>
 
-		<hr />
+			<hr class="my-4" />
 
-		<admin-web-content-field
-			class="mb-4"
-			:label="strings.legal_alert_body.pt"
-			:content="alert.body!"
-			@edit="handleEditBody"
-		/>
+			<admin-web-content-field
+				class="mb-4"
+				:label="strings.legal_alert_body.pt"
+				:content="alert.body!"
+				@edit="handleEditBody"
+			/>
 
-		<hr />
+			<hr class="my-4" />
 
-		<admin-actions
-			class="mb-3"
-			:backTo="BACK_PAGE"
-			:deleteDisabled="!alert.uuid"
-			:saveDisabled="!alert.title?.pt"
-			@delete="handleDelete"
-			@save="handleSave"
-		/>
+			<admin-actions
+				class="mb-4"
+				:backTo="BACK_PAGE"
+				:deleteDisabled="!alert.uuid"
+				:saveDisabled="!alert.title?.pt"
+				@delete="handleDelete"
+				@save="handleSave"
+			/>
+
+			<input type="hidden" name="csrf_token" :value="csrf" />
+		</form>
 
 		<lr-web-content-editor-dialog ref="editorRef" />
 	</div>
 </template>
-
-<style scoped>
-select,
-input[readonly] {
-	padding: 0.75em 0.75em;
-	border: solid 1px #73777f;
-	border-radius: 0;
-}
-select option {
-	padding: 1.5em;
-}
-</style>

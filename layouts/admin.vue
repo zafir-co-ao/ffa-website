@@ -29,7 +29,7 @@ function logout() {
 				<admin-nav-item title="Media" url="/a/media-articles" />
 				<admin-nav-item title="Separadores" url="/a/section-headers" />
 				<hr />
-				<admin-nav-item title="Discovery" url="/a/discovery" />
+				<admin-nav-item title="Discovery" url="/a/discovery" target="_blank" />
 				<admin-nav-item title="Sair" url="#" @click="logout" />
 			</admin-nav>
 			<hr />
@@ -47,6 +47,10 @@ function logout() {
 </template>
 
 <style>
+:root {
+	font-size: 16px;
+}
+
 body {
 	min-height: 100vh;
 	min-height: -webkit-fill-available;

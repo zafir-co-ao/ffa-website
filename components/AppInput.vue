@@ -31,3 +31,10 @@ const emit = defineEmits(["update:modelValue"]);
 		</div>
 	</div>
 </template>
+
+<style scoped>
+.form-control {
+	border-radius: 0;
+	border: 1px solid #ced4da;
+}
+</style>
