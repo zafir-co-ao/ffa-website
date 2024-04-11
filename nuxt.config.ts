@@ -100,6 +100,7 @@ export default defineNuxtConfig({
 								"data:", // If you use base64 encoded images
 								"https://cms.fatimafreitas.com",
 								"https://i.ytimg.com",
+								"https://sp.tinymce.com",
 							],
 							"font-src": [
 								"'self'", // Enables loading of fonts hosted on self origin
@@ -117,6 +118,7 @@ export default defineNuxtConfig({
 								"'self'",
 								"https://cms.fatimafreitas.com",
 								"https://www.google-analytics.com",
+								"https://cdn.tiny.cloud",
 							],
 							"frame-src": ["https://www.google.com", "https://www.youtube.com"],
 							"media-src": ["'self'", "https://cms.fatimafreitas.com"],

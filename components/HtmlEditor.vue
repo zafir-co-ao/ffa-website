@@ -19,7 +19,7 @@ const EDITOR_INIT = {
 };
 
 const props = withDefaults(defineProps<EditorProps>(), {
-	apiKey: "fz5xyz1eiffj4av5nsyydhxthj4gd21nlzpv7tpy4t424v3z",
+	apiKey: "s0z0maa9q57mpodemqw9bvl6x3s6s9lkv7e4xb5wuwvgqfql",
 });
 
 const emit = defineEmits<EditorEvents>();
