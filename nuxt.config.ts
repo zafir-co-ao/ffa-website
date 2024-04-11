@@ -71,7 +71,10 @@ export default defineNuxtConfig({
 			origin: (origin: string) =>
 				/(localhost|fatimafreitas.com|ffa-website-inky.vercel.app)/.test(origin),
 		},
-		csrf: true,
+		csrf: {
+			enabled: true,
+			methodsToProtect: ["PATCH"],
+		},
 		nonce: true, // Enables HTML nonce support in SSR mode
 		sri: true,
 		headers: {
