@@ -35,8 +35,6 @@ const modelReloader = makeModelReloader<Event>(
 );
 
 onMounted(async () => {
-	// const { useToast } = await import("~/lib/clientDeps");
-	// toast.value = useToast(".edit-event");
 	await reloadEvent();
 });
 

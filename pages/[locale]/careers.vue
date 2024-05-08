@@ -126,7 +126,7 @@ function sendRecaptchaToken(token: string) {
 	return useFetch<{ score?: number; errors: string[] }>("/api/recaptcha", {
 		method: "POST",
 		body: JSON.stringify({ token }),
-		headers: { "Content-Type": "application/json" },
+		headers: { "Content-Type": "application/json", "csrf-token": useCsrf().csrf },
 		ignoreResponseError: true,
 	});
 }
