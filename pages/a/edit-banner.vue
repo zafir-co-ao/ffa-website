@@ -86,9 +86,12 @@ function handleUploadImage() {
 	const method = metadata.uuid ? "PUT" : "POST";
 	const url = method === "PUT" ? `${API_BASE_URL}/${metadata.uuid}` : API_BASE_URL;
 
+	const headers = new Headers();
+	headers.append("csrf-token", useCsrf().csrf);
+
 	apiHandler
 		.handle(
-			fetch(url, { method, body: formData })
+			fetch(url, { method, headers, body: formData })
 				.then((res) => {
 					if (!res.ok) {
 						return left<string, void>(res.statusText);

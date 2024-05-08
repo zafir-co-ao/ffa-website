@@ -1,11 +1,28 @@
 <script lang="ts" setup>
-import { left, type Either, type WebContent, right } from "~/lib/deps";
+import {
+	left,
+	type Either,
+	type WebContent,
+	right,
+	nodeServiceClient,
+	fidToUuid,
+} from "~/lib/deps";
 import { i18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 import {
 	i18nWebContentGetter,
 	webContentGetter,
 	webContentSaver,
 } from "~/lib/server_api_clients/web_content_client";
+
+const dateFormatter = new Intl.DateTimeFormat("pt-PT", {
+	timeZone: "Africa/Luanda",
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit",
+	second: "2-digit",
+});
 
 const hasErrors = ref(false);
 const messages = ref<string[]>([]);
@@ -16,6 +33,10 @@ const email = ref("");
 const comments = ref("");
 
 const recaptchaSiteKey = useRuntimeConfig().public.recaptchaSiteKey;
+const antboxUrl = useRuntimeConfig().public.antboxUrl;
+const applicantsKey = useRuntimeConfig().public.applicantsKey;
+
+const nodeService = nodeServiceClient({ url: antboxUrl, apiKey: applicantsKey });
 
 const { $messages, $locale: lang } = useI18n();
 
@@ -110,7 +131,40 @@ function sendRecaptchaToken(token: string) {
 	});
 }
 
-function uploadApplicationAndResetForm() {
+async function uploadApplicationAndResetForm() {
+	const parentOrErr = await nodeService.get(fidToUuid("now-hiring"));
+	if (parentOrErr.isLeft()) {
+		console.error(parentOrErr.value);
+		messages.value = [$messages.pages.careers.text.unknown_error];
+		return;
+	}
+
+	const today = new Date().toISOString().substring(0, 10);
+
+	const applicationOrErr = await nodeService.createFolder({
+		title: `${today} - ${name.value}`,
+		parent: parentOrErr.value.uuid,
+		description: buildDescription(),
+	});
+
+	if (applicationOrErr.isLeft()) {
+		console.error(applicationOrErr.value);
+		messages.value = [$messages.pages.careers.text.unknown_error];
+		return;
+	}
+
+	const fileOrErr = await nodeService.createFile(fileRef.value.files![0], {
+		parent: applicationOrErr.value.uuid,
+		title: `CV - ${name.value} - ${today}`,
+	});
+
+	if (fileOrErr.isLeft()) {
+		console.error(fileOrErr.value);
+		messages.value = [$messages.pages.careers.text.unknown_error];
+
+		return;
+	}
+
 	name.value = "";
 	email.value = "";
 	messages.value = [];
@@ -119,6 +173,17 @@ function uploadApplicationAndResetForm() {
 	fileRef.value.value = "";
 
 	messages.value = [$messages.pages.careers.text.thanks_for_your_application];
+}
+
+function buildDescription() {
+	const now = dateFormatter.format(new Date());
+
+	return `
+Nome: ${name.value}
+Email: ${email.value}
+Comentários: ${comments.value}
+Data e Hora: ${now}
+`;
 }
 
 function validateForm(name: string, email: string): string[] {

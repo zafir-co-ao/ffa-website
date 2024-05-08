@@ -15,7 +15,8 @@
 				"attach_and_send": "Anexar e Enviar",
 				"leave_you_message": "Deixe a sua mensagem",
 				"thanks_for_your_application": "Obrigado pela tua candidatura",
-				"warning_file_formats": "Ficheiros apenas nos formatos .pdf .doc .docx até 1 MB"
+				"warning_file_formats": "Ficheiros apenas nos formatos .pdf .doc .docx até 1 MB",
+				"unknown_error": "Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde."
 			}
 		}
 	},

@@ -135,6 +135,8 @@ export default defineNuxtConfig({
 		public: {
 			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
 			recaptchaSiteKey: "6LcedyYpAAAAAKz5CGTqE4fdue0Sa7H8o1Ak0o-F",
+			//applicantsKey: "0KOcOpJt6C",
+			applicantsKey: "Cj3m6gWYJn",
 		},
 
 		private: {

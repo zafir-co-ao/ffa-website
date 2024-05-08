@@ -15,7 +15,8 @@
 				"attach_and_send": "Attach and Send",
 				"leave_you_message": "Leave your message",
 				"thanks_for_your_application": "Thanks for your application",
-				"warning_file_formats": " Only .pdf .doc .docx with less than 1 MB are allowed"
+				"warning_file_formats": " Only .pdf .doc .docx with less than 1 MB are allowed",
+				"unknown_error": "An unknown error occurred. Please try again later."
 			}
 		}
 	},

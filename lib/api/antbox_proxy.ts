@@ -31,9 +31,8 @@ export async function updateFile(evt: H3Event, uuid: string, file: File) {
 export async function exportNode(evt: H3Event, uuid: string) {
 	const voidOrErr = await client.export(uuid);
 
-	console.log(voidOrErr);
-
 	if (voidOrErr.isLeft()) {
+		console.error(voidOrErr.value);
 		return processApiError(evt, voidOrErr);
 	}
 
