@@ -67,10 +67,7 @@ export default defineNuxtConfig({
 
 	modules: ["nuxt-security", "@nuxt/devtools"],
 	security: {
-		corsHandler: {
-			origin: (origin: string) =>
-				/(localhost|fatimafreitas.com|ffa-website-inky.vercel.app)/.test(origin),
-		},
+		corsHandler: false,
 		csrf: {
 			enabled: true,
 			methodsToProtect: ["PATCH", "POST", "PUT", "DELETE"],
