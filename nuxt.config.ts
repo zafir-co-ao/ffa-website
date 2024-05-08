@@ -73,11 +73,12 @@ export default defineNuxtConfig({
 		},
 		csrf: {
 			enabled: true,
-			methodsToProtect: ["PATCH"],
+			methodsToProtect: ["PATCH", "POST", "PUT", "DELETE"],
 		},
 		nonce: true, // Enables HTML nonce support in SSR mode
 		sri: true,
 		headers: {
+			strictTransportSecurity: { maxAge: 3153600, includeSubdomains: true, preload: true },
 			crossOriginEmbedderPolicy:
 				process.env.NODE_ENV === "development" ? "unsafe-none" : false,
 			contentSecurityPolicy:
@@ -133,14 +134,12 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		public: {
-			antboxUrl: process.env.NUXT_PUBLIC_ANTBOX_URL,
-			recaptchaSiteKey: "6LcedyYpAAAAAKz5CGTqE4fdue0Sa7H8o1Ak0o-F",
-			applicantsKey: "0KOcOpJt6C",
-			// applicantsKey: "Cj3m6gWYJn",
+			antboxUrl: "",
+			recaptchaSiteKey: "",
+			applicantsKey: "",
+			tinyMceApiKey: "",
 		},
 
-		private: {
-			recaptchaSecretKey: "6LcedyYpAAAAAA2rEcYsFQAY-g81ot6xDFlUelxx",
-		},
+		recaptchaSecretKey: "",
 	},
 });

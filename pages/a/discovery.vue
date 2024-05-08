@@ -3,6 +3,7 @@ import { LrDiscovery } from "@zafir.co.ao/lightray";
 import "@zafir.co.ao/lightray/style.css";
 
 const url = useAntboxUrl();
+const tinyMceApiKey = useRuntimeConfig().public.tinyMceApiKey;
 
 definePageMeta({ layout: "none", middleware: "auth-guard" });
 </script>
@@ -10,7 +11,7 @@ definePageMeta({ layout: "none", middleware: "auth-guard" });
 <template>
 	<div>
 		<ClientOnly>
-			<LrDiscovery :antbox-url="url" />
+			<LrDiscovery :antbox-url="url" :tiny-mce-api-key="tinyMceApiKey" />
 		</ClientOnly>
 	</div>
 </template>

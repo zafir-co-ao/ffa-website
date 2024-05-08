@@ -1,57 +1,54 @@
+import { log } from "console";
 import { type Either, left, right } from "~/lib/deps";
 
 export interface BaseData {
 	uuid: string;
 }
 
-export interface ApiController<T> {
-	load(rawUuid: string, builder: () => Partial<T>): Promise<Either<T, T>>;
-	createOrUpdate(data: T): Promise<Either<string, void | string>>;
-	create(data: T): Promise<Either<string, string>>;
-	update(data: T): Promise<Either<string, void>>;
-	delete(uuid: string): Promise<Either<string, void>>;
+export class ApiController<T extends BaseData> {
+	constructor(readonly apiBaseUrl: string) {}
+
+	async load(uuid: string, builder: () => T): Promise<Either<T, T>> {
+		const res = await useFetch<T>(this.apiBaseUrl.concat("/", uuid));
+
+		const err = await res.error;
+		const data = await res.data;
+
+		if (err.value) {
+			console.error(err.value);
+			return left(builder());
+		}
+
+		return right(data.value as T);
+	}
+
+	createOrUpdate(data: T): Promise<Either<string, void | string>> {
+		if (data.uuid) {
+			return updateData(this.apiBaseUrl, data);
+		}
+
+		return createData(this.apiBaseUrl, data);
+	}
+
+	create(data: T): Promise<Either<string, string>> {
+		return createData(this.apiBaseUrl, data);
+	}
+
+	update(data: T): Promise<Either<string, void>> {
+		return updateData(this.apiBaseUrl, data);
+	}
+
+	delete(uuid: string): Promise<Either<string, undefined>> {
+		return deleteRequest(this.apiBaseUrl.concat("/", uuid))
+			.then(() => right<string, undefined>(undefined))
+			.catch((err) => left(err as string));
+	}
 }
 
 export default function makeApiController<T extends BaseData>(
 	apiBaseUrl: string
 ): ApiController<T> {
-	return {
-		async load(uuid: string, builder: () => T): Promise<Either<T, T>> {
-			const res = await useFetch<T>(apiBaseUrl.concat("/", uuid));
-
-			const err = await res.error;
-			const data = await res.data;
-
-			if (err.value) {
-				console.error(err.value);
-				return left(builder());
-			}
-
-			return right(data.value as T);
-		},
-
-		createOrUpdate(data: T): Promise<Either<string, void | string>> {
-			if (data.uuid) {
-				return updateData(apiBaseUrl, data);
-			}
-
-			return createData(apiBaseUrl, data);
-		},
-
-		create(data: T): Promise<Either<string, string>> {
-			return createData(apiBaseUrl, data);
-		},
-
-		update(data: T): Promise<Either<string, void>> {
-			return updateData(apiBaseUrl, data);
-		},
-
-		delete(uuid: string): Promise<Either<string, undefined>> {
-			return deleteRequest(apiBaseUrl.concat("/", uuid))
-				.then(() => right<string, undefined>(undefined))
-				.catch((err) => left(err as string));
-		},
-	};
+	return new ApiController<T>(apiBaseUrl);
 }
 
 async function createData<T>(url: string, data: T): Promise<Either<string, string>> {

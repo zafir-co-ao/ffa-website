@@ -4,7 +4,6 @@ import Editor from "@tinymce/tinymce-vue";
 
 interface EditorProps {
 	modelValue: string;
-	apiKey?: string;
 }
 
 interface EditorEvents {
@@ -18,14 +17,13 @@ const EDITOR_INIT = {
 		"undo redo | blocks | bold italic underline strikethrough  | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | casechange removeformat | link | emoticons  | code ",
 };
 
-const props = withDefaults(defineProps<EditorProps>(), {
-	apiKey: "s0z0maa9q57mpodemqw9bvl6x3s6s9lkv7e4xb5wuwvgqfql",
-});
-
+const props = defineProps<EditorProps>();
 const emit = defineEmits<EditorEvents>();
 
 const loadEditor = ref(false);
 const htmlContent = ref("");
+
+const apiKey = useRuntimeConfig().public.tinyMceApiKey;
 
 function updateModel() {
 	emit("update:modelValue", htmlContent.value);

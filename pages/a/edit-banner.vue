@@ -43,10 +43,12 @@ function handleSave() {
 	formData.append("metadata", JSON.stringify(metadata));
 
 	const url = `${API_BASE_URL}/${metadata.uuid}`;
+	const headers = new Headers();
+	headers.append("csrf-token", useCsrf().csrf);
 
 	apiHandler
 		.handle(
-			fetch(url, { method: "PUT", body: formData })
+			fetch(url, { method: "PUT", body: formData, headers })
 				.then((res) => {
 					if (!res.ok) {
 						return left<string, void>(res.statusText);
