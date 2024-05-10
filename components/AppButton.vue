@@ -31,6 +31,7 @@ withDefaults(defineProps<AppButtonProps>(), {
 	padding-left: 2.5em;
 	padding-right: 2.5em;
 	border-radius: 0px;
+	border-style: solid;
 	font-family: "Montserrat", sans-serif;
 }
 
