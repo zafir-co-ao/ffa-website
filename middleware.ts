@@ -1,6 +1,32 @@
 import { next } from "@vercel/edge";
 
 const contentSecurityPolicy = {
+	"base-uri": ["'none'"],
+	"connect-src": [
+		"'self'",
+		"https://cms.fatimafreitas.com",
+		"https://www.google-analytics.com",
+		"https://cdn.tiny.cloud",
+	],
+	"form-action": ["'self'"],
+	"frame-ancestors": ["'self'"],
+	"frame-src": ["https://www.google.com", "https://www.youtube.com"],
+	"font-src": [
+		"'self'", // Enables loading of fonts hosted on self origin
+		"https://cdn.jsdelivr.net",
+		"https://fonts.gstatic.com",
+	],
+	"img-src": [
+		"'self'", // Enables loading of images hosted on self origin
+		"blob:", // If you use Blob to construct images dynamically from javascript
+		"data:", // If you use base64 encoded images
+		"https://cms.fatimafreitas.com",
+		"https://i.ytimg.com",
+		"https://sp.tinymce.com",
+	],
+	"media-src": ["'self'", "https://cms.fatimafreitas.com"],
+	"manifest-src": ["'none'"],
+	"object-src": ["'none'"],
 	"script-src": [
 		"'self'", // Fallback value, will be ignored by browsers level 3
 		"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
@@ -15,35 +41,10 @@ const contentSecurityPolicy = {
 		"https://cdn.jsdelivr.net",
 		"https://cdn.tiny.cloud",
 	],
-	"img-src": [
-		"'self'", // Enables loading of images hosted on self origin
-		"blob:", // If you use Blob to construct images dynamically from javascript
-		"data:", // If you use base64 encoded images
-		"https://cms.fatimafreitas.com",
-		"https://i.ytimg.com",
-		"https://sp.tinymce.com",
-	],
-	"font-src": [
-		"'self'", // Enables loading of fonts hosted on self origin
-		"https://cdn.jsdelivr.net",
-		"https://fonts.gstatic.com",
-	],
 	"worker-src": [
 		"'self'", // Enables loading service worker from self origin,
 		"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
 	],
-
-	"object-src": ["'none'"],
-	"base-uri": ["'none'"],
-	"connect-src": [
-		"'self'",
-		"https://cms.fatimafreitas.com",
-		"https://www.google-analytics.com",
-		"https://cdn.tiny.cloud",
-	],
-	"frame-src": ["https://www.google.com", "https://www.youtube.com"],
-	"media-src": ["'self'", "https://cms.fatimafreitas.com"],
-	"manifest-src": ["'none'"],
 };
 
 // Set CSP header
@@ -66,8 +67,13 @@ export default function middleware(request: Request) {
 	response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 	response.headers.set("Content-Security-Policy", cspHeader);
-	response.headers.set("x-modified-edge", "true");
-	response.headers.set("Access-Control-Allow-Origin", request.headers.get("Origin") || "*");
+	response.headers.set("X-Content-Type-Options", "nosniff");
+
+	if (request.headers.get("Origin")) {
+		response.headers.set("Access-Control-Allow-Origin", request.headers.get("Origin")!);
+	} else {
+		response.headers.delete("Access-Control-Allow-Origin");
+	}
 
 	// Return response
 	return response;
