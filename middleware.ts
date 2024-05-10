@@ -66,8 +66,7 @@ export function middleware(request: Request) {
 	response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 	response.headers.set("Content-Security-Policy", cspHeader);
-
-	console.log("Running middleware");
+	response.headers.set("x-modified-edge", "true");
 
 	// Return response
 	return response;
