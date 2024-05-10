@@ -72,7 +72,7 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["nuxt-security", "@nuxt/devtools"],
+	modules: ["nuxt-security", "@nuxt/devtools", "@nuxtjs/tailwindcss"],
 	security: {
 		corsHandler: false,
 		csrf: {
