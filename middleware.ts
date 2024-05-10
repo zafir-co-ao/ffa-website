@@ -67,6 +67,7 @@ export default function middleware(request: Request) {
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 	response.headers.set("Content-Security-Policy", cspHeader);
 	response.headers.set("x-modified-edge", "true");
+	response.headers.set("Access-Control-Allow-Origin", request.headers.get("Origin") || "*");
 
 	// Return response
 	return response;

@@ -1,11 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
 
-// function ifdev<L, R>(left: L, right: R): L | R {
-// 	if (process.env.NODE_ENV === "development") return left;
-
-// 	return right;
-// }
-
 export default defineNuxtConfig({
 	app: {
 		head: {
