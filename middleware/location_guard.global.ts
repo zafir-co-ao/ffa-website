@@ -1,4 +1,4 @@
-const SUPPORTED_LOCALES_RE = /^\/?(pt|en)($|\/)/;
+const SUPPORTED_LOCALES_RE = /^\/(pt|en)($|\/)/;
 const SUPPORTED_LOCALES = ["pt", "en"];
 const REDIRECT_ROUTE = "/pt";
 
@@ -9,6 +9,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
 	return navigateTo(getRedirectRoute(to.path));
 });
+
 function getRedirectRoute(url: string): string {
 	const headers = useRequestHeaders();
 
@@ -21,7 +22,13 @@ function getRedirectRoute(url: string): string {
 		?.map((locale) => locale.substring(0, 2))
 		?.filter((locale) => SUPPORTED_LOCALES.includes(locale));
 
-	return locales?.[0] ?? REDIRECT_ROUTE;
+	const locale = `/${locales?.[0] ?? REDIRECT_ROUTE}`;
+
+	if (url === "/") {
+		return locale;
+	}
+
+	return `${locale}/${url}`;
 }
 
 function isWellFormated(url: string) {
