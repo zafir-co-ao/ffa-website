@@ -3,7 +3,7 @@ import { type I18nLawyer } from "~~/lib/model/types/lawyer";
 
 const nodeClient = useAntboxClient();
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: lawyers } = await useFetch<void, I18nLawyer[]>("/api/lawyers?lang=pt");
 

@@ -6,6 +6,7 @@ import { languages } from "~/lib/intl/strings";
 import lawyerAreas from "~/lib/intl/lawyer_areas";
 import { type I18nLawyer } from "~/lib/model/types/lawyer";
 import { getI18nLawyer } from "~/lib/server_api_clients/lawyers_client";
+import { throwNuxtErrorFromAntboxError } from "~/lib/throw_error_from_antbox_error";
 
 const nodeClient = useAntboxClient();
 
@@ -89,7 +90,13 @@ function ldJson() {
 }
 
 onMounted(async () => {
-	lawyer.value = await getI18nLawyer(fid, lang.value);
+	const res = await getI18nLawyer(fid, lang.value);
+
+	if (res.isLeft()) {
+		return throwNuxtErrorFromAntboxError(res.value);
+	}
+
+	lawyer.value = res.value;
 
 	useHead({
 		script: [

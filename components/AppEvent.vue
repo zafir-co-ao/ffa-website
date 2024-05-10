@@ -83,7 +83,14 @@ const handleAddToCalendar = () =>
 	);
 
 onMounted(async () => {
-	event.value = await props.getter();
+	const res = await props.getter();
+
+	if (res.isLeft()) {
+		console.error("Error fetching event ", event.value?.fid, res.value);
+		return;
+	}
+
+	event.value = res.value;
 });
 </script>
 

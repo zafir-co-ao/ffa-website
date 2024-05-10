@@ -1,9 +1,11 @@
 import { setResponseStatus, H3Event } from "h3";
 
 export default function processApiError(evt: H3Event, err: unknown) {
-	setResponseStatus(evt, 500);
+	const statusCode = err === "NotFoundError" ? 404 : 500;
 
-	console.error(err);
+	setResponseStatus(evt, statusCode);
+
+	if (statusCode !== 404) console.error(err);
 
 	return { isError: true, err };
 }

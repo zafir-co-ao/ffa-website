@@ -1,4 +1,11 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
+import { defineNuxtConfig } from "nuxt/config";
+
+function ifdev<L, R>(left: L, right: R): L | R {
+	if (process.env.NODE_ENV === "development") return left;
+
+	return right;
+}
+
 export default defineNuxtConfig({
 	sourcemap: {
 		server: true,
@@ -76,57 +83,57 @@ export default defineNuxtConfig({
 		sri: true,
 		headers: {
 			strictTransportSecurity: { maxAge: 3153600, includeSubdomains: true, preload: true },
-			crossOriginEmbedderPolicy:
-				process.env.NODE_ENV === "development" ? "unsafe-none" : false,
-			contentSecurityPolicy:
-				process.env.NODE_ENV === "development"
-					? false
-					: {
-							"script-src": [
-								"'self'", // Fallback value, will be ignored by browsers level 3
-								"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
-								"https://www.google.com",
-								"https://www.googletagmanager.com/",
-								"https://cdn.tiny.cloud/",
-							],
-							"style-src": [
-								"'self'", // Enables loading of stylesheets hosted on self origin
-								"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
-								"https://fonts.googleapis.com",
-								"https://cdn.jsdelivr.net",
-								"https://cdn.tiny.cloud",
-							],
-							"img-src": [
-								"'self'", // Enables loading of images hosted on self origin
-								"blob:", // If you use Blob to construct images dynamically from javascript
-								"data:", // If you use base64 encoded images
-								"https://cms.fatimafreitas.com",
-								"https://i.ytimg.com",
-								"https://sp.tinymce.com",
-							],
-							"font-src": [
-								"'self'", // Enables loading of fonts hosted on self origin
-								"https://cdn.jsdelivr.net",
-								"https://fonts.gstatic.com",
-							],
-							"worker-src": [
-								"'self'", // Enables loading service worker from self origin,
-								"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
-							],
+			crossOriginEmbedderPolicy: ifdev("unsafe-none", false),
+			contentSecurityPolicy: ifdev(false, {
+				"script-src": [
+					"'self'", // Fallback value, will be ignored by browsers level 3
+					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"https://www.google.com",
+					"https://www.googletagmanager.com/",
+					"https://cdn.tiny.cloud/",
+				],
+				"style-src": [
+					"'self'", // Enables loading of stylesheets hosted on self origin
+					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"https://fonts.googleapis.com",
+					"https://cdn.jsdelivr.net",
+					"https://cdn.tiny.cloud",
+				],
+				"img-src": [
+					"'self'", // Enables loading of images hosted on self origin
+					"blob:", // If you use Blob to construct images dynamically from javascript
+					"data:", // If you use base64 encoded images
+					"https://cms.fatimafreitas.com",
+					"https://i.ytimg.com",
+					"https://sp.tinymce.com",
+				],
+				"font-src": [
+					"'self'", // Enables loading of fonts hosted on self origin
+					"https://cdn.jsdelivr.net",
+					"https://fonts.gstatic.com",
+				],
+				"worker-src": [
+					"'self'", // Enables loading service worker from self origin,
+					"blob:", // If you use PWA, it is likely that the worker will be instantiated from Blob
+				],
 
-							"object-src": ["'none'"],
-							"base-uri": ["'none'"],
-							"connect-src": [
-								"'self'",
-								"https://cms.fatimafreitas.com",
-								"https://www.google-analytics.com",
-								"https://cdn.tiny.cloud",
-							],
-							"frame-src": ["https://www.google.com", "https://www.youtube.com"],
-							"media-src": ["'self'", "https://cms.fatimafreitas.com"],
-							"manifest-src": ["'none'"],
-					  },
+				"object-src": ["'none'"],
+				"base-uri": ["'none'"],
+				"connect-src": [
+					"'self'",
+					"https://cms.fatimafreitas.com",
+					"https://www.google-analytics.com",
+					"https://cdn.tiny.cloud",
+				],
+				"frame-src": ["https://www.google.com", "https://www.youtube.com"],
+				"media-src": ["'self'", "https://cms.fatimafreitas.com"],
+				"manifest-src": ["'none'"],
+			}),
 		},
+	},
+
+	routeRules: {
+		"/a/**": { appMiddleware: ["auth-guard"], ssr: false },
 	},
 
 	runtimeConfig: {

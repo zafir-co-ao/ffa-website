@@ -15,8 +15,15 @@ const header = ref<I18nSectionHeader>();
 const headerRef = ref<HTMLElement>();
 
 onMounted(async () => {
-	header.value = await props.getter();
-	headerRef.value!.style.backgroundImage = `url(${header.value?.imageUrl}?t=${Date.now()})`;
+	const res = await props.getter();
+
+	if (res.isLeft()) {
+		console.error("Error fetching section header", res.value);
+		return;
+	}
+
+	header.value = res.value;
+	headerRef.value!.style.backgroundImage = `url(${res.value?.imageUrl}?t=${Date.now()})`;
 });
 </script>
 

@@ -25,7 +25,7 @@ function mapI18nToOptions(strings: I18nMessages): { value: string; label: string
 </script>
 
 <script lang="ts" setup>
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const nodeClient = useAntboxClient();
 const { csrf } = useCsrf();

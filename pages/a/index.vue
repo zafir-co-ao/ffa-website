@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 </script>
 
 <template>

@@ -5,7 +5,7 @@ import "@zafir.co.ao/lightray/style.css";
 const url = useAntboxUrl();
 const tinyMceApiKey = useRuntimeConfig().public.tinyMceApiKey;
 
-definePageMeta({ layout: "none", middleware: "auth-guard" });
+definePageMeta({ layout: "none" });
 </script>
 
 <template>

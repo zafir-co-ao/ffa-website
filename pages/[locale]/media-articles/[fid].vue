@@ -2,9 +2,9 @@
 import { strings } from "~/lib/intl/strings";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
-import error404 from "../../err/404.vue";
 import { type I18nMediaArticle } from "~/lib/model/types/media_article";
 import { getI18nMediaArticle } from "~/lib/server_api_clients/media_articles_client";
+import { throwNuxtErrorFromAntboxError } from "~/lib/throw_error_from_antbox_error";
 
 const route = useRoute();
 
@@ -20,7 +20,12 @@ const linkedinShare = ref<string>();
 const article = ref<I18nMediaArticle>();
 
 onMounted(async () => {
-	article.value = await getI18nMediaArticle(fid, lang.value);
+	const articleOrErr = await getI18nMediaArticle(fid, lang.value);
+	if (articleOrErr.isLeft()) {
+		return throwNuxtErrorFromAntboxError(articleOrErr.value);
+	}
+
+	article.value = articleOrErr.value;
 	whatsappShare.value = makeWhatsappShareUrl();
 	linkedinShare.value = makeLinkedinShareUrl();
 });
@@ -55,9 +60,6 @@ onMounted(async () => {
 			</div>
 
 			<app-article-back-link :lang="lang" />
-		</div>
-		<div v-else>
-			<error404 />
 		</div>
 	</div>
 </template>

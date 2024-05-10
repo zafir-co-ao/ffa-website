@@ -1,10 +1,10 @@
-import { fidToUuid } from "../deps";
+import { fidToUuid, left, right } from "../deps";
 import type { I18nLawyer as I18nLawyer } from "../model/types/lawyer";
 import type { PortalLocale } from "../model/types/portal_locale";
+import type { APIClientGetter } from "./api_client_getter";
+import handleClientError from "./handle_client_error";
 
-export interface I18nLawyerGetter {
-	(): Promise<I18nLawyer | undefined>;
-}
+export type I18nLawyerGetter = APIClientGetter<I18nLawyer>;
 
 export function i18nLawyerGetter(
 	uuidOrFid: string,
@@ -15,18 +15,14 @@ export function i18nLawyerGetter(
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const res = await fetch(`/api/lawyers/${uuid}?lang=${lang}`);
 		if (res.status !== 200) {
-			return undefined;
+			return left(handleClientError(res));
 		}
 
-		return res.json() as Promise<I18nLawyer>;
+		return right((await res.json()) as I18nLawyer);
 	};
 }
 
-export function getI18nLawyer(
-	uuid: string,
-	lang: PortalLocale,
-	useFid = true
-): Promise<I18nLawyer | undefined> {
+export function getI18nLawyer(uuid: string, lang: PortalLocale, useFid = true) {
 	return i18nLawyerGetter(uuid, lang, useFid)();
 }
 

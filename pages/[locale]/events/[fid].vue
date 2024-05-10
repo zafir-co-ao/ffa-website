@@ -4,7 +4,7 @@ import { type I18nEvent } from "~/lib/model/types/event";
 import { getI18nEvent } from "~/lib/server_api_clients/events_client";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
-import error404 from "../../err/404.vue";
+// import error404 from "../../err/404.vue";
 
 const nodeClient = useAntboxClient();
 
@@ -99,8 +99,8 @@ onMounted(async () => {
 
 			<app-article-back-link :lang="lang" :back-page="BACK_PAGE" />
 		</div>
-		<div v-else>
+		<!-- <div v-else>
 			<error404 />
-		</div>
+		</div> -->
 	</div>
 </template>

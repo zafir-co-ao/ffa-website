@@ -50,30 +50,39 @@ const selectIndex = (index: number) => {
 watch(banners, () => initializeComponent(currentIndex, banners.value ?? [], intervalIdRef));
 
 onMounted(async () => {
-	banners.value = await props.getter();
+	const res = await props.getter();
+
+	if (res.isLeft()) {
+		console.error("Failed to fetch banners", res.value);
+		return;
+	}
+
+	banners.value = res.value;
 });
 </script>
 
 <template>
-	<div class="banners-carousel" v-if="hasBanners">
-		<app-banner
-			v-for="(banner, index) in banners"
-			:class="{ 'd-none': index !== currentIndex }"
-			:title1="banner.title1"
-			:title2="banner.title2"
-			:subtitle="banner.subtitle"
-			:imageUrl="banner.imageUrl"
-			:href="banner.href"
-			:lang="lang"
-		/>
-
-		<div class="banner-ellipsis">
-			<div
-				v-for="(_, index) in banners"
-				class="banner-selector"
-				:class="{ 'banner-selector__selected': index === currentIndex }"
-				@click="selectIndex(index)"
+	<div class="banners-carousel tw-min-h-[472px]">
+		<template v-if="hasBanners">
+			<app-banner
+				v-for="(banner, index) in banners"
+				:class="{ 'd-none': index !== currentIndex }"
+				:title1="banner.title1"
+				:title2="banner.title2"
+				:subtitle="banner.subtitle"
+				:imageUrl="banner.imageUrl"
+				:href="banner.href"
+				:lang="lang"
 			/>
-		</div>
+
+			<div class="banner-ellipsis">
+				<div
+					v-for="(_, index) in banners"
+					class="banner-selector"
+					:class="{ 'banner-selector__selected': index === currentIndex }"
+					@click="selectIndex(index)"
+				/>
+			</div>
+		</template>
 	</div>
 </template>

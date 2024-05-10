@@ -15,7 +15,7 @@ const BACK_PAGE = "/a/events";
 </script>
 
 <script lang="ts" setup>
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { csrf } = useCsrf();
 

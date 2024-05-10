@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type I18nMediaArticle } from "~/lib/model/types/media_article";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: articles } = await useFetch<I18nMediaArticle[]>(
 	"/api/media-articles?lang=pt&latest=1000"

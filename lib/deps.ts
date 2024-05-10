@@ -7,4 +7,11 @@ export {
 	FOLDER_MIMETYPE,
 } from "antbox-sdk";
 
-export type { NodeFilter, NodeFilterResult, Node, Either, WebContent } from "antbox-sdk";
+export type {
+	AntboxError,
+	NodeFilter,
+	NodeFilterResult,
+	Node,
+	Either,
+	WebContent,
+} from "antbox-sdk";

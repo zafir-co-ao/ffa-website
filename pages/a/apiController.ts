@@ -1,4 +1,3 @@
-import { log } from "console";
 import { type Either, left, right } from "~/lib/deps";
 
 export interface BaseData {

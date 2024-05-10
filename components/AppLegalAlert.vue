@@ -2,9 +2,10 @@
 import { strings } from "~/lib/intl/strings";
 import { type I18nLegalAlert } from "~/lib/model/types/legal_alert";
 import { type PortalLocale } from "~/lib/model/types/portal_locale";
+import type { I18nLegalAlertGetter } from "~/lib/server_api_clients/legal_alerts_client";
 
 const props = defineProps<{
-	getter: () => Promise<I18nLegalAlert | undefined>;
+	getter: I18nLegalAlertGetter;
 	lang: PortalLocale;
 }>();
 
@@ -19,7 +20,14 @@ const scopedStrings = {
 };
 
 onMounted(async () => {
-	alert.value = await props.getter();
+	const res = await props.getter();
+
+	if (res.isLeft()) {
+		console.error("Failed to fetch alert");
+		return;
+	}
+
+	alert.value = res.value;
 });
 </script>
 

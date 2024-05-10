@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type I18nBanner } from "~~/lib/model/types/banner";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: banners } = await useFetch<I18nBanner[]>("/api/banners?lang=pt");
 

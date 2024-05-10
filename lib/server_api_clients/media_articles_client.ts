@@ -1,14 +1,10 @@
-import { fidToUuid } from "../deps";
-import type { I18nMediaArticle, MediaArticle } from "../model/types/media_article";
+import { fidToUuid, left, right } from "../deps";
+import type { I18nMediaArticle } from "../model/types/media_article";
 import type { PortalLocale } from "../model/types/portal_locale";
+import type { APIClientGetter } from "./api_client_getter";
+import handleClientError from "./handle_client_error";
 
-export interface I18nMediaArticleGetter {
-	(): Promise<I18nMediaArticle | undefined>;
-}
-
-export interface MediaArticleGetter {
-	(): Promise<MediaArticle | undefined>;
-}
+export type I18nMediaArticleGetter = APIClientGetter<I18nMediaArticle>;
 
 export function i18nMediaArticleGetter(
 	uuidOrFid: string,
@@ -19,18 +15,14 @@ export function i18nMediaArticleGetter(
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const res = await fetch(`/api/media-articles/${uuid}?lang=${lang}`);
 		if (res.status !== 200) {
-			return undefined;
+			return left(handleClientError(res));
 		}
 
-		return res.json() as Promise<I18nMediaArticle>;
+		return right((await res.json()) as I18nMediaArticle);
 	};
 }
 
-export function getI18nMediaArticle(
-	uuidOrFid: string,
-	lang: PortalLocale,
-	useFid = true
-): Promise<I18nMediaArticle | undefined> {
+export function getI18nMediaArticle(uuidOrFid: string, lang: PortalLocale, useFid = true) {
 	return i18nMediaArticleGetter(uuidOrFid, lang, useFid)();
 }
 export function getLatestMediaArticles(lang: PortalLocale, count = 2): Promise<I18nMediaArticle[]> {

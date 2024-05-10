@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
 
-const props = defineProps({
+defineProps({
 	error: Object as () => NuxtError,
 });
 </script>
 
 <template>
 	<div class="ffa container">
-		<template v-if="error.statusCode === 404">
+		<template v-if="error?.statusCode === 404">
 			<div class="ffa container">
 				<h1 class>
 					<span class="erro d-block fs-3">404</span>
@@ -27,7 +27,7 @@ const props = defineProps({
 		</template>
 		<template v-else>
 			<h1 class>
-				<span class="erro d-block fs-3">{{ errror.statusCode }}</span>
+				<span class="erro d-block fs-3">{{ error?.statusCode }}</span>
 				Oops, something went wrong.
 			</h1>
 			<p>Try to refresh this page or feel free to contact us if the problem persists.</p>

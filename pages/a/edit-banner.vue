@@ -14,7 +14,7 @@ const BACK_PAGE = "/a/banners";
 <script lang="ts" setup>
 import AdminIntlContentField from "~~/components/AdminIntlContentField.vue";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { csrf } = useCsrf();
 

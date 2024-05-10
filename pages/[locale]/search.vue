@@ -84,6 +84,7 @@ function updateSearch() {
 				v-for="article in articles"
 				:getter="i18nMediaArticleGetter(article.uuid, lang, false)"
 				:lawyerGetter="i18nLawyerGetter(article.lawyerUuid!, lang, false)"
+				:has-lawyer="article.lawyerUuid ? true : false"
 				:lang="lang"
 			/>
 		</div>

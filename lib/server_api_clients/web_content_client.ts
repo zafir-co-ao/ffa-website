@@ -1,10 +1,8 @@
-import { type WebContent, fidToUuid } from "~/lib/deps";
+import { type WebContent, fidToUuid, right } from "~/lib/deps";
 import type { PortalLocale } from "~/lib/model/types/portal_locale";
+import type { APIClientGetter } from "./api_client_getter";
 
-export interface I18nWebContentGetter {
-	(): Promise<string>;
-}
-
+export type I18nWebContentGetter = APIClientGetter<string>;
 export interface WebContentGetter {
 	(): Promise<WebContent>;
 }
@@ -24,7 +22,7 @@ export function i18nWebContentGetter(
 		const uuid = useFid ? fidToUuid(uuidOrFid) : uuidOrFid;
 		const contentOrErr = await client.get(uuid, lang);
 
-		return contentOrErr as string;
+		return right(contentOrErr as string);
 	};
 }
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type I18nEvent } from "~/lib/model/types/event";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: events } = await useFetch<I18nEvent[]>("/api/events?lang=pt");
 </script>

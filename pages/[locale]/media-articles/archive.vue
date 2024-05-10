@@ -12,14 +12,14 @@ const { $locale: lang } = useI18n();
 
 const pageSize = 6;
 const pageToken = ref(1);
-const alerts = ref<I18nMediaArticle[]>([]);
+const articles = ref<I18nMediaArticle[]>([]);
 
-const hasMore = computed(() => pageSize * pageToken.value === alerts.value.length);
+const hasMore = computed(() => pageSize * pageToken.value === articles.value.length);
 
 async function loadMore() {
-	const newAlerts = await searchMediaArticlesArchive(lang.value, pageSize, pageToken.value);
+	const newArticles = await searchMediaArticlesArchive(lang.value, pageSize, pageToken.value);
 
-	alerts.value = [...alerts.value, ...newAlerts];
+	articles.value = [...articles.value, ...newArticles];
 }
 
 onMounted(loadMore);
@@ -44,10 +44,11 @@ function handleLoadMoreClick() {
 			</h2>
 
 			<div class="row gx-5">
-				<div v-for="alert in alerts" class="bg-azul-1 mb-3 pb-4">
+				<div v-for="article in articles" class="bg-azul-1 mb-3 pb-4">
 					<app-media-article
-						:getter="i18nMediaArticleGetter(alert.uuid, lang, false)"
-						:lawyer-getter="i18nLawyerGetter(alert.lawyerUuid!, lang, false)"
+						:getter="i18nMediaArticleGetter(article.uuid, lang, false)"
+						:lawyer-getter="i18nLawyerGetter(article.lawyerUuid!, lang, false)"
+						:has-lawyer="article.lawyerUuid ? true : false"
 						:lang="lang"
 					/>
 				</div>

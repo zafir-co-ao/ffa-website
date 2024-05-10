@@ -12,7 +12,15 @@ const props = defineProps<{
 // const editorRef = ref();
 
 const content = ref<string>("");
-content.value = await props.getter();
+
+const res = await props.getter();
+if (res.isLeft()) {
+	console.error("Error fetching web content", res.value);
+}
+
+if (res.isRight()) {
+	content.value = res.value;
+}
 
 // const canEdit = computed(() => {
 // 	const auth = useAuth();

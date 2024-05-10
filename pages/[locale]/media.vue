@@ -60,6 +60,7 @@ onMounted(async () => {
 						v-for="article in articles"
 						:getter="i18nMediaArticleGetter(article.uuid, lang, false)"
 						:lawyer-getter="i18nLawyerGetter(article.lawyerUuid!, lang, false)"
+						:has-lawyer="article.lawyerUuid ? true : false"
 						:lang="lang"
 					/>
 					<div class="text-center body2 mt-5">

@@ -2,9 +2,9 @@
 import { type I18nMessagesEntry, strings } from "~/lib/intl/strings";
 import { makeLinkedinShareUrl, makeWhatsappShareUrl } from "~/lib/social_share_link_builder";
 
-import error404 from "../../err/404.vue";
 import { type I18nLegalAlert, type LegalAlertsCategory } from "~/lib/model/types/legal_alert";
 import { getI18nLegalAlert } from "~/lib/server_api_clients/legal_alerts_client";
+import { throwNuxtErrorFromAntboxError } from "~/lib/throw_error_from_antbox_error";
 
 const route = useRoute();
 
@@ -46,7 +46,13 @@ function ldJson() {
 }
 
 onMounted(async () => {
-	alert.value = await getI18nLegalAlert(fid, lang.value);
+	const res = await getI18nLegalAlert(fid, lang.value);
+
+	if (res.isLeft()) {
+		return throwNuxtErrorFromAntboxError(res.value);
+	}
+
+	alert.value = res.value;
 	whatsappShare.value = makeWhatsappShareUrl();
 	linkedinShare.value = makeLinkedinShareUrl();
 
@@ -86,9 +92,6 @@ onMounted(async () => {
 			<div v-html="alert.body" />
 
 			<app-article-back-link :lang="lang" :back-page="BACK_PAGE" />
-		</div>
-		<div v-else>
-			<error404 />
 		</div>
 	</div>
 </template>

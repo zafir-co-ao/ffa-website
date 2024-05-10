@@ -5,6 +5,7 @@ import makeModelReloader from "./modelReloader";
 
 import { left, right } from "~/lib/deps";
 import type { Toaster } from "~/types/toaster";
+import type { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 
 const API_BASE_URL = "/api/section-headers";
 const BACK_PAGE = "/a/section-headers";
@@ -16,7 +17,7 @@ import {
 	type SectionHeader,
 	makeSectionHeader,
 } from "~/lib/model/types/section_header";
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { csrf } = useCsrf();
 
@@ -112,7 +113,9 @@ function handleUploadImage() {
 					<app-icon-button iconClass="bi bi-pencil" @click="uploadImageRef?.click()" />
 				</div>
 
-				<app-section-header :getter="() => localizedHeader" />
+				<app-section-header
+					:getter="(() => localizedHeader.then(right)) as I18nSectionHeaderGetter"
+				/>
 			</div>
 
 			<admin-intl-content-field

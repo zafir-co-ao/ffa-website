@@ -8,17 +8,33 @@ import type { PortalLocale } from "~/lib/model/types/portal_locale";
 
 const props = defineProps<{
 	getter: I18nMediaArticleGetter;
-	lawyerGetter: I18nLawyerGetter;
+	lawyerGetter: I18nLawyerGetter | undefined;
+	hasLawyer: boolean;
 	lang: PortalLocale;
 }>();
 
 const article = ref<I18nMediaArticle>();
 const lawyerFid = ref<string>();
 
-onMounted(async () => {
-	article.value = await props.getter();
-	if (article.value?.lawyerUuid) {
-		lawyerFid.value = await props.lawyerGetter().then((lawyer) => lawyer?.fid);
+onMounted(() => {
+	props.getter().then((res) => {
+		if (res.isLeft()) {
+			console.error("Error fetching media article", res.value);
+			return;
+		}
+
+		article.value = res.value;
+	});
+
+	if (props.hasLawyer) {
+		props.lawyerGetter?.().then((res) => {
+			if (res.isLeft()) {
+				console.error("Error fetching lawyer", res.value);
+				return;
+			}
+
+			lawyerFid.value = res.value.fid;
+		});
 	}
 });
 </script>

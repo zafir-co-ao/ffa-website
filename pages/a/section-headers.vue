@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type I18nSectionHeader } from "~/lib/model/types/section_header";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: sectionHeaders } = await useFetch<I18nSectionHeader[]>(
 	"/api/section-headers?lang=pt"

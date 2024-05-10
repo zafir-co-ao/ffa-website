@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type I18nLegalAlert } from "~/lib/model/types/legal_alert";
 
-definePageMeta({ layout: "admin", middleware: "auth-guard" });
+definePageMeta({ layout: "admin" });
 
 const { data: alerts } = await useFetch<I18nLegalAlert[]>("/api/legal-alerts?lang=pt&latest=1000");
 </script>
