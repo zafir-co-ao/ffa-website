@@ -118,14 +118,14 @@ export default defineNuxtConfig({
 				"object-src": ["'none'"],
 				"script-src": [
 					"'self'", // Fallback value, will be ignored by browsers level 3
-					// "'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
 					"https://www.google.com",
 					"https://www.googletagmanager.com/",
 					"https://cdn.tiny.cloud/",
 				],
 				"style-src": [
 					"'self'", // Enables loading of stylesheets hosted on self origin
-					// "'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
+					"'nonce-{{nonce}}'", // Enables CSP nonce support for scripts in SSR mode, supported browsers level 2 & 3
 					"https://fonts.googleapis.com",
 					"https://cdn.jsdelivr.net",
 					"https://cdn.tiny.cloud",

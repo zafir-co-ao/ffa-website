@@ -66,8 +66,11 @@ export default function middleware(request: Request) {
 	response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
 	response.headers.set("Cross-Origin-Resource-Policy", "same-origin");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-	response.headers.set("Content-Security-Policy", cspHeader);
+
 	response.headers.set("X-Content-Type-Options", "nosniff");
+
+	if (!response.headers.has("Content-Security-Policy"))
+		response.headers.set("Content-Security-Policy", cspHeader);
 
 	response.headers.set(
 		"Access-Control-Allow-Origin",
