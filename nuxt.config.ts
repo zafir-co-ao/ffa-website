@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 		client: true,
 	},
 
-	css: ["~~/assets/sass/fatimafreitas.scss"],
+	css: ["~~/assets/sass/fatimafreitas.scss", "~~/assets/css/tailwind.css"],
 	app: {
 		head: {
 			script: [

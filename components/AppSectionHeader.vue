@@ -32,7 +32,7 @@ onMounted(async () => {
 		<div class="container">
 			<div class="text-center">
 				<h1 class="titulo fw-bold text-white text-uppercase" v-html="header?.title ?? ''" />
-				<p class="h4 fw-normal text-white" v-html="header?.subtitle ?? 'xpto'" />
+				<p class="h4 fw-normal text-white" v-html="header?.subtitle ?? ''" />
 			</div>
 		</div>
 		<div v-if="header?.clipTop ?? false" class="paratransparente" />

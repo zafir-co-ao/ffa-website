@@ -1,0 +1,17 @@
+/**
+ * This file is used to add custom Tailwind CSS utilities.
+*/
+
+@tailwind utilities;
+
+@layer utilities {
+	/* Those classes should be removed. They are are just to make sure we can use lightray copied component */
+	.tw-bg-lr-primary,
+	.tw-border-lr-outline,
+	.tw-shadow-lr-outline,
+	.tw-text-lr-primary,
+	.tw-text-lr-on-primary,
+	.tw-text-lr-on-surface {
+		alt: unset;
+	}
+}
