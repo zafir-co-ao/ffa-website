@@ -52,7 +52,7 @@ const cspHeader = Object.entries(contentSecurityPolicy)
 	.join("; ");
 
 // Middleware for vercel deployment
-export function middleware(request: Request) {
+export default function middleware(request: Request) {
 	// Store the response so we can modify its headers
 	const response = next();
 
