@@ -21,6 +21,7 @@
 						height="400"
 						frameborder="0"
 						allowfullscreen
+						crossorigin
 					></iframe>
 				</div>
 			</div>

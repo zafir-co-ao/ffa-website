@@ -18,8 +18,8 @@ export default function middleware(request: Request) {
 		"max-age=31536000; includeSubDomains; preload"
 	);
 	response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
-	response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
 	response.headers.set("Cross-Origin-Resource-Policy", "cross-origin");
+	response.headers.set("Cross-Origin-Opener-Policy", "cross-origin");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
 	response.headers.set("X-Content-Type-Options", "nosniff");
