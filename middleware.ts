@@ -19,7 +19,7 @@ export default function middleware(request: Request) {
 	);
 	response.headers.set("Cross-Origin-Embedder-Policy", "unsafe-none");
 	response.headers.set("Cross-Origin-Resource-Policy", "cross-origin");
-	response.headers.set("Cross-Origin-Opener-Policy", "cross-origin");
+	response.headers.set("Cross-Origin-Opener-Policy", "unsafe-none");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
 	response.headers.set("X-Content-Type-Options", "nosniff");
