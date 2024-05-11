@@ -38,7 +38,6 @@ export const contentSecurityPolicy = {
 		"https://fonts.googleapis.com",
 		"https://cdn.jsdelivr.net",
 		"https://cdn.tiny.cloud",
-		"'unsafe-hashes'",
 	],
 	"worker-src": [
 		"'self'", // Enables loading service worker from self origin,
