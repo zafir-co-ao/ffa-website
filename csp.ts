@@ -5,6 +5,8 @@ export const contentSecurityPolicy = {
 		"https://cms.fatimafreitas.com",
 		"https://www.google-analytics.com",
 		"https://cdn.tiny.cloud",
+		"https://cdn.jsdelivr.net",
+        
 	],
 	"form-action": ["'self'"],
 	"frame-ancestors": ["'self'"],
@@ -31,6 +33,7 @@ export const contentSecurityPolicy = {
 		"https://www.google.com",
 		"https://www.googletagmanager.com/",
 		"https://cdn.tiny.cloud/",
+		"https://cdn.jsdelivr.net",
 	],
 	"style-src": [
 		"'self'", // Enables loading of stylesheets hosted on self origin
