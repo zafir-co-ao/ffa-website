@@ -71,7 +71,17 @@ const props = defineProps<EventProps>();
 
 const event = ref<I18nEvent>();
 
-const formatedEventDate = computed(() => event.value?.eventDateTime.substring(0, 10));
+const formatedEventDate = computed(() => {
+	if (!event.value?.eventDateTime) {
+		console.error("Event date is missing");
+		console.error(JSON.stringify(event.value, null, 2));
+
+		return "";
+	}
+
+	return event.value?.eventDateTime.substring(0, 10);
+});
+
 const tooltipTitle = computed(() => strings.add_to_calendar[props.lang]);
 
 const handleAddToCalendar = () =>

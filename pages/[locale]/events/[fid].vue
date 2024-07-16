@@ -21,7 +21,16 @@ const linkedinShare = ref<string>();
 
 const event = ref<I18nEvent>();
 
-const formatedEventDate = computed(() => event.value?.eventDateTime.substring(0, 10));
+const formatedEventDate = computed(() => {
+	if (!event.value?.eventDateTime) {
+		console.error("Event date is missing");
+		console.error(JSON.stringify(event.value, null, 2));
+
+		return "";
+	}
+
+	return event.value?.eventDateTime.substring(0, 10);
+});
 
 const bannerUrl = computed(() => nodeClient.getNodeUrl(event.value?.bannerUuid!));
 
@@ -42,7 +51,15 @@ function ldJson() {
 }
 
 onMounted(async () => {
-	event.value = await getI18nEvent(fid, lang.value);
+	const eventOrErr = await getI18nEvent(fid, lang.value);
+
+	if (eventOrErr.isLeft()) {
+		console.error("Error fetching event ", fid, eventOrErr.value);
+		return;
+	}
+
+	event.value = eventOrErr.value;
+
 	whatsappShare.value = makeWhatsappShareUrl();
 	linkedinShare.value = makeLinkedinShareUrl();
 
