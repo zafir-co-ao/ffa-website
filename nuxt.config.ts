@@ -84,7 +84,6 @@ export default defineNuxtConfig({
 	security: {
 		corsHandler: false,
 		csrf: {
-			enabled: true,
 			methodsToProtect: ["PATCH", "POST", "PUT", "DELETE"],
 		},
 		nonce: true, // Enables HTML nonce support in SSR mode

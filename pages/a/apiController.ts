@@ -45,7 +45,7 @@ export class ApiController<T extends BaseData> {
 }
 
 export default function makeApiController<T extends BaseData>(
-	apiBaseUrl: string
+	apiBaseUrl: string,
 ): ApiController<T> {
 	return new ApiController<T>(apiBaseUrl);
 }
@@ -64,7 +64,7 @@ async function createData<T>(url: string, data: T): Promise<Either<string, strin
 
 async function updateData<T extends BaseData>(
 	apiBaseUrl: string,
-	data: T
+	data: T,
 ): Promise<Either<string, void>> {
 	return putRequest(apiBaseUrl.concat("/", data.uuid), data)
 		.then((res) => {
@@ -93,6 +93,7 @@ function postRequest<T>(url: string, data?: T) {
 
 function deleteRequest(url: string) {
 	const headers = new Headers();
+	headers.append("csrf-token", useCsrf().csrf);
 
 	return fetch(url, {
 		method: "DELETE",
