@@ -1,8 +1,6 @@
 /**
  * This file is used to add custom Tailwind CSS utilities.
 */
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 @layer utilities {

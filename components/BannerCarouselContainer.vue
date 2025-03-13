@@ -62,7 +62,7 @@ onMounted(async () => {
 </script>
 
 <template>
-	<div class="banners-carousel tw-min-h-[472px] tw-border-2 tw-border-lime-300">
+	<div class="banners-carousel tw-min-h-[472px]">
 		<template v-if="hasBanners">
 			<app-banner
 				v-for="(banner, index) in banners"
