@@ -18,13 +18,13 @@ export default defineNuxtConfig({
 				},
 				{
 					innerHTML: `
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){
-					   dataLayer.push(arguments);
-					}
-					gtag('js', new Date());
-					gtag('config', 'G-3XMWQYWMNL');
-					`,
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){
+							dataLayer.push(arguments);
+						}
+						gtag('js', new Date());
+						gtag('config', 'G-3XMWQYWMNL');
+																				`,
 				},
 			],
 			link: [
@@ -52,6 +52,11 @@ export default defineNuxtConfig({
 				{
 					rel: "stylesheet",
 					href: "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap&subset=latin-ext",
+				},
+				// <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+				{
+					rel: "stylesheet",
+					href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp",
 				},
 			],
 			meta: [
@@ -94,6 +99,17 @@ export default defineNuxtConfig({
 			crossOriginEmbedderPolicy: "unsafe-none",
 			crossOriginOpenerPolicy: "unsafe-none",
 			crossOriginResourcePolicy: "cross-origin",
+		},
+	},
+
+	tailwindcss: {
+		config: {
+			content: [],
+			theme: {
+				extend: {},
+			},
+			plugins: [],
+			prefix: "tw-",
 		},
 	},
 

@@ -3,7 +3,6 @@ FROM oven/bun:alpine
 WORKDIR /website
 
 COPY package.json  .
-COPY package-lock.json  .
 
 RUN bun install --production
 

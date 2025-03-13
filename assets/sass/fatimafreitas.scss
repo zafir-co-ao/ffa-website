@@ -2,7 +2,11 @@
 
 @use "colors";
 
-@import "base", "button", "structure", "banners-carousel", "splash";
+@use "base";
+@use "button";
+@use "structure";
+@use "banners-carousel";
+@use "splash";
 
 .ffa {
 	/* Cores texto */

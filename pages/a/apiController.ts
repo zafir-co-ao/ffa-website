@@ -8,17 +8,13 @@ export class ApiController<T extends BaseData> {
 	constructor(readonly apiBaseUrl: string) {}
 
 	async load(uuid: string, builder: () => T): Promise<Either<T, T>> {
-		const res = await useFetch<T>(this.apiBaseUrl.concat("/", uuid));
-
-		const err = await res.error;
-		const data = await res.data;
-
-		if (err.value) {
-			console.error(err.value);
+		try {
+			const data = await $fetch<T>(this.apiBaseUrl.concat("/", uuid));
+			return right(data as T);
+		} catch (err) {
+			console.error(err);
 			return left(builder());
 		}
-
-		return right(data.value as T);
 	}
 
 	createOrUpdate(data: T): Promise<Either<string, void | string>> {

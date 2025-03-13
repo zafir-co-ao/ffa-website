@@ -6,9 +6,7 @@ interface AppInputProps {
 	modelValue: any;
 }
 
-const { lang } = withDefaults(defineProps<AppInputProps>(), {
-	lang: "pt",
-});
+const { lang = "pt" } = defineProps<AppInputProps>();
 const emit = defineEmits(["update:modelValue"]);
 
 const placeholder = { pt: "O que procura?", en: "Type to search" };
