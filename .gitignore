@@ -12,3 +12,6 @@ output.tgz
 bun.lockb
 /firebase.json
 .vercel
+bun.lock
+package.json
+package.json

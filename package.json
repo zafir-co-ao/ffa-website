@@ -18,7 +18,7 @@
     "@types/serve-static": "^1.15.1",
     "@vercel/edge": "^1.1.1",
     "nuxt": "^3.12.3",
-    "nuxt-security": "^1.0.0",
+    "nuxt-security": "^2.2.0",
     "sass": "^1.49.7",
     "sass-loader": "^12.4.0"
   },
@@ -26,5 +26,8 @@
     "@zafir.co.ao/lightray": "^1.0.0-beta.7",
     "antbox-sdk": "1.1.0-beta.9",
     "jose": "^4.8.3"
-  }
+  },
+  "trustedDependencies": [
+    "@parcel/watcher"
+  ]
 }
