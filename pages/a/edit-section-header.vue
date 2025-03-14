@@ -1,13 +1,10 @@
 <script lang="ts">
-import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
-import makeModelReloader from "./modelReloader";
 
-import { left, right } from "~/lib/deps";
+import { right } from "~/lib/deps";
 import type { Toaster } from "~/types/toaster";
 import type { I18nSectionHeaderGetter } from "~/lib/server_api_clients/section_headers_client";
 
-const API_BASE_URL = "/api/section-headers";
 const BACK_PAGE = "/a/section-headers";
 </script>
 
@@ -20,20 +17,18 @@ import {
 definePageMeta({ layout: "admin" });
 
 const { csrf } = useCsrf();
+const sectionHeaderService = useSectionHeaderService();
 
 const toast = ref<Toaster>();
 const header = ref<SectionHeader>(makeSectionHeader());
 const uploadImageRef = ref<HTMLInputElement>();
 
-const apiCtrl = makeApiController(API_BASE_URL);
+const routeUuid = useRoute().query.uuid as string;
+const uuid = routeUuid?.match(/\w+/)?.[0] ?? undefined;
+
 const apiHandler = makeApiResponseHandler(toast as Ref<Toaster>);
-const modelReloader = makeModelReloader(
-	apiHandler,
-	apiCtrl,
-	makeSectionHeader,
-	useRoute().query.uuid as string,
-	header
-);
+
+header.value = (await apiHandler.handle(sectionHeaderService.load(uuid))) ?? header.value;
 
 const localizedHeader = computed(() =>
 	Promise.resolve({
@@ -42,18 +37,23 @@ const localizedHeader = computed(() =>
 		clipTop: header.value?.clipTop,
 		clipBottom: header.value?.clipBottom,
 		imageUrl: header.value?.imageUrl,
-	} as I18nSectionHeader)
+	} as I18nSectionHeader),
 );
-
-await modelReloader.reload();
-
-onMounted(async () => {
-	// const \{ useToast \} = await import\("~/lib/clientDeps"\);
-	// toast\.value = useToast\("#pageTop"\);
-});
 
 function handleSave() {
 	save(header.value?.uuid!, { metadata: header.value as SectionHeader });
+}
+
+function handleUploadImage() {
+	const file = uploadImageRef.value?.files?.[0];
+
+	if (!file) {
+		return;
+	}
+
+	const metadata = header.value!;
+
+	save(metadata.uuid!, { metadata, file });
 }
 
 function save(uuid: string, opts: { metadata?: SectionHeader; file?: File }) {
@@ -67,37 +67,11 @@ function save(uuid: string, opts: { metadata?: SectionHeader; file?: File }) {
 		formData.append("file", opts.file);
 	}
 
-	const url = `${API_BASE_URL}/${uuid}`;
-
-	apiHandler
-		.handle(
-			fetch(url, { method: "PUT", body: formData })
-				.then((res) => {
-					if (!res.ok) {
-						return left<string, void>(res.statusText);
-					}
-
-					return right<string, void>(undefined);
-				})
-				.catch((err) => left(err as string))
-		)
-		.then(back);
+	apiHandler.handle(sectionHeaderService.update(uuid, formData)).then(back);
 }
 
 function back() {
 	useRouter().push(BACK_PAGE);
-}
-
-function handleUploadImage() {
-	const file = uploadImageRef.value?.files?.[0];
-
-	if (!file) {
-		return;
-	}
-
-	const metadata = header.value!;
-
-	save(metadata.uuid!, { metadata, file });
 }
 </script>
 
