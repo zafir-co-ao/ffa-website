@@ -94,6 +94,11 @@ export default defineNuxtConfig({
 		nonce: true, // Enables HTML nonce support in SSR mode
 		sri: true,
 
+		xssValidator: {
+			methods: ["GET"],
+			throwError: false,
+		},
+
 		headers: {
 			contentSecurityPolicy,
 			crossOriginEmbedderPolicy: "unsafe-none",
