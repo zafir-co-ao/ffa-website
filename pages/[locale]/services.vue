@@ -72,7 +72,7 @@ function ldJson() {
 			},
 		],
 
-		logo: "https://www.fatimafreitas.com/images/ffa-logo.jpg",
+		logo: "https://www.fatimafreitas.com/images/logo_principal_358x60px.png",
 
 		knowsLanguage: ["pt", "en", "es", "fr", "ru"],
 		openingHours: "Mo-Fr 8:30-18:30",

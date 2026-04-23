@@ -96,9 +96,9 @@ function redirect() {
 <template>
 	<div class="ffa d-flex p-4 justify-content-center">
 		<div class="form-container pt-5">
-			<div class="px-5 mb-3">
+			<div class="mb-3">
 				<nuxt-link :to="`/${lang}`">
-					<img src="/images/ffa-logo.svg" />
+					<img src="/images/logo_principal_358x60px.png" />
 				</nuxt-link>
 			</div>
 
