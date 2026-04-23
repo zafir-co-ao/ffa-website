@@ -123,5 +123,9 @@ export default defineNuxtConfig({
 		client: true,
 	},
 
+	experimental: {
+		appManifest: false,
+	},
+
 	compatibilityDate: "2024-07-16",
 });
