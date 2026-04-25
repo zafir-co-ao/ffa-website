@@ -122,7 +122,7 @@ function handleWebContentSave(content: WebContent) {
 							{{ strings.know_more[lang] }}
 						</nuxt-link>
 					</div>
-					<p class="h2 fw-bold azul mt-5 mb-1">ESG Impact+</p>
+					<p class="h2 fw-bold azul mt-5 mb-1">ESG+S</p>
 					<video :src="esgVideoUrl" controls autoplay muted class="w-100 my-4">
 						Your browser does not support the video tag.
 					</video>
