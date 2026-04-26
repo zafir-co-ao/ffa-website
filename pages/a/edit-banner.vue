@@ -162,7 +162,7 @@ function handleUploadImage() {
 				type="number"
 				v-model="banner.priority"
 				label="Prioridade"
-				style="widows: 50%"
+				class="banner-priority-input"
 			/>
 
 			<hr class="my-4" />
@@ -205,3 +205,9 @@ function handleUploadImage() {
 		/>
 	</div>
 </template>
+
+<style scoped>
+.banner-priority-input {
+	width: 50%;
+}
+</style>

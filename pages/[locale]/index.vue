@@ -110,11 +110,7 @@ function handleWebContentSave(content: WebContent) {
 							:getter="i18nWebContentGetter('home_media__text', lang)"
 							:edit-getter="webContentGetter('home_media__text')"
 							:edit-saver="handleWebContentSave"
-							style="
-								padding: 0;
-								margin-top: 0 !important;
-								margin-bottom: 0 !important;
-							"
+							class="home-media-content"
 						/>
 					</div>
 					<div class="body2">
@@ -185,6 +181,12 @@ function handleWebContentSave(content: WebContent) {
 	min-height: 60px;
 	width: 100%;
 	max-width: 500px;
+}
+
+.home-media-content {
+	padding: 0;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
 }
 
 @media (min-width: 576px) {

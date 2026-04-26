@@ -106,7 +106,11 @@ onMounted(async () => {
 			<div v-html="event.body" />
 
 			<div class="text-center mt-5">
-				<img v-if="event.bannerUuid" :src="bannerUrl" style="max-width: 75%" />
+				<img
+					v-if="event.bannerUuid"
+					:src="bannerUrl"
+					class="event-banner-image"
+				/>
 			</div>
 
 			<div v-if="event.registrationUrl" class="mt-5">
@@ -121,3 +125,9 @@ onMounted(async () => {
 		</div> -->
 	</div>
 </template>
+
+<style scoped>
+.event-banner-image {
+	max-width: 75%;
+}
+</style>
