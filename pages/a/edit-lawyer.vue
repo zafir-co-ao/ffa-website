@@ -1,15 +1,14 @@
 <script lang="ts">
+import lawyerAreas from "~/lib/intl/lawyer_areas";
 import { categories, type I18nMessages, languages, strings } from "~~/lib/intl/strings";
 import { type Lawyer, makeLawyer } from "~~/lib/model/types/lawyer";
 import makeApiController from "./apiController";
 import makeApiResponseHandler from "./apiResponseHandler";
-import { forceReload, forceReplace } from "./forcedReloader";
+import { forceReplace } from "./forcedReloader";
 import makeModelReloader from "./modelReloader";
-import lawyerAreas from "~/lib/intl/lawyer_areas";
-
+import LrWebContentEditorDialog from "~/components/LrWebContentEditorDialog.vue";
 import type { WebContent } from "~/lib/deps";
 import type { Toaster } from "~/types/toaster";
-import LrWebContentEditorDialog from "~/components/LrWebContentEditorDialog.vue";
 
 const API_BASE_URL = "/api/lawyers";
 const BACK_PAGE = "/a/lawyers";
@@ -121,13 +120,13 @@ function back() {
 }
 
 async function uploadPhoto(file: File, lawyer: Lawyer & Record<string, string>, fieldname: string) {
-	console.log("uploading photo", file, lawyer, lawyer[fieldname]);
-
 	if (lawyer[fieldname]) {
-		return apiHandler.handle(nodeClient.updateFile(lawyer[fieldname], file));
+		return apiHandler
+			.handle(nodeClient.updateFile(lawyer[fieldname], file))
+			.then(() => reloadLawyer());
 	}
 
-	apiHandler
+	return apiHandler
 		.handle(nodeClient.createFile(file, { parent: lawyer.uuid }))
 		.then((node) => {
 			if (!node) {
@@ -135,35 +134,41 @@ async function uploadPhoto(file: File, lawyer: Lawyer & Record<string, string>, 
 			}
 
 			lawyer[fieldname] = node.uuid;
-			return apiCtrl.update(lawyer);
+			return apiHandler.handle(
+				apiCtrl.update(lawyer as any),
+				"Advogado actualizado com sucesso"
+			);
 		})
-		.then(() => apiCtrl.update(lawyer))
 		.then(() => reloadLawyer());
 }
 
 async function handleUploadPortrait() {
-	await uploadPhoto(
-		uploadPortraitRef.value?.files?.[0]!,
-		lawyer.value as any,
-		"portraitUuid"
-	).then(forceReload);
+	if (!uploadPortraitRef.value?.files?.[0]) {
+		return;
+	}
+	await uploadPhoto(uploadPortraitRef.value.files[0], lawyer.value as any, "portraitUuid");
 }
 
 async function handleUploadThumb() {
-	await uploadPhoto(uploadThumbRef.value?.files?.[0]!, lawyer.value as any, "thumbnailUuid").then(
-		forceReload
-	);
+	if (!uploadThumbRef.value?.files?.[0]) {
+		return;
+	}
+	await uploadPhoto(uploadThumbRef.value.files[0], lawyer.value as any, "thumbnailUuid");
 }
 
 async function reloadLawyer(): Promise<void> {
 	await modelReloader.reload();
 
+	if (!lawyer.value) {
+		return;
+	}
+
 	if (lawyer.value.portraitUuid) {
-		portraitUrl.value = nodeClient.getNodeUrl(lawyer.value.portraitUuid);
+		portraitUrl.value = `${nodeClient.getNodeUrl(lawyer.value.portraitUuid)}?t=${Date.now()}`;
 	}
 
 	if (lawyer.value.thumbnailUuid) {
-		thumbnailUrl.value = nodeClient.getNodeUrl(lawyer.value.thumbnailUuid);
+		thumbnailUrl.value = `${nodeClient.getNodeUrl(lawyer.value.thumbnailUuid)}?t=${Date.now()}`;
 	}
 }
 </script>
