@@ -46,7 +46,7 @@ function setupIntersectionObserver() {
 				<nuxt-link class="navbar-brand" :to="localePath('')">
 					<img
 						class="logo"
-						src="/images/FatimaFreitas-02.png"
+						src="/images/logo_principal_716x120px.svg"
 						alt="Fátima Freitas Associados"
 					/>
 				</nuxt-link>

@@ -22,7 +22,7 @@ onMounted(async () => {
 	latestNews.value = (await getLatestLegalAlerts(lang.value)) as I18nLegalAlert[];
 });
 
-const esgVideoUrl = nodeClient.getNodeUrl(fidToUuid("esg-540p-mp4"));
+const esgVideoUrl = nodeClient.getNodeUrl(fidToUuid("esg-720p-mp4"));
 
 const scopedMessages = {
 	knowMore: { pt: "Saiba mais", en: "Know more" },
