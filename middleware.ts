@@ -1,12 +1,5 @@
 import { next } from "@vercel/edge";
 
-import { contentSecurityPolicy } from "./csp";
-
-// Set CSP header
-const cspHeader = Object.entries(contentSecurityPolicy)
-	.map(([key, value]) => `${key} ${value.join(" ")}`)
-	.join("; ");
-
 // Middleware for vercel deployment
 export default function middleware(request: Request) {
 	// Store the response so we can modify its headers
@@ -23,9 +16,6 @@ export default function middleware(request: Request) {
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
 	response.headers.set("X-Content-Type-Options", "nosniff");
-
-	if (!response.headers.has("Content-Security-Policy"))
-		response.headers.set("Content-Security-Policy", cspHeader);
 
 	response.headers.set(
 		"Access-Control-Allow-Origin",

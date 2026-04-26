@@ -69,7 +69,11 @@ export default defineNuxtConfig({
 	},
 
 	css: ["~~/assets/sass/fatimafreitas.scss", "~~/assets/css/tailwind.css"],
-	modules: ["nuxt-security", "@nuxt/devtools", "@nuxtjs/tailwindcss"],
+	modules: ["nuxt-security", "@nuxtjs/tailwindcss"],
+
+	devtools: {
+		enabled: false,
+	},
 
 	routeRules: {
 		"/a/**": { appMiddleware: ["auth-guard"], ssr: false },
